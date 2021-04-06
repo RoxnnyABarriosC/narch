@@ -1,0 +1,128 @@
+{
+  "env": "development",
+  "nodePath": "/usr/app",
+  "serverPort": 8089,
+  "auth": {
+    "authorization": false
+  },
+  "dbConfig": {
+    "TypeORM": {
+      "type": "mysql",
+      "host": "localhost",
+      "port": 3306,
+      "database": "node-example",
+      "username": "root",
+      "password": "$Maalex.POO0101..",
+      "synchronize": true,
+      "migrationsRun": false,
+      "logging": true,
+      "entities": [
+        "src/**/Infrastructure/*.sql.schema.ts",
+        "src/**/Infrastructure/Schema/*.sql.schema.ts"
+      ],
+      "migrations": [
+        "src/Infrastructure/Migrations/TypeORM/**/*.ts"
+      ],
+      "subscribers": [
+        "src/Infrastructure/Subscribers/TypeORM/**/*.ts"
+      ],
+      "cli": {
+        "entitiesDir": "/src/Infrastructure/Entities/TypeORM",
+        "migrationsDir": "/src/Infrastructure/Migrations",
+        "subscribersDir": "/src/Infrastructure/Subscribers"
+      }
+    },
+    "Mongoose": {
+      "host": "db",
+      "port": 27017,
+      "database": "experience",
+      "username": "experience",
+      "password": "experience"
+    },
+    "default": "TypeORM"
+  },
+  "cache": {
+    "redis": {
+      "port": 6379,
+      "host": "127.0.0.1"
+    }
+  },
+  "filesystem": {
+    "minio": {
+      "endPoint": "minio",
+      "accessKey": "minio",
+      "secretKey": "12345678",
+      "useSSL": false,
+      "port": 9000,
+      "region": "us-east-1",
+      "bucket": "experience"
+    },
+    "local": {
+      "type": "local"
+    },
+    "default": "minio"
+  },
+  "encryption": {
+    "bcrypt": {
+      "type": "bcrypt",
+      "saltRounds": 10,
+      "algorithm": "HS512"
+    },
+    "encryptionDefault": "bcrypt"
+  },
+  "jwt": {
+    "secret": "mySecretJWT",
+    "expires": 3600,
+    "iss": "digichanges",
+    "aud": "digichanges.com"
+  },
+  "mail": {
+    "host": "mail",
+    "port": 1025,
+    "username": "",
+    "password": "",
+    "secure": false,
+    "senderName": "Notifications",
+    "senderEmailDefault": "notification@localhost.com",
+    "templateDir": "Infrastructure/templates/emails"
+  },
+  "push": {
+    "privateKey": "BFbzNLYCWO7Ei0cmBco43ZCsEbhFAOzcfop1eHYiK8CVCBK_-xeWEWzHHlQiPEUPvuxwMHc1koGj40t2hcgiWvk",
+    "publicKey": "k8sGjPBnD8iabMkB6toD8payp9plozw4t4FSfjhUPhQ"
+  },
+  "url":{
+    "urlApi": "http://localhost:8089/api/",
+    "urlWeb": "http://localhost:3000/"
+  },
+  "productInfo": {
+    "productName": "Narch Js"
+  },
+  "validationSettings": {
+    "password": {
+      "min": 3,
+      "max": 15
+    }
+  },
+  "apiWhitelist": [
+    {
+      "method": ["GET"],
+      "url": "/"
+    },
+    {
+      "method": ["GET"],
+      "url": "/logs"
+    },
+    {
+      "method": ["POST"],
+      "url": "/api/auth/login"
+    },
+    {
+      "method": ["POST"],
+      "url": "/api/auth/forgotPassword"
+    },
+    {
+      "method": ["POST"],
+      "url": "/api/auth/changeForgotPassword"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "env": "production",
+  "nodePath": "/usr/app",
+  "serverPort": 80,
+  "auth": {
+    "authorization": true
+  },
+  "dbConfig": {
+    "TypeORM": {
+      "type": "mongodb",
+      "host": "localhost",
+      "port": 5432,
+      "database": "experience",
+      "username": "experience",
+      "password": "experience",
+      "synchronize": true,
+      "migrationsRun": false,
+      "logging": true,
+      "entities": [
+        "dist/src/Infrastructure/Entities/TypeORM/Mongo/*{.ts,.js}"
+      ],
+      "migrations": [
+        "dist/src/Infrastructure/Migrations/TypeORM/Mongo/**/*{.ts,.js}"
+      ],
+      "subscribers": [
+        "dist/src/Infrastructure/Subscribers/TypeORM/Mongo/**/*{.ts,.js}"
+      ],
+      "cli": {
+        "entitiesDir": "/src/Infrastructure/Entities",
+        "migrationsDir": "/src/Infrastructure/Migrations",
+        "subscribersDir": "/src/Infrastructure/Subscribers"
+      },
+      "default": "TypeORM"
+    },
+    "Mongoose": {
+      "host": "db",
+      "port": 27017,
+      "database": "experience",
+      "username": "experience",
+      "password": "experience"
+    },
+    "default": "Mongoose"
+  },
+  "cache": {
+    "redis": {
+      "port": 6379,
+      "host": "redis",
+      "password": "ewsua132435"
+    }
+  },
+  "filesystem": {
+    "minio": {
+      "type": "minio",
+      "endPoint": "minio",
+      "accessKey": "minio",
+      "secretKey": "12345678",
+      "useSSL": false,
+      "port": 9000,
+      "region": "us-east-1",
+      "bucket": "experience"
+    },
+    "local": {
+      "type": "local"
+    },
+    "default": "minio"
+  },
+  "encryption": {
+    "bcrypt": {
+      "type": "bcrypt",
+      "saltRounds": 10,
+      "algorithm": "HS512"
+    },
+    "encryptionDefault": "bcrypt"
+  },
+  "jwt": {
+    "secret": "mySecretJWT",
+    "expires": 3600,
+    "iss": "digichanges",
+    "aud": "digichanges.com"
+  },
+  "mail": {
+    "host": "mail",
+    "port": 1025,
+    "username": "",
+    "password": "",
+    "secure":false,
+    "senderName": "Notifications",
+    "senderEmailDefault": "notification@localhost.com",
+    "templateDir": "Infrastructure/templates/emails"
+  },
+  "url":{
+    "urlApi": "http://localhost:8089/api/",
+    "urlWeb": "http://localhost:3000/"
+  },
+  "productInfo": {
+    "productName": "experience"
+  },
+  "validationSettings": {
+    "password": {
+      "min": 3,
+      "max": 15
+    }
+  },
+  "apiWhitelist": [
+    {
+      "method": ["GET"],
+      "url": "/"
+    },
+    {
+      "method": ["POST"],
+      "url": "/api/auth/login"
+    },
+    {
+      "method": ["POST"],
+      "url": "/api/auth/forgotPassword"
+    },
+    {
+      "method": ["POST"],
+      "url": "/api/auth/changeForgotPassword"
+    }
+  ]
+}
