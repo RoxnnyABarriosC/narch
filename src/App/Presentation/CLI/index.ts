@@ -17,6 +17,7 @@ import AssignRoleToUserCommand from "./Commands/AssingRoleToUser/AssingRoleToUse
 import CreateVapIDCommant from "./Commands/CreateVapID/CreateVapID.commant";
 import SyncRolesPermissionCommand from "./Commands/SyncRolesPermission/SyncRolesPermission.command";
 import CreateBucketCommand from "./Commands/CreateBucket/CreateBucket.command";
+import TestCommand from "./Commands/Test/Test.command";
 
 (async() => 
 {
@@ -25,6 +26,8 @@ import CreateBucketCommand from "./Commands/CreateBucket/CreateBucket.command";
         await initCommand();
 
         const program = commander.program;
+
+        program.addCommand(TestCommand);
 
         program.addCommand(AddUserRoleCommand);
         program.addCommand(AddUserCommand);
