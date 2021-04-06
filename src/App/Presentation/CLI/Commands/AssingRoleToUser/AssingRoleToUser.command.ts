@@ -1,8 +1,8 @@
 import commander from 'commander';
-import {loggerCli} from '../../Infrastructure/Shared/Logger';
-import AssignRoleBySlugUseCase from "../../../User/Domain/UseCases/AssignRoleBySlug.useCase";
-import UserAssignRoleByPayload from "../../../User/InterfaceAdapters/Payloads/UserAssignRoleBy.payload";
-import UserAssignRoleByCommandRequest from "../Requests/Command/Requests/UserAssignRoleByCommand.request";
+import {loggerCli} from '../../../../Infrastructure/Shared/Logger';
+import AssignRoleBySlugUseCase from "../../../../../User/Domain/UseCases/AssignRoleBySlug.useCase";
+import UserAssignRoleByPayload from "../../../../../User/InterfaceAdapters/Payloads/UserAssignRoleBy.payload";
+import UserAssignRoleRequest from "./UserAssignRole.request";
 
 const AssignRoleToUserCommand = new commander.Command('assignRoleToUser');
 
@@ -15,8 +15,8 @@ AssignRoleToUserCommand
     {
         const assignRoleBySlugUseCase = new AssignRoleBySlugUseCase();
 
-        const request: UserAssignRoleByPayload = new UserAssignRoleByCommandRequest(env);
-        const user = await assignRoleBySlugUseCase.handle(request);
+        const userAssignRoleRequest: UserAssignRoleByPayload = new UserAssignRoleRequest(env);
+        const user = await assignRoleBySlugUseCase.handle(userAssignRoleRequest);
 
         if (user)
         {

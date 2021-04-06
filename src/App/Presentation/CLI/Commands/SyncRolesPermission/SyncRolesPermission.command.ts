@@ -1,6 +1,6 @@
-import {loggerCli} from '../../Infrastructure/Shared/Logger';
+import {loggerCli} from '../../../../Infrastructure/Shared/Logger';
 import commander from 'commander';
-import SyncRolesPermissionUseCase from "../../../Auth/Domain/UseCases/SyncRolesPermission.useCase";
+import SyncRolesPermissionUseCase from "../../../../../Auth/Domain/UseCases/SyncRolesPermission.useCase";
 
 const SyncRolesPermissionCommand = new commander.Command('syncRolesPermission');
 

@@ -1,10 +1,10 @@
 import commander from 'commander';
 import webpush from 'web-push';
-import {loggerCli} from '../../Infrastructure/Shared/Logger';
+import {loggerCli} from '../../../../Infrastructure/Shared/Logger';
 
-const CreateVapID = new commander.Command('createVapID');
+const CreateVapIDCommant = new commander.Command('createVapID');
 
-CreateVapID
+CreateVapIDCommant
     .version('0.0.1')
     .description('Generate VapID Keys')
     .action(async(env: any) => 
@@ -21,4 +21,4 @@ CreateVapID
         }
     });
 
-export default CreateVapID;
+export default CreateVapIDCommant;

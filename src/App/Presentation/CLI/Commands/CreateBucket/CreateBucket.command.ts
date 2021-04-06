@@ -1,8 +1,8 @@
 import commander from 'commander';
-import {loggerCli} from '../../Infrastructure/Shared/Logger';
-import CreateBucketUseCase from "../../../File/Domain/UseCases/CreateBucket.useCase";
-import CreateBucketPayload from "../../../File/InterfaceAdapters/Payloads/CreateBucket.payload";
-import CreateBucketCommandRequest from "../Requests/Command/Requests/CreateBucketCommand.request";
+import {loggerCli} from '../../../../Infrastructure/Shared/Logger';
+import CreateBucketUseCase from "../../../../../File/Domain/UseCases/CreateBucket.useCase";
+import CreateBucketPayload from "../../../../../File/InterfaceAdapters/Payloads/CreateBucket.payload";
+import CreateBucketRequest from "./CreateBucket.request";
 
 const CreateBucketCommand = new commander.Command('createBucket');
 
@@ -14,7 +14,7 @@ CreateBucketCommand
     .action(async(env: any) => 
     {
         const useCase = new CreateBucketUseCase();
-        const request: CreateBucketPayload = new CreateBucketCommandRequest(env);
+        const request: CreateBucketPayload = new CreateBucketRequest(env);
 
         await useCase.handle(request);
 
