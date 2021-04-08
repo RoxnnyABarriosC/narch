@@ -18,25 +18,20 @@ import CronFactory from "./App/Infrastructure/Factories/Cron.factory";
         // Initialize configuration
         validateEnv();
 
-        const databaseFactory = new DatabaseFactory();
-
-        const createConnection: ICreateConnection = databaseFactory.create();
-
+        const createConnection: ICreateConnection = DatabaseFactory.create();
         await createConnection.create();
 
-        // const sqlSeeds = new SqlSeedFactory();
-        //
-        // sqlSeeds.init();
+       /* const sqlSeeds = new SqlSeedFactory();
+        sqlSeeds.init();*/
 
         let cache: ICacheRepository = CacheFactory.createRedisCache(); // Create for redis repository
         await cache.createConnection(Config.get("cache.redis")); // Create connection for cache
         await cache.cleanAll();
 
-        const eventHandler = EventHandler.getInstance();
+        EventHandler.getInstance();
 
         const cronFactory = new CronFactory();
-
-        cronFactory.start();
+        // cronFactory.start();
 
         const app = new App();
         await app.initConfig();

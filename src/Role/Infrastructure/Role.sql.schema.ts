@@ -28,12 +28,12 @@ const RoleSqlSchema = new EntitySchema<RoleEntity>({
         },
         createdAt: {
             name: 'createdAt',
-            type: 'datetime',
+            type: 'timestamp with time zone',
             createDate: true,
         },
         updatedAt: {
             name: 'updatedAt',
-            type: 'datetime',
+            type: 'timestamp with time zone',
             updateDate: true,
         }
     }

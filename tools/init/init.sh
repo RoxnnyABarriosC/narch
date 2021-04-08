@@ -11,5 +11,3 @@ npx ts-node ./src/Commands.ts addUser --email client@narchjs.com --firstName Cli
 npx ts-node ./src/Commands.ts assignRoleToUser --slug superadmin --email superadmin@narchjs.com
 npx ts-node ./src/Commands.ts assignRoleToUser --slug admin --email admin@narchjs.com
 npx ts-node ./src/Commands.ts assignRoleToUser --slug client --email client@narchjs.com
-
-

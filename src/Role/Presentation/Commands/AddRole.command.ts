@@ -7,10 +7,12 @@ import SaveRoleCommandRequest from "../Requests/Commands/SaveRole.command.reques
 const AddRoleCommand = new commander.Command('addRole');
 
 AddRoleCommand
+    .passCommandToAction(false)
+    .storeOptionsAsProperties(false)
     .version('0.0.1')
     .description('Add role to the system')
-    .option('-n, --name <name>', 'Name of the role')
-    .option('-s, --slug <slug>', 'Slug of the role')
+    .requiredOption('-n, --name <name>', 'Name of the role')
+    .requiredOption('-s, --slug <slug>', 'Slug of the role')
     .action(async(env: any) => 
     {
         const saveRoleUseCase = new SaveRoleUseCase();

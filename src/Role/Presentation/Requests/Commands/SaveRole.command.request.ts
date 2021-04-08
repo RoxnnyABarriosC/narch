@@ -21,8 +21,8 @@ export default class SaveRoleCommandRequest implements SaveRolePayload
 
     constructor(env: any)
     {
-        this.name = env.role;
-        this.slug = env.role.toLowerCase();
+        this.name = env.name;
+        this.slug = env.slug.toLowerCase();
         this.permissions = [];
         this.enable = true;
     }

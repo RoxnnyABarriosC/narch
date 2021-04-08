@@ -1,13 +1,20 @@
-import {createConnection} from "typeorm";
+import {Connection, createConnection} from "typeorm";
 import ICreateConnection from "../../InterfaceAdapters/IDatabase/ICreateConnection";
 
 export default class TypeORMCreateConnection implements ICreateConnection
 {
-    private readonly config: any;
+    private config: any;
 
     constructor(config: any)
     {
         this.config = config;
+    }
+
+    setAttrConfig(attribute: string, value: any): void
+    {
+        const newConfig = JSON.parse(JSON.stringify(this.config))
+        newConfig[attribute] = value;
+        this.config= newConfig;
     }
 
     initConfig(): any
@@ -20,7 +27,7 @@ export default class TypeORMCreateConnection implements ICreateConnection
         // TODO: Init config Test
     }
 
-    async create(): Promise<any>
+    async create(): Promise<Connection>
     {
         return await createConnection({...this.config});
     }

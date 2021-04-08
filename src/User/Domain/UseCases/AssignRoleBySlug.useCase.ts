@@ -23,7 +23,7 @@ export default class AssignRoleBySlugUseCase
         const slug = payload.getSlugRole();
 
         let user: IUserDomain = await this.repository.getOneBy({email});
-        let role: IRoleDomain = await this.roleRepository.getBy({slug});
+        let role: IRoleDomain = await this.roleRepository.getOneBy({slug});
 
         user.setRole(role);
 

@@ -6,7 +6,7 @@ export default class CronFactory
 
     constructor()
     {
-        this.test = new TestCron('0 */6 * * *');
+        this.test = new TestCron('* * * * *');
     }
 
     start(): any

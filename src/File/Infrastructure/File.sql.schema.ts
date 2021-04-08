@@ -34,12 +34,12 @@ const FileSqlSchema = new EntitySchema<FileEntity>({
         },
         createdAt: {
             name: 'createdAt',
-            type: 'datetime',
+            type: 'timestamp with time zone',
             createDate: true,
         },
         updatedAt: {
             name: 'updatedAt',
-            type: 'datetime',
+            type: 'timestamp with time zone',
             updateDate: true,
         }
     }

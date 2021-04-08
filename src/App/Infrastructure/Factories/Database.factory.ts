@@ -1,28 +1,23 @@
 import Config from "config";
 import TypeORMCreateConnection from "../Database/TypeORMCreateConnection";
-import {ICreateConnection} from "@digichanges/shared-experience";
+import ICreateConnection from "../../InterfaceAdapters/IDatabase/ICreateConnection";
 
 export default class DatabaseFactory
 {
-    private dbDefault: string;
-
-    constructor(dbDefault?: string)
+    static create(dbName?: 'TypeORM' | 'Mongoose'): ICreateConnection
     {
-        this.dbDefault = dbDefault
-    }
+        let dbDefault: string = dbName;
 
-    create(): ICreateConnection
-    {
         let createConnection = null;
 
-        if (!this.dbDefault)
+        if (!dbDefault)
         {
-           this.dbDefault = Config.get('dbConfig.default');
+           dbDefault = Config.get('dbConfig.default');
         }
 
-        const config = Config.get(`dbConfig.${this.dbDefault}`);
+        const config = Config.get(`dbConfig.${dbDefault}`);
 
-        if (this.dbDefault === 'TypeORM')
+        if (dbDefault === 'TypeORM')
         {
             createConnection = new TypeORMCreateConnection(config);
         }

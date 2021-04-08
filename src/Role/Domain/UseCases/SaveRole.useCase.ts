@@ -24,6 +24,7 @@ export default class SaveRoleUseCase
         this.authService.validatePermissions(payload.getPermissions());
 
         const role = new RoleEntity();
+
         role.name = payload.getName();
         role.slug = payload.getSlug();
         role.permissions = payload.getPermissions();

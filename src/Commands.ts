@@ -17,6 +17,7 @@ import SyncRolesPermissionCommand from "./Role/Presentation/Commands/SyncRolesPe
 import CreateBucketCommand from "./File/Presentation/Commands/CreateBucket.command";
 import {validateEnv} from "./Config/validateEnv";
 import DatabaseFactory from "./App/Infrastructure/Factories/Database.factory";
+import ICreateConnection from "./App/InterfaceAdapters/IDatabase/ICreateConnection";
 
 (async() => 
 {
@@ -24,10 +25,9 @@ import DatabaseFactory from "./App/Infrastructure/Factories/Database.factory";
     {
         validateEnv();
 
-        const databaseFactory = new DatabaseFactory();
+        const createConnection: ICreateConnection = DatabaseFactory.create();
 
-        const createConnection = databaseFactory.create();
-        createConnection.initConfig();
+        createConnection.setAttrConfig('synchronize', false);
 
         await createConnection.create();
 
@@ -45,8 +45,8 @@ import DatabaseFactory from "./App/Infrastructure/Factories/Database.factory";
     }
     catch (error)
     {
-        loggerCli.info('Error while connecting to the database', error);
-        loggerCli.info(error.message);
+        loggerCli.info('Command Error');
+        loggerCli.error(error.message);
         exit();
     }
 })();
