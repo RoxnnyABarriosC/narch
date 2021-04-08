@@ -5,7 +5,7 @@ import {StatusCode} from "@digichanges/shared-experience";
 import {inject} from "inversify";
 import {SERVICES} from "../Services";
 import IAuthService from "../App/InterfaceAdapters/IServices/IAuthService";
-import {TYPES} from "../types";
+import {Types} from "../Types";
 import Responder from "../App/Presentation/Shared/Responder";
 import AuthRequest from "./Presentation/Requests/Auth.request";
 import ValidatorRequest from "../App/Shared/ValidatorRequest";
@@ -29,7 +29,7 @@ class AuthHandler
     @inject(SERVICES.IAuthService)
     private service: IAuthService;
 
-    @inject(TYPES.Responder)
+    @inject(Types.Responder)
     private responder: Responder;
 
     @httpPost('/login')

@@ -2,7 +2,7 @@ import "reflect-metadata";
 import {Container} from "inversify";
 import getDecorators from "inversify-inject-decorators";
 import Responder from "./App/Presentation/Shared/Responder";
-import {TYPES} from "./types";
+import {Types} from "./Types";
 import IFormatResponder from "./App/InterfaceAdapters/Shared/IFormatResponder";
 import FormatResponder from "./App/Presentation/Shared/FormatResponder";
 import {REPOSITORIES} from "./Repositories";
@@ -24,8 +24,8 @@ const container = new Container();
 container.bind<IAuthService>(SERVICES.IAuthService).to(AuthService);
 
 /** Libs */
-container.bind<Responder>(TYPES.Responder).to(Responder);
-container.bind<IFormatResponder>(TYPES.IFormatResponder).to(FormatResponder);
+container.bind<Responder>(Types.Responder).to(Responder);
+container.bind<IFormatResponder>(Types.IFormatResponder).to(FormatResponder);
 
 /** Repositories */
 container.bind<IUserRepository>(REPOSITORIES.IUserRepository).to(UserSqlRepository);

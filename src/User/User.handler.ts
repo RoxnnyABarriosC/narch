@@ -1,7 +1,7 @@
 import {inject} from "inversify";
 import {NextFunction, Request, Response} from 'express';
 import {controller, httpDelete, httpGet, httpPost, httpPut, request, response, next} from 'inversify-express-utils';
-import {TYPES} from "../types";
+import {Types} from "../Types";
 import Responder from "../App/Presentation/Shared/Responder";
 import AuthorizeMiddleware from "../App/Presentation/Middlewares/Authorize.middleware";
 import Permissions from "../Config/Permissions";
@@ -30,7 +30,7 @@ import ChangeUserPasswordUseCase from "./Domain/UseCases/ChangeUserPassword.useC
 @controller('/api/users')
 export default class UserHandler
 {
-    @inject(TYPES.Responder)
+    @inject(Types.Responder)
     private responder: Responder;
 
     @httpPost('/', AuthorizeMiddleware(Permissions.USERS_SAVE))

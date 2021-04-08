@@ -1,8 +1,8 @@
 import {IsArray, IsBoolean, IsString} from 'class-validator';
-import SaveUserPayload from "../../../../../User/InterfaceAdapters/Payloads/SaveUser.payload";
-import IRoleDomain from "../../../../../Role/InterfaceAdapters/IRole.domain";
+import SaveUserPayload from "../../../InterfaceAdapters/Payloads/SaveUser.payload";
+import IRoleDomain from "../../../../Role/InterfaceAdapters/IRole.domain";
 
-export default class SaveUserRequest implements SaveUserPayload
+export default class SaveUserCommandRequest implements SaveUserPayload
 {
     @IsString()
     firstName: string;

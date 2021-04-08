@@ -1,8 +1,8 @@
 import commander from 'commander';
-import {loggerCli} from '../../../../Infrastructure/Shared/Logger';
-import SaveRolePayload from "../../../../../Role/InterfaceAdapters/Payloads/SaveRole.payload";
-import SaveRoleUseCase from "../../../../../Role/Domain/UseCases/SaveRole.useCase";
-import SaveRoleUserRequest from "./SaveRoleUser.request";
+import {loggerCli} from '../../../App/Infrastructure/Shared/Logger';
+import SaveRolePayload from "../../InterfaceAdapters/Payloads/SaveRole.payload";
+import SaveRoleUseCase from "../../Domain/UseCases/SaveRole.useCase";
+import SaveRoleCommandRequest from "../Requests/Commands/SaveRole.command.request";
 
 const AddRoleCommand = new commander.Command('addRole');
 
@@ -15,8 +15,8 @@ AddRoleCommand
     {
         const saveRoleUseCase = new SaveRoleUseCase();
 
-        const saveRoleUserRequest: SaveRolePayload = new SaveRoleUserRequest(env);
-        const role = await saveRoleUseCase.handle(saveRoleUserRequest);
+        const roleCommandRequest: SaveRolePayload = new SaveRoleCommandRequest(env);
+        const role = await saveRoleUseCase.handle(roleCommandRequest);
 
         if (role)
         {

@@ -7,12 +7,12 @@
   },
   "dbConfig": {
     "TypeORM": {
-      "type": "mysql",
+      "type": "postgres",
       "host": "localhost",
-      "port": 3306,
-      "database": "node-example",
-      "username": "root",
-      "password": "$Maalex.POO0101..",
+      "port": 5432,
+      "database": "narchjs",
+      "username": "narchjs",
+      "password": "narchjs",
       "synchronize": true,
       "migrationsRun": false,
       "logging": true,
@@ -35,16 +35,17 @@
     "Mongoose": {
       "host": "db",
       "port": 27017,
-      "database": "experience",
-      "username": "experience",
-      "password": "experience"
+      "database": "narchjs",
+      "username": "narchjs",
+      "password": "narchjs"
     },
     "default": "TypeORM"
   },
   "cache": {
     "redis": {
       "port": 6379,
-      "host": "127.0.0.1"
+      "host": "127.0.0.1",
+      "password": "narchjs"
     }
   },
   "filesystem": {
@@ -55,7 +56,7 @@
       "useSSL": false,
       "port": 9000,
       "region": "us-east-1",
-      "bucket": "experience"
+      "bucket": "narchjs"
     },
     "local": {
       "type": "local"
@@ -73,8 +74,8 @@
   "jwt": {
     "secret": "mySecretJWT",
     "expires": 3600,
-    "iss": "digichanges",
-    "aud": "digichanges.com"
+    "iss": "narchjs",
+    "aud": "narchjs.com"
   },
   "mail": {
     "host": "mail",

@@ -1,63 +1,62 @@
 {
   "env": "production",
   "nodePath": "/usr/app",
-  "serverPort": 80,
+  "serverPort": 8089,
   "auth": {
-    "authorization": true
+    "authorization": false
   },
   "dbConfig": {
     "TypeORM": {
-      "type": "mongodb",
+      "type": "postgres",
       "host": "localhost",
       "port": 5432,
-      "database": "experience",
-      "username": "experience",
-      "password": "experience",
+      "database": "narchjs",
+      "username": "narchjs",
+      "password": "narchjs",
       "synchronize": true,
       "migrationsRun": false,
       "logging": true,
       "entities": [
-        "dist/src/Infrastructure/Entities/TypeORM/Mongo/*{.ts,.js}"
+        "src/**/Infrastructure/*.sql.schema.ts",
+        "src/**/Infrastructure/Schema/*.sql.schema.ts"
       ],
       "migrations": [
-        "dist/src/Infrastructure/Migrations/TypeORM/Mongo/**/*{.ts,.js}"
+        "src/Infrastructure/Migrations/TypeORM/**/*.ts"
       ],
       "subscribers": [
-        "dist/src/Infrastructure/Subscribers/TypeORM/Mongo/**/*{.ts,.js}"
+        "src/Infrastructure/Subscribers/TypeORM/**/*.ts"
       ],
       "cli": {
-        "entitiesDir": "/src/Infrastructure/Entities",
+        "entitiesDir": "/src/Infrastructure/Entities/TypeORM",
         "migrationsDir": "/src/Infrastructure/Migrations",
         "subscribersDir": "/src/Infrastructure/Subscribers"
-      },
-      "default": "TypeORM"
+      }
     },
     "Mongoose": {
       "host": "db",
       "port": 27017,
-      "database": "experience",
-      "username": "experience",
-      "password": "experience"
+      "database": "narchjs",
+      "username": "narchjs",
+      "password": "narchjs"
     },
-    "default": "Mongoose"
+    "default": "TypeORM"
   },
   "cache": {
     "redis": {
       "port": 6379,
-      "host": "redis",
-      "password": "ewsua132435"
+      "host": "127.0.0.1",
+      "password": "narchjs"
     }
   },
   "filesystem": {
     "minio": {
-      "type": "minio",
       "endPoint": "minio",
       "accessKey": "minio",
       "secretKey": "12345678",
       "useSSL": false,
       "port": 9000,
       "region": "us-east-1",
-      "bucket": "experience"
+      "bucket": "narchjs"
     },
     "local": {
       "type": "local"
@@ -75,25 +74,29 @@
   "jwt": {
     "secret": "mySecretJWT",
     "expires": 3600,
-    "iss": "digichanges",
-    "aud": "digichanges.com"
+    "iss": "narchjs",
+    "aud": "narchjs.com"
   },
   "mail": {
     "host": "mail",
     "port": 1025,
     "username": "",
     "password": "",
-    "secure":false,
+    "secure": false,
     "senderName": "Notifications",
     "senderEmailDefault": "notification@localhost.com",
     "templateDir": "Infrastructure/templates/emails"
+  },
+  "push": {
+    "privateKey": "BFbzNLYCWO7Ei0cmBco43ZCsEbhFAOzcfop1eHYiK8CVCBK_-xeWEWzHHlQiPEUPvuxwMHc1koGj40t2hcgiWvk",
+    "publicKey": "k8sGjPBnD8iabMkB6toD8payp9plozw4t4FSfjhUPhQ"
   },
   "url":{
     "urlApi": "http://localhost:8089/api/",
     "urlWeb": "http://localhost:3000/"
   },
   "productInfo": {
-    "productName": "experience"
+    "productName": "Narch Js"
   },
   "validationSettings": {
     "password": {
@@ -105,6 +108,10 @@
     {
       "method": ["GET"],
       "url": "/"
+    },
+    {
+      "method": ["GET"],
+      "url": "/logs"
     },
     {
       "method": ["POST"],

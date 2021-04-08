@@ -6,7 +6,7 @@ import Responder from "../App/Presentation/Shared/Responder";
 import AuthorizeMiddleware from "../App/Presentation/Middlewares/Authorize.middleware";
 import Permissions from "../Config/Permissions";
 import ListFilesRequest from "./Presentation/Requests/ListFiles.request";
-import {TYPES} from "../types";
+import {Types} from "../Types";
 import ValidatorRequest from "../App/Shared/ValidatorRequest";
 import ListFilesUseCase from "./Domain/UseCases/ListFiles.useCase";
 import FileTransformer from "./Presentation/Transformers/File.transformer";
@@ -31,7 +31,7 @@ import UploadBase64UseCase from "./Domain/UseCases/UploadBase64.useCase";
 @controller('/api/files')
 export default class FileHandler
 {
-    @inject(TYPES.Responder)
+    @inject(Types.Responder)
     private responder: Responder;
 
     @httpGet('/', AuthorizeMiddleware(Permissions.FILES_LIST))

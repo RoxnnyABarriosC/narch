@@ -1,7 +1,7 @@
 import {IsArray, IsBoolean, IsOptional, IsString} from 'class-validator';
-import SaveRolePayload from "../../../../../Role/InterfaceAdapters/Payloads/SaveRole.payload";
+import SaveRolePayload from "../../../InterfaceAdapters/Payloads/SaveRole.payload";
 
-export default class SaveRoleUserRequest implements SaveRolePayload
+export default class SaveRoleCommandRequest implements SaveRolePayload
 {
     @IsString()
     name: string;

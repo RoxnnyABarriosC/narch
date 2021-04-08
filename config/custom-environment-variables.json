@@ -25,7 +25,8 @@
   "cache": {
     "redis": {
       "port": "CACHE_PORT",
-      "host": "CACHE_HOST"
+      "host": "CACHE_HOST",
+      "password": "CACHE_PASSWORD"
     }
   },
   "filesystem": {

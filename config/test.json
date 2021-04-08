@@ -3,21 +3,22 @@
   "nodePath": "/usr/app",
   "serverPort": 8089,
   "auth": {
-    "authorization": true
+    "authorization": false
   },
   "dbConfig": {
     "TypeORM": {
       "type": "postgres",
-      "host": "db",
+      "host": "localhost",
       "port": 5432,
-      "database": "experience",
-      "username": "experience",
-      "password": "experience",
+      "database": "narchjs",
+      "username": "narchjs",
+      "password": "narchjs",
       "synchronize": true,
       "migrationsRun": false,
       "logging": true,
       "entities": [
-        "src/Infrastructure/Schema/TypeORM/*.ts"
+        "src/**/Infrastructure/*.sql.schema.ts",
+        "src/**/Infrastructure/Schema/*.sql.schema.ts"
       ],
       "migrations": [
         "src/Infrastructure/Migrations/TypeORM/**/*.ts"
@@ -34,17 +35,17 @@
     "Mongoose": {
       "host": "db",
       "port": 27017,
-      "database": "experience",
-      "username": "experience",
-      "password": "experience"
+      "database": "narchjs",
+      "username": "narchjs",
+      "password": "narchjs"
     },
-    "default": "Mongoose"
+    "default": "TypeORM"
   },
   "cache": {
     "redis": {
       "port": 6379,
-      "host": "redis",
-      "password": "ewsua132435"
+      "host": "127.0.0.1",
+      "password": "narchjs"
     }
   },
   "filesystem": {
@@ -55,7 +56,7 @@
       "useSSL": false,
       "port": 9000,
       "region": "us-east-1",
-      "bucket": "experience"
+      "bucket": "narchjs"
     },
     "local": {
       "type": "local"
@@ -73,8 +74,8 @@
   "jwt": {
     "secret": "mySecretJWT",
     "expires": 3600,
-    "iss": "digichanges",
-    "aud": "digichanges.com"
+    "iss": "narchjs",
+    "aud": "narchjs.com"
   },
   "mail": {
     "host": "mail",
@@ -95,7 +96,7 @@
     "urlWeb": "http://localhost:3000/"
   },
   "productInfo": {
-    "productName": "experience"
+    "productName": "Narch Js"
   },
   "validationSettings": {
     "password": {
@@ -107,6 +108,10 @@
     {
       "method": ["GET"],
       "url": "/"
+    },
+    {
+      "method": ["GET"],
+      "url": "/logs"
     },
     {
       "method": ["POST"],

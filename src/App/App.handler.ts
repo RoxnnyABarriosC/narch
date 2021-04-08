@@ -1,7 +1,7 @@
 import {inject} from "inversify";
 import {controller, httpGet, BaseHttpController, response, request, next} from "inversify-express-utils";
 import {StatusCode} from "@digichanges/shared-experience";
-import {TYPES} from "../types";
+import {Types} from "../Types";
 import Responder from "./Presentation/Shared/Responder";
 import {Locales} from "./App";
 import {NextFunction, Request, Response} from "express";
@@ -10,7 +10,7 @@ import GetLogViewUseCase from "./Domain/UseCases/Log/GetLogView.useCase";
 @controller('/')
 export default class AppHandler extends BaseHttpController
 {
-    @inject(TYPES.Responder)
+    @inject(Types.Responder)
     private responder: Responder;
 
     @httpGet('/')

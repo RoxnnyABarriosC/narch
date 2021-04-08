@@ -4,13 +4,13 @@ import {IHttpStatusCode, IPaginator, Transformer} from "@digichanges/shared-expe
 
 import IFormatResponder from '../../InterfaceAdapters/Shared/IFormatResponder';
 import PaginatorTransformer from "./PaginatorTransformer";
-import {TYPES} from "../../../types";
+import {Types} from "../../../Types";
 import IFileDTO from "../../../File/InterfaceAdapters/IDto/IFileDTO";
 
 @injectable()
 export default class Responder
 {
-    @inject(TYPES.IFormatResponder)
+    @inject(Types.IFormatResponder)
     private formatResponder: IFormatResponder;
 
     public send(data: any, request: Request | any, response: Response, status: IHttpStatusCode, transformer: Transformer = null)

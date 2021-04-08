@@ -1,8 +1,7 @@
 import {IsString} from 'class-validator';
-import CreateBucketPayload from "../../../../../File/InterfaceAdapters/Payloads/CreateBucket.payload";
+import CreateBucketPayload from "../../../InterfaceAdapters/Payloads/CreateBucket.payload";
 
-// TODO: Refactor set policy
-export default class CreateBucketRequest implements CreateBucketPayload
+export default class CreateBucketCommandRequest implements CreateBucketPayload
 {
     @IsString()
     bucketName: string;

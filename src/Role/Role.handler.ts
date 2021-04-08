@@ -3,7 +3,7 @@ import {NextFunction, Request, Response} from 'express';
 import {controller, httpDelete, httpGet, httpPost, httpPut, request, response, next} from 'inversify-express-utils';
 import {IPaginator, StatusCode} from "@digichanges/shared-experience";
 import Responder from "../App/Presentation/Shared/Responder";
-import {TYPES} from "../types";
+import {Types} from "../Types";
 import AuthorizeMiddleware from "../App/Presentation/Middlewares/Authorize.middleware";
 import Permissions from "../Config/Permissions";
 import SaveRoleRequest from "./Presentation/Requests/SaveRole.request";
@@ -23,7 +23,7 @@ import RemoveRoleUseCase from "./Domain/UseCases/RemoveRole.useCase";
 @controller('/api/roles')
 export default class RoleHandler
 {
-    @inject(TYPES.Responder)
+    @inject(Types.Responder)
     private responder: Responder;
 
     @httpPost('/', AuthorizeMiddleware(Permissions.ROLES_SAVE))
