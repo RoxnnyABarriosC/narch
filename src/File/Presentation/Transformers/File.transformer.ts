@@ -1,6 +1,5 @@
-import moment from "moment";
-import {Transformer} from "@digichanges/shared-experience";
 import IFileDomain from "../../InterfaceAdapters/IFile.domain";
+import Transformer from "../../../App/Presentation/Shared/Transformer";
 
 export default class FileTransformer extends Transformer
 {
@@ -15,8 +14,8 @@ export default class FileTransformer extends Transformer
             mimeType: file.mimeType,
             size: file.size,
             version: file.version,
-            createdAt: moment(file.createdAt).utc().unix(),
-            updatedAt: moment(file.updatedAt).utc().unix(),
+            createdAt: this.transformDate(file.createdAt),
+            updatedAt: this.transformDate(file.updatedAt),
         };
     }    
 }

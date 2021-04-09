@@ -1,5 +1,4 @@
-import moment from "moment";
-import {Transformer} from "@digichanges/shared-experience";
+import Transformer from "../../../App/Presentation/Shared/Transformer";
 
 export default class ObjectTransformer extends Transformer
 {
@@ -7,7 +6,7 @@ export default class ObjectTransformer extends Transformer
     {
         return {
             name: object.name,
-            lastModified: moment(object.lastModified).utc().unix(),
+            lastModified: this.transformDate(object.lastModified),
             etag: object.etag,
             size: object.size,
         };

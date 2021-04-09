@@ -1,7 +1,6 @@
-import moment from "moment";
-import {Transformer} from "@digichanges/shared-experience";
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
 import RoleTransformer from "../../../Role/Presentation/Transformers/Role.transformer";
+import Transformer from "../../../App/Presentation/Shared/Transformer";
 
 export default class UserTransformer extends Transformer
 {
@@ -21,10 +20,10 @@ export default class UserTransformer extends Transformer
             lastName: user.lastName,
             email: user.email,
             enable: user.enable,
-            roles: this.roleTransformer.handle(user.getRoles()),
+            roles: this.validate(user?.getRoles(),'roleTransformer'),
             permissions: user.permissions,
-            createdAt: moment(user.createdAt).utc().unix(),
-            updatedAt: moment(user.updatedAt).utc().unix(),
+            createdAt: this.transformDate(user.createdAt),
+            updatedAt: this.transformDate(user.updatedAt),
         };
     }
 }

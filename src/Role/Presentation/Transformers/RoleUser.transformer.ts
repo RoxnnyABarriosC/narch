@@ -1,5 +1,4 @@
-import moment from "moment";
-import {Transformer} from "@digichanges/shared-experience";
+import Transformer from "../../../App/Presentation/Shared/Transformer";
 import IRoleDomain from "../../InterfaceAdapters/IRole.domain";
 
 export default class RoleUserTransformer extends Transformer
@@ -11,8 +10,8 @@ export default class RoleUserTransformer extends Transformer
             name: role.name,
             slug: role.slug,
             enable: role.enable,
-            createdAt: moment(role.createdAt).utc().unix(),
-            updatedAt: moment(role.updatedAt).utc().unix(),
+            createdAt: this.transformDate(role.createdAt),
+            updatedAt: this.transformDate(role.updatedAt),
         };
     }
 }

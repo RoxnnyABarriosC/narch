@@ -1,5 +1,4 @@
-import moment from "moment";
-import {Transformer} from "@digichanges/shared-experience";
+import Transformer from "../../../App/Presentation/Shared/Transformer";
 import RoleUserTransformer from "../../../Role/Presentation/Transformers/RoleUser.transformer";
 import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
@@ -29,8 +28,8 @@ export default class AuthTransformer extends Transformer
                 enable: token.getUser().enable,
                 permissions: authService.getPermissions(user),
                 roles: this.roleUserTransformer.handle(token.getUser().roles),
-                createdAt: moment(token.getUser().createdAt).utc().unix(),
-                updatedAt: moment(token.getUser().updatedAt).utc().unix(),
+                createdAt: this.transformDate(token.getUser().createdAt),
+                updatedAt: this.transformDate(token.getUser().updatedAt),
             },
             expires: token.getExpires(),
             token: token.getHash()
