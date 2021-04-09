@@ -293,8 +293,10 @@ export default  abstract class Filter implements IFilter
                     valueAttr = valueAttr.split(' ').map((value) => `${value}:*`).join(' | ');
                 }
 
-                queryBuilder[condition](`${searchAtt} @@ to_tsquery(${aliasAttr})`);
+                queryBuilder.addSelect(`ts_rank_cd( (${searchAtt}) , to_tsquery(${aliasAttr}))`, 'rank');
+                queryBuilder[condition](`to_tsquery(${aliasAttr}) @@ (${searchAtt})`);
                 queryBuilder.setParameter(entityFilter[attribute], valueAttr);
+                queryBuilder.orderBy('rank', 'DESC');
             }
         }
     }
