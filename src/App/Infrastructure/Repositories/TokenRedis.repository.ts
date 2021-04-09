@@ -5,6 +5,7 @@ import {ICacheRepository, ITokenRepository} from "@digichanges/shared-experience
 import NotFoundException from "../Exceptions/NotFound.exception";
 import CacheFactory from "../Factories/Cache.factory";
 import ITokenDomain from "../../InterfaceAdapters/IInfraestructure/ITokenDomain";
+import TokenEntity from "../Entities/Token.entity";
 
 @injectable()
 export default class TokenRedisRepository implements ITokenRepository
@@ -17,15 +18,15 @@ export default class TokenRedisRepository implements ITokenRepository
         this.repository = CacheFactory.createRedisCache();
     }
 
-    async save (token: ITokenDomain): Promise<ITokenDomain>
+    async save (token: TokenEntity): Promise<ITokenDomain>
     {
-        await this.repository.jset(token.getId(), token, this.expire);
+        await this.repository.jset(token._id, token, this.expire);
         return token;
     }
 
-    async update(token: ITokenDomain): Promise<ITokenDomain>
+    async update(token: TokenEntity): Promise<ITokenDomain>
     {
-        await this.repository.jset(token.getId(), token);
+        await this.repository.jset(token._id, token);
         return token;
     }
 
@@ -35,7 +36,7 @@ export default class TokenRedisRepository implements ITokenRepository
 
         if (!token)
         {
-            throw new NotFoundException('TokenEntity');
+            throw new NotFoundException(TokenEntity.name.replace('Entity',''));
         }
 
         return token;

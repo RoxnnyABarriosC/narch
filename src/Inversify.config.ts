@@ -23,6 +23,9 @@ import FileSqlRepository from "./File/Infrastructure/File.sql.repository";
 import {ITokenRepository} from "@digichanges/shared-experience";
 import TokenRedisRepository from "./App/Infrastructure/Repositories/TokenRedis.repository";
 
+import INotificationRepository from "./App/InterfaceAdapters/IRepository/INotificationRepository";
+import NotificationSqlRepository from "./App/Infrastructure/Repositories/Notification.sql.repository";
+
 /* IServices */
 container.bind<IAuthService>(SERVICES.IAuthService).to(AuthService);
 
@@ -36,5 +39,6 @@ container.bind<IRoleRepository>(REPOSITORIES.IRoleRepository).to(RoleSqlReposito
 container.bind<IFileRepository>(REPOSITORIES.IFileRepository).to(FileSqlRepository);
 
 container.bind<ITokenRepository>(REPOSITORIES.ITokenRepository).to(TokenRedisRepository);
+container.bind<INotificationRepository>(REPOSITORIES.INotificationRepository).to(NotificationSqlRepository);
 
 export default container;

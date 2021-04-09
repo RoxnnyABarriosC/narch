@@ -1,3 +1,4 @@
+import {Request} from "express";
 import {IsEmail} from "class-validator";
 import {IsUUID} from "class-validator";
 import KeepAlivePayload from "../../InterfaceAdapters/Payloads/KeepAlive.payload";
@@ -10,7 +11,7 @@ export default class KeepAliveRequest implements KeepAlivePayload
     @IsUUID("4")
     id: string;
 
-    constructor(request: any)
+    constructor(request: Request | any)
     {
         this.email = request.tokenDecode.email;
         this.id = request.tokenDecode.id;

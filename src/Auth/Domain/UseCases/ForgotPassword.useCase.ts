@@ -20,6 +20,8 @@ export default class ForgotPasswordUseCase
         user.confirmationToken = String(await payload.getConfirmationToken());
         user.passwordRequestedAt = payload.getPasswordRequestedAT();
 
+        await this.repository.update(user);
+
         const emailNotification = new EmailNotificationEntity();
 
         let urlConfirmationToken: string = Config.get('url.urlWeb') + 'changeForgotPassword/' + user.confirmationToken;

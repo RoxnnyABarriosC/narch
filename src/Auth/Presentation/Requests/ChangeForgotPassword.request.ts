@@ -1,4 +1,4 @@
-import * as express from "express";
+import {Request} from "express";
 import Config from "config";
 import {IsString, Length} from "class-validator";
 import ChangeForgotPasswordPayload from "../../InterfaceAdapters/Payloads/ChangeForgotPassword.payload";
@@ -20,7 +20,7 @@ export default class ChangeForgotPasswordRequest implements ChangeForgotPassword
     @IsString()
     confirmationToken: string;
 
-    constructor(request: express.Request)
+    constructor(request: Request | any)
     {
         this.password = request.body.password;
         this.passwordConfirmation = request.body.passwordConfirmation;

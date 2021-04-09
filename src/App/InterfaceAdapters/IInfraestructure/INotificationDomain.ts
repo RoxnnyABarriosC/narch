@@ -1,5 +1,6 @@
+import IBaseEntityDomain from "../Shared/IBaseEntityDomain";
 
-export default interface INotificationDomain
+export default interface INotificationDomain extends IBaseEntityDomain
 {
     name?: string;
 
@@ -13,8 +14,4 @@ export default interface INotificationDomain
     subject?: string;
     description?: string;
 
-    createdAt: Date;
-    updatedAt: Date;
-
-    getId(): string;
 }

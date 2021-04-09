@@ -12,7 +12,7 @@ export default class AuthRequest implements AuthPayload
     @Length(Config.get('validationSettings.password.min'), Config.get('validationSettings.password.max'))
     password: string;
 
-    constructor(request: Request)
+    constructor(request: Request | any)
     {
         this.email = request.body.email;
         this.password = request.body.password;

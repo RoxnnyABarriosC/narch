@@ -1,4 +1,4 @@
-import * as express from "express";
+import {Request} from "express";
 import moment from "moment";
 import Config from "config";
 import {IsEmail} from "class-validator";
@@ -11,7 +11,7 @@ export default class ForgotPasswordRequest implements ForgotPasswordPayload
     @IsEmail()
     email: string;
 
-    constructor(request: express.Request)
+    constructor(request: Request | any)
     {
         this.email = request.body.email;
     }

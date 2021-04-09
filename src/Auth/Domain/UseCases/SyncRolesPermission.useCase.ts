@@ -16,12 +16,12 @@ export default class SyncRolesPermissionUseCase
     {
         const roles = Roles.getRoles();
 
-        _.map(roles, async (value: string[], key: string) =>
+        await _.map(roles, async (value: string[], key: string) =>
         {
-            let permissions = value;
-            let amount = false;
+            let permissions: string[] = value;
+            let amount: boolean = false;
 
-            const role: IRoleDomain = await this.repository.getBy({slug: key.toLowerCase()});
+            const role: IRoleDomain = await this.repository.getOneBy({slug: key.toLowerCase()}, false);
 
             if (role)
             {
