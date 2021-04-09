@@ -1,4 +1,4 @@
-import * as express from 'express';
+import {Request} from "express";
 import {IsOptional, IsString} from "class-validator";
 import SavePresignedFilePayload from "../../InterfaceAdapters/Payloads/SavePresignedFile.payload";
 
@@ -11,7 +11,7 @@ export default class SavePresignedFileRequest implements SavePresignedFilePayloa
     @IsString()
     expiry: number;
 
-    constructor(request: express.Request)
+    constructor(request: Request | any)
     {
         this.filename = request.body.filename;
         this.expiry = request.body.expiry;

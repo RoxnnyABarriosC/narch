@@ -8,6 +8,7 @@ import NotFoundException from "../../App/Infrastructure/Exceptions/NotFound.exce
 import Paginator from "../../App/Presentation/Shared/Paginator";
 import ICriteria from "../../App/InterfaceAdapters/Shared/ICriteria";
 import IFileRepository from "../InterfaceAdapters/IFile.repository";
+import FileFilter from "../Presentation/Criterias/File.filter";
 
 @injectable()
 export default class FileSqlRepository implements IFileRepository
@@ -30,7 +31,7 @@ export default class FileSqlRepository implements IFileRepository
 
         if (!file)
         {
-            throw new NotFoundException('File');
+            throw new NotFoundException(FileEntity.name.replace('Entity',''));
         }
 
         return file;
@@ -41,6 +42,8 @@ export default class FileSqlRepository implements IFileRepository
         let queryBuilder = this.repository.createQueryBuilder("i");
 
         const filter = criteria.getFilter();
+
+        filter.createFilter(queryBuilder,FileFilter, FileFilter.NAME, 'andWhere','ilike');
 
         queryBuilder.where("1 = 1");
 
@@ -63,7 +66,7 @@ export default class FileSqlRepository implements IFileRepository
 
         if(initThrow && files.length === 0)
         {
-            throw new NotFoundException('File');
+            throw new NotFoundException(FileEntity.name.replace('Entity',''));
         }
 
         return files;
@@ -75,7 +78,7 @@ export default class FileSqlRepository implements IFileRepository
 
         if(initThrow && !file)
         {
-            throw new NotFoundException('File');
+            throw new NotFoundException(FileEntity.name.replace('Entity',''));
         }
 
         return file;

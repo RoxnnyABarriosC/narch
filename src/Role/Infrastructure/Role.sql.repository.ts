@@ -8,6 +8,7 @@ import IRoleDomain from "../InterfaceAdapters/IRole.domain";
 import NotFoundException from "../../App/Infrastructure/Exceptions/NotFound.exception";
 import Paginator from "../../App/Presentation/Shared/Paginator";
 import ICriteria from "../../App/InterfaceAdapters/Shared/ICriteria";
+import RoleFilter from "../Presentation/Criterias/Role.filter";
 
 @injectable()
 export default class RoleSqlRepository implements IRoleRepository
@@ -30,7 +31,7 @@ export default class RoleSqlRepository implements IRoleRepository
 
         if (!role)
         {
-            throw new NotFoundException('Role');
+            throw new NotFoundException(RoleEntity.name.replace('Entity',''));
         }
 
         return role;
@@ -43,6 +44,10 @@ export default class RoleSqlRepository implements IRoleRepository
         const filter = criteria.getFilter();
 
         queryBuilder.where("1 = 1");
+
+        filter.createFilter(queryBuilder,RoleFilter,RoleFilter.NAME,'andWhere', 'ilike');
+        filter.createFilter(queryBuilder,RoleFilter,RoleFilter.SLUG,'andWhere', '=');
+        filter.createFilter(queryBuilder,RoleFilter,RoleFilter.ENABLE,'andWhere', '=');
 
         return new Paginator(queryBuilder, criteria);
     }
@@ -63,7 +68,7 @@ export default class RoleSqlRepository implements IRoleRepository
 
         if(initThrow && roles.length === 0)
         {
-            throw new NotFoundException('Role');
+            throw new NotFoundException(RoleEntity.name.replace('Entity',''));
         }
 
         return roles
@@ -75,7 +80,7 @@ export default class RoleSqlRepository implements IRoleRepository
 
         if(initThrow && !role)
         {
-            throw new NotFoundException('Role');
+            throw new NotFoundException(RoleEntity.name.replace('Entity',''));
         }
 
         return role

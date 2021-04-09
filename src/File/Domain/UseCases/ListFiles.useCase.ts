@@ -1,17 +1,13 @@
-import {IPaginator} from "@digichanges/shared-experience";
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
+import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
 import ICriteria from "../../../App/InterfaceAdapters/Shared/ICriteria";
 import IFileRepository from "../../InterfaceAdapters/IFile.repository";
+import IPaginator from "../../../App/InterfaceAdapters/Shared/IPaginator";
 
 export default class ListFilesUseCase
 {
+    @lazyInject(REPOSITORIES.IFileRepository)
     private repository: IFileRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IFileRepository>(REPOSITORIES.IFileRepository);
-    }
 
     async handle(payload: ICriteria): Promise<IPaginator>
     {

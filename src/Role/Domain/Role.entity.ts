@@ -20,4 +20,9 @@ export default class RoleEntity implements IRoleDomain
     {
         return this._id;
     }
+
+    setId(id: string)
+    {
+        this._id = id;
+    }
 }

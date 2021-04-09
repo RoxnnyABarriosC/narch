@@ -1,3 +1,4 @@
+import lazyInject from "../../../LazyInject";
 import IRoleRepository from "../../InterfaceAdapters/IRole.repository";
 import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuthService";
 import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
@@ -7,10 +8,12 @@ import IRoleDomain from "../../InterfaceAdapters/IRole.domain";
 import SaveRolePayload from "../../InterfaceAdapters/Payloads/SaveRole.payload";
 import RoleEntity from "../Role.entity";
 
-
 export default class SaveRoleUseCase
 {
+    @lazyInject(REPOSITORIES.IRoleRepository)
     private repository: IRoleRepository;
+
+    @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;
 
     constructor()

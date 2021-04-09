@@ -1,17 +1,13 @@
+import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
 import CreateBucketPayload from "../../InterfaceAdapters/Payloads/CreateBucket.payload";
 import FilesystemFactory from "../../../App/Infrastructure/Factories/Filesystem.factory";
 import IFileRepository from "../../InterfaceAdapters/IFile.repository";
 
 export default class CreateBucketUseCase
 {
+    @lazyInject(REPOSITORIES.IFileRepository)
     private repository: IFileRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IFileRepository>(REPOSITORIES.IFileRepository);
-    }
 
     async handle(payload: CreateBucketPayload): Promise<void>
     {

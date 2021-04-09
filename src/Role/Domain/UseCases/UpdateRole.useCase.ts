@@ -1,28 +1,24 @@
-import IRoleRepository from "../../InterfaceAdapters/IRole.repository";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuthService";
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
+import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
 import {SERVICES} from "../../../Services";
+import IRoleRepository from "../../InterfaceAdapters/IRole.repository";
+import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuthService";
 import IRoleDomain from "../../InterfaceAdapters/IRole.domain";
 import UpdateRolePayload from "../../InterfaceAdapters/Payloads/UpdateRole.payload";
 
 export default class UpdateRoleUseCase
 {
+    @lazyInject(REPOSITORIES.IRoleRepository)
     private repository: IRoleRepository;
-    private authService: IAuthService;
 
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IRoleRepository>(REPOSITORIES.IRoleRepository);
-        this.authService = ContainerFactory.create<IAuthService>(SERVICES.IAuthService);
-    }
+    @lazyInject(SERVICES.IAuthService)
+    private authService: IAuthService;
 
     async handle(payload: UpdateRolePayload): Promise<IRoleDomain>
     {
         this.authService.validatePermissions(payload.getPermissions());
 
-        const id = payload.getId();
-        let role: IRoleDomain = await this.repository.getOne(id);
+        const role: IRoleDomain = await this.repository.getOne(payload.getId());
 
         role.name = payload.getName();
         role.slug = payload.getSlug();

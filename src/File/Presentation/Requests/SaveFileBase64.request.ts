@@ -1,4 +1,4 @@
-import * as express from "express";
+import {Request} from "express";
 import {IsBase64, IsMimeType, IsString} from "class-validator";
 import SaveFileBase64Payload from "../../InterfaceAdapters/Payloads/SaveFileBase64.payload";
 
@@ -13,7 +13,7 @@ export default class SaveFileBase64Request implements SaveFileBase64Payload
     @IsBase64()
     base64: string;
 
-    constructor(request: express.Request)
+    constructor(request: Request | any)
     {
         this.filename = request.body.filename;
         this.base64 = request.body.base64.split(";base64,").pop();

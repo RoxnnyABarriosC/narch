@@ -1,20 +1,16 @@
-import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
+import Config from "config";
+import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
+import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
 import ForgotPasswordPayload from "../../InterfaceAdapters/Payloads/ForgotPassword.payload";
 import EmailNotificationEntity from "../../../App/Infrastructure/Entities/EmailNotification.entity";
-import Config from "config";
 import EventHandler from "../../../App/Infrastructure/Events/EventHandler";
 import ForgotPasswordEvent from "../../Infrastructure/Event/ForgotPassword.event";
 
 export default class ForgotPasswordUseCase
 {
+    @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IUserRepository>(REPOSITORIES.IUserRepository);
-    }
 
     async handle(payload: ForgotPasswordPayload)
     {

@@ -1,3 +1,4 @@
+import path from "path";
 import Notificator from "../../../App/Infrastructure/Notifications/Notificator";
 
 export default class ForgotPasswordEvent
@@ -8,8 +9,10 @@ export default class ForgotPasswordEvent
     {
         const {emailNotification, urlConfirmationToken} = props;
 
+        const template: string =  path.join(__dirname, "../templates/emails/forgot_password.hbs");
+
         Notificator
-            .sendEmail(emailNotification, "auth/forgot_password.hbs", {urlConfirmationToken})
+            .sendEmail(emailNotification, template, {urlConfirmationToken})
             .then((success) => success )
             .catch((error: any) => { throw Error("Error To send NotificationEntity Forgot Password") });
     }

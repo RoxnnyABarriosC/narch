@@ -1,4 +1,4 @@
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
+import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
 import FileEntity from "../File.entity";
 import SaveFileMultipartPayload from "../../InterfaceAdapters/Payloads/SaveFileMultipart.payload";
@@ -9,16 +9,12 @@ import IFileRepository from "../../InterfaceAdapters/IFile.repository";
 
 export default class UploadMultipartUseCase
 {
+    @lazyInject(REPOSITORIES.IFileRepository)
     private repository: IFileRepository;
 
-    constructor()
+    async handle(payload: SaveFileMultipartPayload): Promise<IFileDomain>
     {
-        this.repository = ContainerFactory.create<IFileRepository>(REPOSITORIES.IFileRepository);
-    }
-
-    async handle(payload: SaveFileMultipartPayload): Promise<any>
-    {
-        const file: IFileDomain = new FileEntity();
+        let file: IFileDomain = new FileEntity();
 
         file.extension = payload.getExtension();
         file.originalName = payload.getName();
@@ -26,7 +22,7 @@ export default class UploadMultipartUseCase
         file.mimeType = payload.getMimeType();
         file.size = payload.getSize();
 
-        await this.repository.save(file);
+        file = await this.repository.save(file);
 
         const filesystem = FilesystemFactory.create();
         await filesystem.uploadFile(file.name, payload.getFile().path);

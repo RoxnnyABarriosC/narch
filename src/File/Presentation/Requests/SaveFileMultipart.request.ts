@@ -1,4 +1,4 @@
-import * as express from "express";
+import {Request} from "express";
 import {IsDefined} from "class-validator";
 import SaveFileMultipartPayload from "../../InterfaceAdapters/Payloads/SaveFileMultipart.payload";
 
@@ -7,7 +7,7 @@ export default class SaveFileMultipartRequest implements SaveFileMultipartPayloa
     @IsDefined()
     file: Express.Multer.File;
 
-    constructor(request: express.Request)
+    constructor(request: Request | any)
     {
         this.file = request.file;
     }

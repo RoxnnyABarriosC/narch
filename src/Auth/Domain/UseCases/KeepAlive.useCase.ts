@@ -1,22 +1,24 @@
+import lazyInject from "../../../LazyInject";
+import {REPOSITORIES} from "../../../Repositories";
 import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
 import {ITokenRepository} from "@digichanges/shared-experience";
 import TokenFactory from "../../../App/Infrastructure/Factories/Token.factory";
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
-import {REPOSITORIES} from "../../../Repositories";
 import KeepAlivePayload from "../../InterfaceAdapters/Payloads/KeepAlive.payload";
 import SetTokenBlacklistUseCase from "../../../App/Domain/UseCases/Tokens/SetTokenBlacklist.useCase";
 
 export default class KeepAliveUseCase
 {
+    @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository;
+
+    @lazyInject(REPOSITORIES.ITokenRepository)
     private tokenRepository: ITokenRepository;
+
     private tokenFactory: TokenFactory;
 
     constructor()
     {
         this.tokenFactory = new TokenFactory();
-        this.repository = ContainerFactory.create<IUserRepository>(REPOSITORIES.IUserRepository);
-        this.tokenRepository = ContainerFactory.create<ITokenRepository>(REPOSITORIES.ITokenRepository);
     }
 
     async handle(payload: KeepAlivePayload)

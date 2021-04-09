@@ -1,21 +1,16 @@
 import _ from "lodash";
-
+import lazyInject from "../../../LazyInject";
+import {REPOSITORIES} from "../../../Repositories";
+import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
+import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 import Permissions from "../../../Config/Permissions";
 import Roles from "../../../Config/Roles";
-import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
-import {REPOSITORIES} from "../../../Repositories";
-import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 import RoleEntity from "../../../Role/Domain/Role.entity";
 
 export default class SyncRolesPermissionUseCase
 {
+    @lazyInject(REPOSITORIES.IRoleRepository)
     private repository: IRoleRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IRoleRepository>(REPOSITORIES.IRoleRepository);
-    }
 
     async handle()
     {
@@ -25,9 +20,6 @@ export default class SyncRolesPermissionUseCase
         {
             let permissions = value;
             let amount = false;
-
-            console.log(key);
-            console.log(value)
 
             const role: IRoleDomain = await this.repository.getBy({slug: key.toLowerCase()});
 

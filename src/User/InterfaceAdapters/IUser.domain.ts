@@ -1,6 +1,7 @@
 import IRoleDomain from "../../Role/InterfaceAdapters/IRole.domain";
+import IBaseEntityDomain from "../../App/InterfaceAdapters/Shared/IBaseEntityDomain";
 
-export default interface IUserDomain
+export default interface IUserDomain extends IBaseEntityDomain
 {
     firstName: string;
     lastName: string;
@@ -12,12 +13,9 @@ export default interface IUserDomain
     isSuperAdmin: boolean;
     confirmationToken: string;
     passwordRequestedAt: Date;
-    createdAt: Date;
-    updatedAt: Date;
 
     getFullName(): string;
     setRole(role: IRoleDomain): void;
     getRoles(): IRoleDomain[];
     clearRoles(): void;
-    getId(): string;
 }

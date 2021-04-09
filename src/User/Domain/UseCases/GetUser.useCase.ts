@@ -1,21 +1,16 @@
-import IUserRepository from "../../InterfaceAdapters/IUser.repository";
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
+import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
+import IUserRepository from "../../InterfaceAdapters/IUser.repository";
 import IdPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/IdPayload";
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
 
 export default class GetUserUseCase
 {
+    @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IUserRepository>(REPOSITORIES.IUserRepository);
-    }
 
     async handle(payload: IdPayload): Promise<IUserDomain>
     {
-        const id = payload.getId();
-        return await this.repository.getOne(id);
+        return await this.repository.getOne(payload.getId());
     }
 }

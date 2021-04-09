@@ -1,16 +1,12 @@
-import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
+import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
+import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
 import ChangeForgotPasswordPayload from "../../InterfaceAdapters/Payloads/ChangeForgotPassword.payload";
 
 export default class ChangeForgotPasswordUseCase
 {
+    @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IUserRepository>(REPOSITORIES.IUserRepository);
-    }
 
     async handle(payload: ChangeForgotPasswordPayload)
     {

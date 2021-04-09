@@ -1,4 +1,4 @@
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
+import lazyInject from "../../../LazyInject";
 import IRoleRepository from "../../InterfaceAdapters/IRole.repository";
 import {REPOSITORIES} from "../../../Repositories";
 import IRoleDomain from "../../InterfaceAdapters/IRole.domain";
@@ -6,16 +6,11 @@ import IdPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/IdPayloa
 
 export default class GetRoleUseCase
 {
+    @lazyInject(REPOSITORIES.IRoleRepository)
     private repository: IRoleRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IRoleRepository>(REPOSITORIES.IRoleRepository);
-    }
 
     async handle(payload: IdPayload): Promise<IRoleDomain>
     {
-        const id = payload.getId();
-        return await this.repository.getOne(id);
+        return await this.repository.getOne(payload.getId());
     }
 }

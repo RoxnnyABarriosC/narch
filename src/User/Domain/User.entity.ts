@@ -24,6 +24,11 @@ export default class UserEntity implements IUserDomain
         this.getId = this.getId.bind(this);
     }
 
+    getId(): string
+    {
+        return this._id;
+    }
+
     getFullName(): string
     {
         return `${this.firstName} ${this.lastName}`;
@@ -47,11 +52,6 @@ export default class UserEntity implements IUserDomain
     getRoles(): IRoleDomain[]
     {
         return this.roles;
-    }
-
-    getId(): string
-    {
-        return this._id;
     }
 }
 

@@ -1,16 +1,11 @@
-import {ITokenRepository} from "@digichanges/shared-experience";
-
-import ContainerFactory from "../../../Infrastructure/Factories/Container.factory";
+import lazyInject from "../../../../LazyInject";
 import {REPOSITORIES} from "../../../../Repositories";
+import {ITokenRepository} from "@digichanges/shared-experience";
 
 export default class GetTokenUseCase
 {
+    @lazyInject(REPOSITORIES.ITokenRepository)
     private repository: ITokenRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<ITokenRepository>(REPOSITORIES.ITokenRepository);
-    }
 
     async handle(id: string)
     {

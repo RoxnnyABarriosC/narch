@@ -1,4 +1,4 @@
-import container from "../../../Inversify.config";
+import container from "../../../Container";
 
 export default class ContainerFactory
 {

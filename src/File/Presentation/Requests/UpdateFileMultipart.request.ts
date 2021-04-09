@@ -1,4 +1,4 @@
-import * as express from 'express';
+import {Request} from "express";
 import { IsDefined } from 'class-validator';
 import IdRequest from "../../../App/Presentation/Requests/Defaults/Id.request";
 import UpdateFileMultipartPayload from "../../InterfaceAdapters/Payloads/UpdateFileMultipart.payload";
@@ -8,7 +8,7 @@ class UpdateFileMultipartRequest extends IdRequest implements UpdateFileMultipar
     @IsDefined()
     file: Express.Multer.File;
 
-    constructor(request: express.Request)
+    constructor(request: Request | any)
     {
         super(request)
         this.file = request.file;

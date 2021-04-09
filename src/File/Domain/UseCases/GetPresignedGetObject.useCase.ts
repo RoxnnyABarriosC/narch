@@ -1,4 +1,4 @@
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
+import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
 import SavePresignedFilePayload from "../../InterfaceAdapters/Payloads/SavePresignedFile.payload";
 import IFileDomain from "../../InterfaceAdapters/IFile.domain";
@@ -7,12 +7,8 @@ import IFileRepository from "../../InterfaceAdapters/IFile.repository";
 
 export default class GetPresignedGetObjectUseCase
 {
+    @lazyInject(REPOSITORIES.IFileRepository)
     private repository: IFileRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IFileRepository>(REPOSITORIES.IFileRepository);
-    }
 
     async handle(payload: SavePresignedFilePayload): Promise<string>
     {

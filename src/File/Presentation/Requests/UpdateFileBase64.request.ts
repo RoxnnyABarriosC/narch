@@ -1,4 +1,4 @@
-import * as express from 'express';
+import {Request} from "express";
 import {IsBase64, IsMimeType, IsString} from "class-validator";
 import IdRequest from "../../../App/Presentation/Requests/Defaults/Id.request";
 import UpdateFileBase64Payload from "../../InterfaceAdapters/Payloads/UpdateFileBase64.payload";
@@ -14,7 +14,7 @@ export default class UpdateFileBase64Request extends IdRequest implements Update
     @IsBase64()
     base64: string;
 
-    constructor(request: express.Request)
+    constructor(request: Request | any)
     {
         super(request);
         this.filename = request.body.filename;

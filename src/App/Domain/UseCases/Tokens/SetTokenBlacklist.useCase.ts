@@ -1,18 +1,12 @@
-import {ITokenRepository} from "@digichanges/shared-experience";
-
-
-import ContainerFactory from "../../../Infrastructure/Factories/Container.factory";
+import lazyInject from "../../../../LazyInject";
 import {REPOSITORIES} from "../../../../Repositories";
+import {ITokenRepository} from "@digichanges/shared-experience";
 import ITokenDomain from "../../../InterfaceAdapters/IInfraestructure/ITokenDomain";
 
 export default class SetTokenBlacklistUseCase
 {
+    @lazyInject(REPOSITORIES.ITokenRepository)
     private repository: ITokenRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<ITokenRepository>(REPOSITORIES.ITokenRepository);
-    }
 
     async handle(token: ITokenDomain)
     {

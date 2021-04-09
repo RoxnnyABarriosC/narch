@@ -1,6 +1,5 @@
 import IUserRepository from "../../InterfaceAdapters/IUser.repository";
 import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuthService";
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
 import {REPOSITORIES} from "../../../Repositories";
 import {SERVICES} from "../../../Services";
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
@@ -10,22 +9,23 @@ import Roles from "../../../Config/Roles";
 import CantDisabledException from "../../../Auth/Domain/Exceptions/CantDisabled.exception";
 import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
+import lazyInject from "../../../LazyInject";
 
 export default class UpdateUserUseCase
 {
+    @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository;
-    private authService: IAuthService;
 
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IUserRepository>(REPOSITORIES.IUserRepository);
-        this.authService = ContainerFactory.create<IAuthService>(SERVICES.IAuthService);
-    }
+    @lazyInject(REPOSITORIES.IRoleRepository)
+    private roleRepository: IRoleRepository;
+
+    @lazyInject(SERVICES.IAuthService)
+    private authService: IAuthService;
 
     async handle(payload: UpdateUserPayload): Promise<IUserDomain>
     {
-        const id = payload.getId();
-        const user: IUserDomain = await this.repository.getOne(id);
+        const user: IUserDomain = await this.repository.getOne(payload.getId());
+
         let enable = payload.getEnable();
 
         if (payload.getTokenUserId() === user.getId())
@@ -61,12 +61,11 @@ export default class UpdateUserUseCase
 
     public async checkIfUserHasRole (payload: CheckUserRolePayload): Promise<boolean> // TODO: Create a user service
     {
-        let roleRepository: IRoleRepository = ContainerFactory.create<IRoleRepository>(REPOSITORIES.IRoleRepository);
         let count = payload.user.roles.length;
 
         for (let i = 0; i < count; i++)
         {
-            const role: IRoleDomain = await roleRepository.getOne(payload.user.roles[i].getId());
+            const role: IRoleDomain = await this.roleRepository.getOne(payload.user.roles[i].getId());
 
             if(role.slug === payload.roleToCheck)
             {

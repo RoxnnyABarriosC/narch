@@ -1,10 +1,10 @@
+import lazyInject from "../../../LazyInject";
+import {REPOSITORIES} from "../../../Repositories";
+import {SERVICES} from "../../../Services";
 import {IEncryption} from "@digichanges/shared-experience";
 import IUserRepository from "../../InterfaceAdapters/IUser.repository";
 import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuthService";
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
 import EncryptionFactory from "../../../App/Infrastructure/Factories/Encryption.factory";
-import {REPOSITORIES} from "../../../Repositories";
-import {SERVICES} from "../../../Services";
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
 import SaveUserPayload from "../../InterfaceAdapters/Payloads/SaveUser.payload";
 import UserEntity from "../User.entity";
@@ -13,14 +13,16 @@ import UserCreatedEvent from "../../Infrastructure/Event/UserCreated.event";
 
 export default class SaveUserUseCase
 {
+    @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository;
+
+    @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;
+
     private encryption: IEncryption;
 
     constructor()
     {
-        this.repository = ContainerFactory.create<IUserRepository>(REPOSITORIES.IUserRepository);
-        this.authService = ContainerFactory.create<IAuthService>(SERVICES.IAuthService);
         this.encryption = EncryptionFactory.create();
     }
 
@@ -29,6 +31,7 @@ export default class SaveUserUseCase
         this.authService.validatePermissions(payload.getPermissions());
 
         let user: IUserDomain = new UserEntity();
+
         user.firstName = payload.getFirstName();
         user.lastName = payload.getLastName();
         user.email = payload.getEmail();

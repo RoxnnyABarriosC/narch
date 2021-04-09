@@ -1,4 +1,4 @@
-import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
+import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
 import IFileDTO from "../../InterfaceAdapters/IDto/IFileDTO";
 import IdPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/IdPayload";
@@ -10,12 +10,8 @@ import IFileRepository from "../../InterfaceAdapters/IFile.repository";
 
 export default class DownloadUseCase
 {
+    @lazyInject(REPOSITORIES.IFileRepository)
     private repository: IFileRepository;
-
-    constructor()
-    {
-        this.repository = ContainerFactory.create<IFileRepository>(REPOSITORIES.IFileRepository);
-    }
 
     async handle(payload: IdPayload): Promise<IFileDTO>
     {

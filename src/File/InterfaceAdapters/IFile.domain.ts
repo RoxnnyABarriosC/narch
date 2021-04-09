@@ -1,5 +1,6 @@
+import IBaseEntityDomain from "../../App/InterfaceAdapters/Shared/IBaseEntityDomain";
 
-export default interface IFileDomain
+export default interface IFileDomain extends IBaseEntityDomain
 {
     name: string;
     originalName: string;
@@ -8,8 +9,4 @@ export default interface IFileDomain
     extension: string;
     size: number;
     version: number;
-    createdAt: Date;
-    updatedAt: Date;
-
-    getId(): string;
 }
