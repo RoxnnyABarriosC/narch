@@ -9,10 +9,8 @@ SyncRolesPermissionCommand
     .description('Sync permissions')
     .action(async() => 
     {
-
         const syncRolesPermissionUseCase = new SyncRolesPermissionUseCase();
         await syncRolesPermissionUseCase.handle();
-
 
         loggerCli.info('Sync successfully.');
     });

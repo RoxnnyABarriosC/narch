@@ -9,8 +9,8 @@ const AssignRoleToUserCommand = new commander.Command('assignRoleToUser');
 AssignRoleToUserCommand
     .version('0.0.1')
     .description('Assign role to user')
-    .option('-s, --slug <slug>', 'Slug of the role')
-    .option('-e, --email <email>', 'Email of the user')
+    .requiredOption('-s, --slug <slug>', 'Slug of the role')
+    .requiredOption('-e, --email <email>', 'Email of the user')
     .action(async(env: any) => 
     {
         const assignRoleBySlugUseCase = new AssignRoleBySlugUseCase();

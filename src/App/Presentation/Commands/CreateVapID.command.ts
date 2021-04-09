@@ -9,7 +9,6 @@ CreateVapIDCommand
     .description('Generate VapID Keys')
     .action(async(env: any) => 
     {
-
         const vapidKeys = webpush.generateVAPIDKeys();
 
         if (vapidKeys)
