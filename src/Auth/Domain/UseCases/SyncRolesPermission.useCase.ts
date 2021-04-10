@@ -28,6 +28,7 @@ export default class SyncRolesPermissionUseCase
                 amount = permissions.length >= role.permissions.length;
                 permissions = amount ? _.union(role.permissions, permissions) : _.intersection(role.permissions, permissions);
                 role.permissions = permissions;
+                role.ofSystem = true;
                 await this.repository.save(role);
             }
             else
@@ -37,6 +38,7 @@ export default class SyncRolesPermissionUseCase
                 newRole.slug = key.toLowerCase();
                 newRole.permissions = permissions;
                 newRole.enable = true;
+                newRole.ofSystem = true;
 
                 await this.repository.save(newRole);
             }

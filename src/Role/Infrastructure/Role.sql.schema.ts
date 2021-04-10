@@ -22,6 +22,10 @@ const RoleSqlSchema = new EntitySchema<RoleEntity>({
             type: Boolean,
             default: true,
         },
+        ofSystem: {
+            type: Boolean,
+            default: false,
+        },
         permissions: {
             type: 'simple-array',
             nullable: true

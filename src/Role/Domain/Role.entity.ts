@@ -7,6 +7,7 @@ export default class RoleEntity implements IRoleDomain
     name: string;
     slug: string;
     enable: boolean;
+    ofSystem: boolean;
     permissions: string[];
     createdAt: Date;
     updatedAt: Date;
