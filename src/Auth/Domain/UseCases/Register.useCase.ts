@@ -39,8 +39,6 @@ export default class RegisterUseCase
 
     async handle(payload: RegisterPayload): Promise<IToken>
     {
-        this.authService.validatePermissions(payload.getPermissions());
-
         let user: IUserDomain = new UserEntity();
 
         user.firstName = payload.getFirstName();
