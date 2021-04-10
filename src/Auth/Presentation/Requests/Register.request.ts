@@ -73,7 +73,7 @@ export default class RegisterRequest implements RegisterPayload
 
     getRoles(): string[]
     {
-        return [Roles.ADMIN.toLowerCase()];
+        return [Roles.OPERATOR.toLowerCase()];
     }
 
     getPermissions(): string[]
