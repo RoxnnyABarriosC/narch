@@ -27,7 +27,7 @@ export default class AuthTransformer extends Transformer
                 email: token.getUser().email,
                 enable: token.getUser().enable,
                 permissions: authService.getPermissions(user),
-                roles: this.roleUserTransformer.handle(token.getUser().roles),
+                roles:  this.validate(token.getUser().roles,'roleUserTransformer'),
                 createdAt: this.transformDate(token.getUser().createdAt),
                 updatedAt: this.transformDate(token.getUser().updatedAt),
             },

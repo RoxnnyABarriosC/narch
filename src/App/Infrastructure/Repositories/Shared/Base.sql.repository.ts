@@ -15,9 +15,9 @@ export default class BaseSqlRepository<Entity extends IDomain, IDomain> implemen
         this.repository = getRepository<Entity>(schema);
     }
 
-    async save(user: IDomain): Promise<IDomain>
+    async save(entity: IDomain): Promise<IDomain>
     {
-        return await this.repository.save(user);
+        return await this.repository.save(entity);
     }
 
     async getOne(id: string): Promise<IDomain>

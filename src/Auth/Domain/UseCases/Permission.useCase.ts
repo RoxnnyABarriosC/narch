@@ -5,6 +5,6 @@ export default class PermissionUseCase
 {
     async handle()
     {
-        return _.flatMap(Permissions.permissions());
+        return Permissions.permissions();
     }
 }

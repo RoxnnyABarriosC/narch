@@ -26,7 +26,7 @@ export default class UserSqlRepository extends BaseSqlRepository<UserEntity,IUse
 
         queryBuilder.where("1 = 1");
 
-        filter.createFilter(queryBuilder,UserFilter,UserFilter.EMAIL,'andWhere', 'ilike',);
+        filter.createFilter(queryBuilder,UserFilter,UserFilter.EMAIL,'andWhere', 'ilike');
         filter.createFilter(queryBuilder,UserFilter,UserFilter.ENABLE,'andWhere', '=');
         filter.createFilter(queryBuilder,RoleFilter,RoleFilter.NAME,'andWhere', 'ilike', 'role');
         filter.createFilter(queryBuilder,RoleFilter,RoleFilter.SLUG,'andWhere', '=', 'role');
@@ -36,5 +36,4 @@ export default class UserSqlRepository extends BaseSqlRepository<UserEntity,IUse
 
         return new Paginator(queryBuilder, criteria);
     }
-
 }

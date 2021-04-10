@@ -1,3 +1,4 @@
+import _ from "lodash";
 
 export default class Permissions
 {
@@ -38,36 +39,52 @@ export default class Permissions
     static readonly ROLES_LIST: string = 'rolesList';
     static readonly ROLES_DELETE: string = 'rolesDelete';
 
+    static groupPermissions(): {}
+    {
+        return {
+            OTHERS: [
+                `${Permissions.AUTH_KEEP_ALIVE}`,
+                `${Permissions.AUTH_SYNC_PERMISSIONS}`,
+                `${Permissions.GET_PERMISSIONS}`,
+            ],
+            USERS: [
+                `${Permissions.USERS_SAVE}`,
+                `${Permissions.USERS_UPDATE}`,
+                `${Permissions.USERS_SHOW}`,
+                `${Permissions.USERS_LIST}`,
+                `${Permissions.USERS_DELETE}`,
+                `${Permissions.USERS_CHANGE_MY_PASSWORD}`,
+                `${Permissions.USERS_CHANGE_USER_PASSWORD}`,
+            ],
+            ROLES: [
+                `${Permissions.ROLES_SAVE}`,
+                `${Permissions.ROLES_UPDATE}`,
+                `${Permissions.ROLES_SHOW}`,
+                `${Permissions.ROLES_LIST}`,
+                `${Permissions.ROLES_DELETE}`,
+            ],
+            FILES: [
+                `${Permissions.FILES_UPLOAD}`,
+                `${Permissions.FILES_UPDATE}`,
+                `${Permissions.FILES_DOWNLOAD}`
+            ],
+            ITEMS: [
+                `${Permissions.ITEMS_SAVE}`,
+                `${Permissions.ITEMS_UPDATE}`,
+                `${Permissions.ITEMS_SHOW}`,
+                `${Permissions.ITEMS_LIST}`,
+                `${Permissions.ITEMS_DELETE}`,
+            ],
+        };
+    }
+
     static permissions(): string[]
     {
-        return [
-            `${Permissions.AUTH_KEEP_ALIVE}`,
-            `${Permissions.AUTH_SYNC_PERMISSIONS}`,
-            `${Permissions.GET_PERMISSIONS}`,
+        const permissions: string[] = [];
 
-            `${Permissions.ITEMS_SAVE}`,
-            `${Permissions.ITEMS_UPDATE}`,
-            `${Permissions.ITEMS_SHOW}`,
-            `${Permissions.ITEMS_LIST}`,
-            `${Permissions.ITEMS_DELETE}`,
+        _.map(Permissions.groupPermissions(), (group) => permissions.push(group));
 
-            `${Permissions.USERS_SAVE}`,
-            `${Permissions.USERS_UPDATE}`,
-            `${Permissions.USERS_SHOW}`,
-            `${Permissions.USERS_LIST}`,
-            `${Permissions.USERS_DELETE}`,
-            `${Permissions.USERS_CHANGE_MY_PASSWORD}`,
-            `${Permissions.USERS_CHANGE_USER_PASSWORD}`,
-
-            `${Permissions.ROLES_SAVE}`,
-            `${Permissions.ROLES_UPDATE}`,
-            `${Permissions.ROLES_SHOW}`,
-            `${Permissions.ROLES_LIST}`,
-            `${Permissions.ROLES_DELETE}`,
-
-            `${Permissions.FILES_UPLOAD}`,
-            `${Permissions.FILES_UPDATE}`,
-            `${Permissions.FILES_DOWNLOAD}`
-        ];
+        return _.flatMap(permissions);
     }
+
 }

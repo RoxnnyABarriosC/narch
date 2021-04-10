@@ -29,15 +29,15 @@ export default abstract class Transformer
         if(transformer)
         {
             // @ts-ignore
-            return !_.isNaN(value) && !_.isUndefined(value) ? this[transformer].handle(value) : null;
+            return !_.isNull(value) && !_.isUndefined(value) ? this[transformer].handle(value) : null;
         }
 
-        return !_.isNaN(value) && !_.isUndefined(value) ? value : null;
+        return !_.isNull(value) && !_.isUndefined(value) ? value : null;
     }
 
     transformDate(date: Date): number
     {
-        return  !_.isNaN(date) && !_.isUndefined(date) ? moment(date).utc().unix() : null;
+        return  !_.isNull(date) && !_.isUndefined(date) ? moment(date).utc().unix() : null;
     }
 }
 

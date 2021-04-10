@@ -99,7 +99,7 @@ class AuthHandler
     public async permissions (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const permissionUseCase = new PermissionUseCase();
-        const payload: string[] = await permissionUseCase.handle();
+        const payload = await permissionUseCase.handle();
 
         this.responder.send(payload, req, res, StatusCode.HTTP_OK, new PermissionsTransformer());
     }
