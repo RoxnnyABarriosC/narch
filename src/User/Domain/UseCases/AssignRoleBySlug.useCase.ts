@@ -9,10 +9,10 @@ import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 export default class AssignRoleBySlugUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private repository: IUserRepository;
+    private repository: IUserRepository<IUserDomain>;
 
     @lazyInject(REPOSITORIES.IRoleRepository)
-    private roleRepository: IRoleRepository;
+    private roleRepository: IRoleRepository<IRoleDomain>;
 
     async handle(payload: UserAssignRoleByPayload): Promise<IUserDomain>
     {

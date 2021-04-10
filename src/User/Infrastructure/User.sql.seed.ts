@@ -12,10 +12,10 @@ import IUserDomain from "../InterfaceAdapters/IUser.domain";
 export default class UserSqlSeed
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private userRepository: IUserRepository;
+    private userRepository: IUserRepository<IUserDomain>;
 
     @lazyInject(REPOSITORIES.IRoleRepository)
-    private roleRepository: IRoleRepository;
+    private roleRepository: IRoleRepository<IRoleDomain>;
 
     private encryption: IEncryption;
 

@@ -6,11 +6,10 @@ import IFileDomain from "../../InterfaceAdapters/IFile.domain";
 import FilesystemFactory from "../../../App/Infrastructure/Factories/Filesystem.factory";
 import IFileRepository from "../../InterfaceAdapters/IFile.repository";
 
-
 export default class UploadMultipartUseCase
 {
     @lazyInject(REPOSITORIES.IFileRepository)
-    private repository: IFileRepository;
+    private repository: IFileRepository<IFileDomain>;
 
     async handle(payload: SaveFileMultipartPayload): Promise<IFileDomain>
     {

@@ -10,7 +10,7 @@ import PasswordWrongException from "../../../Auth/Domain/Exceptions/PasswordWron
 export default class ChangeMyPasswordUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private repository: IUserRepository;
+    private repository: IUserRepository<IUserDomain>;
 
     private encryption: IEncryption;
 

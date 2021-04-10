@@ -4,14 +4,15 @@ import IUserRepository from "../../InterfaceAdapters/IUser.repository";
 import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
 import UserAssignRolePayload from "../../InterfaceAdapters/Payloads/UserAssignRole.payload";
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
+import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 
 export default class AssignRoleUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private repository: IUserRepository;
+    private repository: IUserRepository<IUserDomain>;
 
     @lazyInject(REPOSITORIES.IRoleRepository)
-    private roleRepository: IRoleRepository;
+    private roleRepository: IRoleRepository<IRoleDomain>;
 
     async handle(payload: UserAssignRolePayload): Promise<IUserDomain>
     {

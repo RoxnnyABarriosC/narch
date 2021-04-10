@@ -8,7 +8,7 @@ import IFileRepository from "../../InterfaceAdapters/IFile.repository";
 export default class UpdateFileMultipartUseCase
 {
     @lazyInject(REPOSITORIES.IFileRepository)
-    private repository: IFileRepository;
+    private repository: IFileRepository<IFileDomain>;
 
     async handle(payload: UpdateFileMultipartPayload): Promise<IFileDomain>
     {

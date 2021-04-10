@@ -6,11 +6,10 @@ import EncryptionFactory from "../../../App/Infrastructure/Factories/Encryption.
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
 import ChangeUserPasswordPayload from "../../InterfaceAdapters/Payloads/ChangeUserPassword.payload";
 
-
 export default class ChangeUserPasswordUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private repository: IUserRepository;
+    private repository: IUserRepository<IUserDomain>;
 
     private encryption: IEncryption;
 

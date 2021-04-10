@@ -2,31 +2,42 @@ import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
 import {SERVICES} from "../../../Services";
 import {IEncryption} from "@digichanges/shared-experience";
-import IUserRepository from "../../InterfaceAdapters/IUser.repository";
 import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuthService";
 import EncryptionFactory from "../../../App/Infrastructure/Factories/Encryption.factory";
-import IUserDomain from "../../InterfaceAdapters/IUser.domain";
-import SaveUserPayload from "../../InterfaceAdapters/Payloads/SaveUser.payload";
-import UserEntity from "../User.entity";
 import EventHandler from "../../../App/Infrastructure/Events/EventHandler";
-import UserCreatedEvent from "../../Infrastructure/Event/UserCreated.event";
+import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
+import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
+import UserEntity from "../../../User/Domain/User.entity";
+import UserCreatedEvent from "../../../User/Infrastructure/Event/UserCreated.event";
+import RegisterPayload from "../../InterfaceAdapters/Payloads/Register.payload";
+import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
+import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
+import _ from "lodash";
+import TokenFactory from "../../../App/Infrastructure/Factories/Token.factory";
+import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
 
-export default class SaveUserUseCase
+export default class RegisterUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;
+
+    @lazyInject(REPOSITORIES.IRoleRepository)
+    private roleRepository: IRoleRepository<IRoleDomain>;
 
     @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;
 
     private encryption: IEncryption;
 
+    private tokenFactory: TokenFactory;
+
     constructor()
     {
+        this.tokenFactory = new TokenFactory();
         this.encryption = EncryptionFactory.create();
     }
 
-    async handle(payload: SaveUserPayload): Promise<IUserDomain>
+    async handle(payload: RegisterPayload): Promise<IToken>
     {
         this.authService.validatePermissions(payload.getPermissions());
 
@@ -38,7 +49,11 @@ export default class SaveUserUseCase
         user.password = await this.encryption.encrypt(payload.getPassword());
         user.enable = payload.getEnable();
         user.permissions = payload.getPermissions();
-        user.roles = payload.getRoles();
+
+        user.roles = [];
+
+        await _.map(payload.getRoles(), async (slug: string) => user.roles.push(await this.roleRepository.getOneBy({slug})));
+
         user.isSuperAdmin = payload.getIsSuperAdmin();
 
         user = await this.repository.save(user);
@@ -47,6 +62,6 @@ export default class SaveUserUseCase
 
         eventHandler.execute(UserCreatedEvent.USER_CREATED_EVENT, {email: user.email});
 
-        return user;
+        return this.tokenFactory.createToken(user);
     }
 }

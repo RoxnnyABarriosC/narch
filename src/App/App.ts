@@ -38,7 +38,7 @@ export default class App
     {
         this.port = (Config.get('serverPort') || 8090); // default port to listen;
         this.server = new InversifyExpressServer(container);
-        this.initLocale();
+        this.initLocale('es');
         this.initHandlebars();
     }
 

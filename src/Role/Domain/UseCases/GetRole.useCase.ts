@@ -7,7 +7,7 @@ import IdPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/IdPayloa
 export default class GetRoleUseCase
 {
     @lazyInject(REPOSITORIES.IRoleRepository)
-    private repository: IRoleRepository;
+    private repository: IRoleRepository<IRoleDomain>;
 
     async handle(payload: IdPayload): Promise<IRoleDomain>
     {

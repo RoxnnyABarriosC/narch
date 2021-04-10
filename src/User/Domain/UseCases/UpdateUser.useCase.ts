@@ -14,10 +14,10 @@ import lazyInject from "../../../LazyInject";
 export default class UpdateUserUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private repository: IUserRepository;
+    private repository: IUserRepository<IUserDomain>;
 
     @lazyInject(REPOSITORIES.IRoleRepository)
-    private roleRepository: IRoleRepository;
+    private roleRepository: IRoleRepository<IRoleDomain>;
 
     @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;

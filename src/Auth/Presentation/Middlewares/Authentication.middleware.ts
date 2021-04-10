@@ -11,14 +11,22 @@ const AuthenticationMiddleware = (req: Request | any, res: Response, next: NextF
     try
     {
         let existMethodAndUrl = false;
-        const apiWhitelist: any[] = Config.get('apiWhitelist');
+        const apiWhitelist: {method: string[], url: string}[] = Config.get('apiWhitelist');
 
         apiWhitelist.forEach((conf) =>
         {
-            if(conf.method.includes(req.method) && conf.url === req.path)
+            if(conf.method.includes(req.method))
             {
-                existMethodAndUrl = true;
-                return;
+                if(conf.url.indexOf('*') >= 0 && req.path.indexOf(conf.url.replace('*','')) >= 0)
+                {
+                    existMethodAndUrl = true;
+                    return;
+                }
+
+                if(conf.url === req.path){
+                    existMethodAndUrl = true;
+                    return;
+                }
             }
         });
 

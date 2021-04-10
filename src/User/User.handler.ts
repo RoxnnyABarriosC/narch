@@ -26,7 +26,6 @@ import ChangeMyPasswordUseCase from "./Domain/UseCases/ChangeMyPassword.useCase"
 import ChangeUserPasswordRequest from "./Presentation/Requests/ChangeUserPassword.request";
 import ChangeUserPasswordUseCase from "./Domain/UseCases/ChangeUserPassword.useCase";
 
-
 @controller('/api/users')
 export default class UserHandler
 {

@@ -7,7 +7,7 @@ import IUserDomain from "../../InterfaceAdapters/IUser.domain";
 export default class GetUserUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private repository: IUserRepository;
+    private repository: IUserRepository<IUserDomain>;
 
     async handle(payload: IdPayload): Promise<IUserDomain>
     {

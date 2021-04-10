@@ -7,11 +7,10 @@ import FilesystemFactory from "../../../App/Infrastructure/Factories/Filesystem.
 import FileDto from "../../InterfaceAdapters/Payloads/Dto/File.dto";
 import IFileRepository from "../../InterfaceAdapters/IFile.repository";
 
-
 export default class DownloadUseCase
 {
     @lazyInject(REPOSITORIES.IFileRepository)
-    private repository: IFileRepository;
+    private repository: IFileRepository<IFileDomain>;
 
     async handle(payload: IdPayload): Promise<IFileDTO>
     {

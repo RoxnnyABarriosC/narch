@@ -9,11 +9,12 @@ import UserDisabledException from "../../../User/Domain/Exceptions/UserDisabled.
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 import RoleDisabledException from "../../../Role/Domain/Exceptions/RoleDisabled.exception";
 import BadCredentialsException from "../Exceptions/BadCredentials.exception";
+import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
 
 export default class LoginUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private repository: IUserRepository;
+    private repository: IUserRepository<IUserDomain>;
 
     private encryption: IEncryption;
 
@@ -25,7 +26,7 @@ export default class LoginUseCase
         this.encryption = EncryptionFactory.create();
     }
 
-    async handle(payload: AuthPayload)
+    async handle(payload: AuthPayload): Promise<IToken>
     {
         const email = payload.getEmail();
         const password = payload.getPassword();

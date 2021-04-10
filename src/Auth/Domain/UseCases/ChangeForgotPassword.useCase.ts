@@ -2,11 +2,12 @@ import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
 import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
 import ChangeForgotPasswordPayload from "../../InterfaceAdapters/Payloads/ChangeForgotPassword.payload";
+import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 
 export default class ChangeForgotPasswordUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private repository: IUserRepository;
+    private repository: IUserRepository<IUserDomain>;
 
     async handle(payload: ChangeForgotPasswordPayload)
     {

@@ -9,7 +9,7 @@ import UpdateRolePayload from "../../InterfaceAdapters/Payloads/UpdateRole.paylo
 export default class UpdateRoleUseCase
 {
     @lazyInject(REPOSITORIES.IRoleRepository)
-    private repository: IRoleRepository;
+    private repository: IRoleRepository<IRoleDomain>;
 
     @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;

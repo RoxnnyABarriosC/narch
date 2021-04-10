@@ -10,7 +10,7 @@ import RoleEntity from "../../../Role/Domain/Role.entity";
 export default class SyncRolesPermissionUseCase
 {
     @lazyInject(REPOSITORIES.IRoleRepository)
-    private repository: IRoleRepository;
+    private repository: IRoleRepository<IRoleDomain>;
 
     async handle()
     {

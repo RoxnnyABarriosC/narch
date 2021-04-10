@@ -6,11 +6,12 @@ import ForgotPasswordPayload from "../../InterfaceAdapters/Payloads/ForgotPasswo
 import EmailNotificationEntity from "../../../App/Infrastructure/Entities/EmailNotification.entity";
 import EventHandler from "../../../App/Infrastructure/Events/EventHandler";
 import ForgotPasswordEvent from "../../Infrastructure/Event/ForgotPassword.event";
+import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 
 export default class ForgotPasswordUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private repository: IUserRepository;
+    private repository: IUserRepository<IUserDomain>;
 
     async handle(payload: ForgotPasswordPayload)
     {

@@ -9,7 +9,7 @@ import FileEntity from "../File.entity";
 export default class UploadBase64UseCase
 {
     @lazyInject(REPOSITORIES.IFileRepository)
-    private repository: IFileRepository;
+    private repository: IFileRepository<IFileDomain>;
 
     async handle(payload: SaveFileBase64Payload): Promise<IFileDomain>
     {

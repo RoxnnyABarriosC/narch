@@ -19,7 +19,7 @@ const AuthorizeMiddleware = (...handlerPermissions: any) =>
             let isAllowed: boolean = Config.get('auth.authorization') !== 'true';
             let tokenDecode = req.tokenDecode;
 
-            let userRepository: IUserRepository = ContainerFactory.create<IUserRepository>(REPOSITORIES.IUserRepository);
+            let userRepository: IUserRepository<IUserDomain> = ContainerFactory.create<IUserRepository<IUserDomain>>(REPOSITORIES.IUserRepository);
 
             let user: IUserDomain = await userRepository.getOneBy({email:tokenDecode.email},false);
 

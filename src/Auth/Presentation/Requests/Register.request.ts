@@ -3,7 +3,7 @@ import Config from "config";
 import {IsString, IsEmail, Length, IsBoolean} from "class-validator";
 import {Match} from "../../../App/Infrastructure/Shared/Decorators/match";
 import RegisterPayload from "../../InterfaceAdapters/Payloads/Register.payload";
-import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
+import Roles from "../../../Config/Roles";
 
 export default class RegisterRequest implements RegisterPayload
 {
@@ -38,7 +38,7 @@ export default class RegisterRequest implements RegisterPayload
         this.password = request.body.password;
         this.passwordConfirmation = request.body.passwordConfirmation;
         this.passwordConfirmation = request.body.passwordConfirmation;
-        this.enable = request.body.hasOwnProperty('enable') ? request.body.enable : true;
+        this.enable = true;
     }
 
     getFirstName(): string
@@ -71,19 +71,9 @@ export default class RegisterRequest implements RegisterPayload
         return this.enable;
     }
 
-    getConfirmationToken(): null
+    getRoles(): string[]
     {
-        return null;
-    }
-
-    getPasswordRequestedAt(): null
-    {
-        return null;
-    }
-
-    getRoles(): IRoleDomain[]
-    {
-        return [];
+        return [Roles.ADMIN.toLowerCase()];
     }
 
     getPermissions(): string[]

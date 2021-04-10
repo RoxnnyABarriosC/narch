@@ -1,14 +1,15 @@
 import ICriteria from "../Shared/ICriteria";
 import IPaginator from "../Shared/IPaginator";
+import {DeleteResult} from "typeorm";
 
-export default interface IBaseRepository
+export default interface IBaseRepository<IDomain>
 {
-    save(element: any): Promise<any>;
-    update(element: any): Promise<any>;
-    getOne(id: string): Promise<any>;
-    list(criteria: ICriteria): Promise<IPaginator>;
-    delete(id: any): Promise<any>;
-    getBy?(condition: {}, initThrow?: boolean): Promise<any>;
-    getOneBy?(condition: {}, initThrow?: boolean): Promise<any>;
+    save(entity: IDomain): Promise<IDomain>;
+    update(entity: IDomain): Promise<IDomain>;
+    getOne(id: string): Promise<IDomain>;
+    list?(criteria: ICriteria): Promise<IPaginator>;
+    delete(id: string): Promise<DeleteResult>;
+    getBy(condition: {}, initThrow?: boolean): Promise<IDomain[]>;
+    getOneBy(condition: {}, initThrow?: boolean): Promise<IDomain>;
 }
 

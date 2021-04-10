@@ -22,6 +22,9 @@ import ChangeForgotPasswordUseCase from "./Domain/UseCases/ChangeForgotPassword.
 import PermissionUseCase from "./Domain/UseCases/Permission.useCase";
 import PermissionsTransformer from "./Presentation/Transformers/Permissions.transformer";
 import SyncRolesPermissionUseCase from "./Domain/UseCases/SyncRolesPermission.useCase";
+import RegisterRequest from "./Presentation/Requests/Register.request";
+import RegisterUseCase from "./Domain/UseCases/Register.useCase";
+import IToken from "../App/InterfaceAdapters/Shared/IToken";
 
 @controller('/api/auth')
 class AuthHandler
@@ -39,7 +42,19 @@ class AuthHandler
         await ValidatorRequest.handle(_request);
 
         const loginUseCase = new LoginUseCase();
-        const payload = await loginUseCase.handle(_request);
+        const payload: IToken = await loginUseCase.handle(_request);
+
+        this.responder.send(payload, null, res, StatusCode.HTTP_OK, new AuthTransformer());
+    }
+
+    @httpPost('/register')
+    public async register (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
+    {
+        const _request = new RegisterRequest(req);
+        await ValidatorRequest.handle(_request);
+
+        const registerUseCase = new RegisterUseCase();
+        const payload: IToken = await registerUseCase.handle(_request);
 
         this.responder.send(payload, null, res, StatusCode.HTTP_CREATED, new AuthTransformer());
     }
@@ -51,7 +66,7 @@ class AuthHandler
         await ValidatorRequest.handle(_request);
 
         const keepAliveUseCase = new KeepAliveUseCase();
-        const payload = await keepAliveUseCase.handle(_request);
+        const payload: IToken = await keepAliveUseCase.handle(_request);
 
         this.responder.send(payload, null, res, StatusCode.HTTP_CREATED, new AuthTransformer());
     }
@@ -65,7 +80,7 @@ class AuthHandler
         const forgotPasswordUseCase = new ForgotPasswordUseCase();
         const payload = await forgotPasswordUseCase.handle(_request);
 
-        this.responder.send(payload, null, res, StatusCode.HTTP_CREATED, null);
+        this.responder.send(payload, null, res, StatusCode.HTTP_OK, null);
     }
 
     @httpPost('/changeForgotPassword')
@@ -84,7 +99,7 @@ class AuthHandler
     public async permissions (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const permissionUseCase = new PermissionUseCase();
-        const payload = await permissionUseCase.handle();
+        const payload: string[] = await permissionUseCase.handle();
 
         this.responder.send(payload, req, res, StatusCode.HTTP_OK, new PermissionsTransformer());
     }

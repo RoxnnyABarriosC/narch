@@ -5,11 +5,12 @@ import {ITokenRepository} from "@digichanges/shared-experience";
 import TokenFactory from "../../../App/Infrastructure/Factories/Token.factory";
 import KeepAlivePayload from "../../InterfaceAdapters/Payloads/KeepAlive.payload";
 import SetTokenBlacklistUseCase from "../../../App/Domain/UseCases/Tokens/SetTokenBlacklist.useCase";
+import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 
 export default class KeepAliveUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
-    private repository: IUserRepository;
+    private repository: IUserRepository<IUserDomain>;
 
     @lazyInject(REPOSITORIES.ITokenRepository)
     private tokenRepository: ITokenRepository;

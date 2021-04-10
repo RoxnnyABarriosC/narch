@@ -8,7 +8,7 @@ import IFileRepository from "../../InterfaceAdapters/IFile.repository";
 export default class GetPresignedGetObjectUseCase
 {
     @lazyInject(REPOSITORIES.IFileRepository)
-    private repository: IFileRepository;
+    private repository: IFileRepository<IFileDomain>;
 
     async handle(payload: SavePresignedFilePayload): Promise<string>
     {

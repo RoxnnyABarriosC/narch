@@ -19,7 +19,6 @@ import UpdateRoleRequest from "./Presentation/Requests/UpdateRole.request";
 import UpdateRoleUseCase from "./Domain/UseCases/UpdateRole.useCase";
 import RemoveRoleUseCase from "./Domain/UseCases/RemoveRole.useCase";
 
-
 @controller('/api/roles')
 export default class RoleHandler
 {

@@ -7,9 +7,7 @@ export default interface SaveUserPayload
     getPassword(): string;
     getPasswordConfirmation(): string;
     getEnable(): boolean;
-    getRoles?(): any[];
-    getPermissions?(): string[];
-    getConfirmationToken(): null;
-    getPasswordRequestedAt(): null;
+    getRoles(): any[];
+    getPermissions(): string[];
     getIsSuperAdmin(): boolean;
 }

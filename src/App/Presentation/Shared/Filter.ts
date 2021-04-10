@@ -9,7 +9,7 @@ import {SelectQueryBuilder} from "typeorm/query-builder/SelectQueryBuilder";
 import _ from "lodash";
 import {Brackets} from "typeorm";
 
-export default  abstract class Filter implements IFilter
+export default abstract class Filter implements IFilter
 {
     private readonly filters: Map<string, any>;
 

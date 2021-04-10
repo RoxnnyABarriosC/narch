@@ -26,7 +26,8 @@ import UpdateFileBase64UseCase from "./Domain/UseCases/UpdateFileBase64.useCase"
 import UpdateFileMultipartRequest from "./Presentation/Requests/UpdateFileMultipart.request";
 import UpdateFileMultipartUseCase from "./Domain/UseCases/UpdateFileMultipart.useCase";
 import UploadBase64UseCase from "./Domain/UseCases/UploadBase64.useCase";
-
+import IFileDomain from "./InterfaceAdapters/IFile.domain";
+import IFileDTO from "./InterfaceAdapters/IDto/IFileDTO";
 
 @controller('/api/files')
 export default class FileHandler
@@ -65,7 +66,7 @@ export default class FileHandler
         await ValidatorRequest.handle(_request);
 
         const uploadBase64UseCase = new UploadBase64UseCase();
-        const file = await uploadBase64UseCase.handle(_request);
+        const file: IFileDomain = await uploadBase64UseCase.handle(_request);
 
         this.responder.send(file, req, res, StatusCode.HTTP_CREATED , new FileTransformer());
     }
@@ -77,7 +78,7 @@ export default class FileHandler
         await ValidatorRequest.handle(_request);
 
         const uploadMultipartUseCase = new UploadMultipartUseCase();
-        const file = await uploadMultipartUseCase.handle(_request);
+        const file: IFileDomain = await uploadMultipartUseCase.handle(_request);
 
         this.responder.send(file, req, res, StatusCode.HTTP_CREATED , new FileTransformer());
     }
@@ -89,7 +90,7 @@ export default class FileHandler
         await ValidatorRequest.handle(_request);
 
         const getPresignedGetObjectUseCase = new GetPresignedGetObjectUseCase();
-        const presignedGetObject = await getPresignedGetObjectUseCase.handle(_request);
+        const presignedGetObject: string = await getPresignedGetObjectUseCase.handle(_request);
 
         this.responder.send({presignedGetObject}, req, res, StatusCode.HTTP_OK, null);
     }
@@ -102,7 +103,7 @@ export default class FileHandler
 
         const downloadUseCase = new DownloadUseCase();
 
-        const fileDto = await downloadUseCase.handle(_request);
+        const fileDto: IFileDTO = await downloadUseCase.handle(_request);
 
         this.responder.sendStream(fileDto, req, res, StatusCode.HTTP_OK);
     }
@@ -114,7 +115,7 @@ export default class FileHandler
         await ValidatorRequest.handle(_request);
 
         const updateFileBase64UseCase = new UpdateFileBase64UseCase();
-        const file = await updateFileBase64UseCase.handle(_request);
+        const file: IFileDomain = await updateFileBase64UseCase.handle(_request);
 
         this.responder.send(file, req, res, StatusCode.HTTP_CREATED , new FileTransformer());
     }
@@ -126,7 +127,7 @@ export default class FileHandler
         await ValidatorRequest.handle(_request);
 
         const updateFileMultipartUseCase = new UpdateFileMultipartUseCase();
-        const file = await updateFileMultipartUseCase.handle(_request);
+        const file: IFileDomain = await updateFileMultipartUseCase.handle(_request);
 
         this.responder.send(file, req, res, StatusCode.HTTP_CREATED , new FileTransformer());
     }

@@ -8,7 +8,7 @@ import IFileRepository from "../../InterfaceAdapters/IFile.repository";
 export default class UpdateFileBase64UseCase
 {
     @lazyInject(REPOSITORIES.IFileRepository)
-    private repository: IFileRepository;
+    private repository: IFileRepository<IFileDomain>;
 
     async handle(payload: UpdateFileBase64Payload): Promise<IFileDomain>
     {
