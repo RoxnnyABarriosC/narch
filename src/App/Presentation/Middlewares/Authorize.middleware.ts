@@ -25,7 +25,7 @@ const AuthorizeMiddleware = (...handlerPermissions: any) =>
 
             if (user.isSuperAdmin)
             {
-                isAllowed = true;
+                next();
             }
 
             let totalPermissions = authService.getPermissions(user);
