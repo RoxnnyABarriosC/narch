@@ -6,6 +6,8 @@ import ContainerFactory from "../../Infrastructure/Factories/Container.factory";
 import {REPOSITORIES} from "../../../Repositories";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 import ForbiddenHttpException from "../Exceptions/ForbiddenHttp.exception";
+import _ from "lodash";
+import Permissions from "../../../Config/Permissions";
 
 const AuthorizeMiddleware = (...handlerPermissions: any) =>
 {
@@ -23,29 +25,17 @@ const AuthorizeMiddleware = (...handlerPermissions: any) =>
 
             let user: IUserDomain = await userRepository.getOneBy({email:tokenDecode.email},false);
 
-            if (user.isSuperAdmin)
-            {
-                next();
-            }
+            if ( user.isSuperAdmin ) isAllowed = true;
 
             let totalPermissions = authService.getPermissions(user);
 
-            totalPermissions.forEach( (permission: string) =>
-            {
-                if (permission === handlerPermission)
-                {
-                    isAllowed = true;
-                }
+            _.map(totalPermissions, (permission: string) => {
+                if ( permission === handlerPermission || permission === Permissions.ALL) isAllowed = true;
             });
 
-            if (isAllowed)
-            {
-                next();
-            }
-            else
-            {
-                throw new ForbiddenHttpException();
-            }
+            if ( isAllowed )  next();
+
+            else throw new ForbiddenHttpException();
         }
         catch(err)
         {
