@@ -18,8 +18,9 @@ import CronFactory from "./App/Infrastructure/Factories/Cron.factory";
         // Initialize configuration
         validateEnv();
 
-        const createConnection: ICreateConnection = DatabaseFactory.create();
-        await createConnection.create();
+        await DatabaseFactory.create('TypeORM').create();
+
+        await DatabaseFactory.create('Mongoose').create();
 
        /* const sqlSeeds = new SqlSeedFactory();
         sqlSeeds.init();*/

@@ -7,5 +7,5 @@ export default interface ICreateConnection
     drop(): Promise<any>;
     initConfig(): any;
     initConfigTest(uri: string): any;
-    setAttrConfig(attribute: string, value: any): void;
+    setAttrConfig?(attribute: string, value: any): void;
 }
