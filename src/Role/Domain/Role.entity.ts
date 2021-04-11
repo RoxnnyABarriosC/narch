@@ -1,29 +1,16 @@
-import { v4 as uuidv4 } from 'uuid';
 import IRoleDomain from "../InterfaceAdapters/IRole.domain";
+import BaseEntity from "../../App/Domain/Shared/Base.entity";
 
-export default class RoleEntity implements IRoleDomain
+export default class RoleEntity  extends BaseEntity  implements IRoleDomain
 {
-    _id: string;
     name: string;
     slug: string;
     enable: boolean;
     ofSystem: boolean;
     permissions: string[];
-    createdAt: Date;
-    updatedAt: Date;
 
     constructor()
     {
-        this._id = uuidv4();
-    }
-
-    getId(): string
-    {
-        return this._id;
-    }
-
-    setId(id: string)
-    {
-        this._id = id;
+       super()
     }
 }

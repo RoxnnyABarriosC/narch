@@ -1,9 +1,9 @@
 import webPush from "web-push";
 import {TypeNotificationEnum} from "@digichanges/shared-experience";
+import BaseEntity from "../../Domain/Shared/Base.entity";
 
-export default class TypeNotificationEntity
+export default class TypeNotificationEntity extends BaseEntity
 {
-    _id: string;
     name: string;
     emailTemplatePath : string;
     senderName: string;
@@ -15,11 +15,10 @@ export default class TypeNotificationEntity
     url: string;
     subscription: webPush.PushSubscription;
     type: TypeNotificationEnum;
-    createdAt: Date;
-    updatedAt: Date;
 
     constructor()
     {
+        super()
         this.cc = null;
         this.name = null;
         this.emailTemplatePath = null;
@@ -40,11 +39,6 @@ export default class TypeNotificationEntity
     getUrl()
     {
         return this.url;
-    }
-
-    getId(): string
-    {
-        return this._id;
     }
 }
 

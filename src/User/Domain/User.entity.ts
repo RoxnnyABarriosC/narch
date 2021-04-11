@@ -1,10 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
 import IUserDomain from "../InterfaceAdapters/IUser.domain";
 import IRoleDomain from "../../Role/InterfaceAdapters/IRole.domain";
+import BaseEntity from "../../App/Domain/Shared/Base.entity";
 
-export default class UserEntity implements IUserDomain
+export default class UserEntity extends BaseEntity implements IUserDomain
 {
-    _id: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -15,18 +14,11 @@ export default class UserEntity implements IUserDomain
     isSuperAdmin: boolean;
     confirmationToken: string ;
     passwordRequestedAt: Date ;
-    createdAt: Date;
-    updatedAt: Date;
 
     constructor()
     {
-        this._id = uuidv4();
+        super();
         this.getId = this.getId.bind(this);
-    }
-
-    getId(): string
-    {
-        return this._id;
     }
 
     getFullName(): string
