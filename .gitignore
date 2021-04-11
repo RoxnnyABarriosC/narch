@@ -3,6 +3,7 @@
 
 ### NarchJs Directories ###
 narch-cli/
+src/logs
 
 ### Node ###
 # Logs
