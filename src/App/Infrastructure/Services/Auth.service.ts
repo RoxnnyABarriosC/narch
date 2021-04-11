@@ -1,6 +1,6 @@
 import {injectable} from "inversify";
 import jwt, { TAlgorithm } from "jwt-simple";
-import _ from "lodash/fp";
+import _ from "lodash";
 import Config from "config";
 
 import EncryptionFactory from "../Factories/Encryption.factory";
@@ -36,13 +36,9 @@ export default class AuthService implements IAuthService
         let permissions: string[] = user.permissions;
         const roles: IRoleDomain[] = user.getRoles();
 
-        for (const role of roles)
-        {
-            if (role.permissions)
-            {
-                role.permissions.map( (rolePermission: string) => permissions.push(rolePermission));
-            }
-        }
+        _.map(roles, (role) => {
+            if ( role.permissions && role.enable ) _.map(role.permissions, (rolePermission: string) => permissions.push(rolePermission));
+        });
 
         return [...new Set(permissions)];
     }
