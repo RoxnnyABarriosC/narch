@@ -37,12 +37,15 @@ export default class LoginUseCase
             throw new UserDisabledException();
         }
 
-        const roleDisabled = user.getRoles().find(role => role.enable === false);
+        const roleSystem = user.getRoles().some(role => role.ofSystem && role.enable === false);
 
-        if (roleDisabled)
+        if (roleSystem)
         {
             throw new RoleDisabledException();
         }
+
+        // TODO: Si tiene otros roles (NO DEL SISTEMA) y estan inabilitados mandar una notificacion WS con los roles inabilitados.
+
 
         if (! await this.encryption.compare(password, user.password))
         {
