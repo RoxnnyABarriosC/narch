@@ -2,7 +2,7 @@ import lazyInject from "../../../LazyInject";
 import IRoleRepository from "../../InterfaceAdapters/IRole.repository";
 import {REPOSITORIES} from "../../../Repositories";
 import IRoleDomain from "../../InterfaceAdapters/IRole.domain";
-import IdPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/IdPayload";
+import IdPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/Id.payload";
 
 export default class GetRoleUseCase
 {

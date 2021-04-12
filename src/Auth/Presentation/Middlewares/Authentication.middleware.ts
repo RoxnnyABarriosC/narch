@@ -5,8 +5,12 @@ import _ from "lodash";
 import TokenExpiredHttpException from "../../../App/Presentation/Exceptions/TokenExpiredHttp.exception";
 import TokenNotFoundHttpException from "../../../App/Presentation/Exceptions/TokenNotFoundHttp.exception";
 import AuthService from "../../../App/Infrastructure/Services/Auth.service";
+import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
+import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
+import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";
+import {REPOSITORIES} from "../../../Repositories";
 
-const AuthenticationMiddleware = (req: Request | any, res: Response, next: NextFunction) =>
+const AuthenticationMiddleware = async (req: Request | any, res: Response, next: NextFunction) =>
 {
     try
     {
@@ -54,7 +58,15 @@ const AuthenticationMiddleware = (req: Request | any, res: Response, next: NextF
 
             const authService = new AuthService();
 
+            const userRepository: IUserRepository<IUserDomain> = ContainerFactory.create<IUserRepository<IUserDomain>>(REPOSITORIES.IUserRepository);
+
             req.tokenDecode = authService.decodeToken(token);
+
+            req.authUser = await userRepository.getOneBy({
+                relations: ['roles'],
+                where: {
+                    _id: req.tokenDecode.userId
+                }}, { initThrow: false });
 
             next();
         }

@@ -21,7 +21,7 @@ export default class SyncRolesPermissionUseCase
             let permissions: string[] = value;
             let amount: boolean = false;
 
-            const role: IRoleDomain = await this.repository.getOneBy({slug: key.toLowerCase()}, false);
+            const role: IRoleDomain = await this.repository.getOneBy({slug: key.toLowerCase()}, { initThrow: false });
 
             if (role)
             {

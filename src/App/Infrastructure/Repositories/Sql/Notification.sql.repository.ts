@@ -1,16 +1,16 @@
 import {injectable} from "inversify";
 import {Repository, getRepository} from "typeorm";
 
-import IPaginator from "../../InterfaceAdapters/Shared/IPaginator";
-import ICriteria from "../../InterfaceAdapters/Shared/ICriteria";
+import IPaginator from "../../../InterfaceAdapters/Shared/IPaginator";
+import ICriteria from "../../../InterfaceAdapters/Shared/ICriteria";
 
-import INotificationDomain from "../../InterfaceAdapters/IInfraestructure/INotificationDomain";
+import INotificationDomain from "../../../InterfaceAdapters/IInfraestructure/INotification.domain";
 
-import Paginator from "../../Presentation/Shared/Paginator";
-import INotificationRepository from "../../InterfaceAdapters/IRepository/INotificationRepository";
-import TypeNotificationEntity from "../Entities/TypeNotification.entity";
-import TypeNotificationSqlSchema from "../Schema/Notification.sql.schema";
-import NotFoundException from "../Exceptions/NotFound.exception";
+import Paginator from "../../../Presentation/Shared/Paginator";
+import INotificationRepository from "../../../InterfaceAdapters/IRepository/INotification.repository";
+import TypeNotificationEntity from "../../Entities/TypeNotification.entity";
+import TypeNotificationSqlSchema from "../../Schema/Sql/Notification.sql.schema";
+import NotFoundException from "../../Exceptions/NotFound.exception";
 
 @injectable()
 export default class NotificationSqlRepository implements INotificationRepository

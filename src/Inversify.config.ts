@@ -24,10 +24,14 @@ import FileSqlRepository from "./File/Infrastructure/File.sql.repository";
 import IFileDomain from "./File/InterfaceAdapters/IFile.domain";
 
 import {ITokenRepository} from "@digichanges/shared-experience";
-import TokenRedisRepository from "./App/Infrastructure/Repositories/TokenRedis.repository";
+import TokenRedisRepository from "./App/Infrastructure/Repositories/Redis/Token.redis.repository";
 
-import INotificationRepository from "./App/InterfaceAdapters/IRepository/INotificationRepository";
-import NotificationSqlRepository from "./App/Infrastructure/Repositories/Notification.sql.repository";
+import INotificationRepository from "./App/InterfaceAdapters/IRepository/INotification.repository";
+import NotificationSqlRepository from "./App/Infrastructure/Repositories/Sql/Notification.sql.repository";
+
+import IItemRepository from "./Item/InterfaceAdapters/IItem.repository";
+import IItemDomain from "./Item/InterfaceAdapters/IItem.domain";
+import ItemMongoRepository from "./Item/Infrastructure/Item.mongo.repository";
 
 /* IServices */
 container.bind<IAuthService>(SERVICES.IAuthService).to(AuthService);
@@ -36,11 +40,15 @@ container.bind<IAuthService>(SERVICES.IAuthService).to(AuthService);
 container.bind<Responder>(Types.Responder).to(Responder);
 container.bind<IFormatResponder>(Types.IFormatResponder).to(FormatResponder);
 
-/** Repositories */
+/** SQL Repositories */
 container.bind<IUserRepository<IUserDomain>>(REPOSITORIES.IUserRepository).to(UserSqlRepository);
 container.bind<IRoleRepository<IRoleDomain>>(REPOSITORIES.IRoleRepository).to(RoleSqlRepository);
 container.bind<IFileRepository<IFileDomain>>(REPOSITORIES.IFileRepository).to(FileSqlRepository);
 
+/** MONGO Repositories */
+container.bind<IItemRepository<IItemDomain>>(REPOSITORIES.IItemRepository).to(ItemMongoRepository);
+
+/** OTHERS Repositories */
 container.bind<ITokenRepository>(REPOSITORIES.ITokenRepository).to(TokenRedisRepository);
 container.bind<INotificationRepository>(REPOSITORIES.INotificationRepository).to(NotificationSqlRepository);
 

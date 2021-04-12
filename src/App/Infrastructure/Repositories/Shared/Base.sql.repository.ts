@@ -1,10 +1,10 @@
 import {injectable, unmanaged} from "inversify";
 import {DeleteResult, EntitySchema, getRepository, Repository} from "typeorm";
 import NotFoundException from "../../Exceptions/NotFound.exception";
-import IBaseRepository from "../../../InterfaceAdapters/IRepository/IBase.repository";
+import IBaseSqlRepository, {ISqlOptions} from "../../../InterfaceAdapters/IRepository/Shared/IBase.sql.repository";
 
 @injectable()
-export default class BaseSqlRepository<Entity extends IDomain, IDomain> implements IBaseRepository<IDomain>
+export default class BaseSqlRepository<Entity extends IDomain, IDomain> implements IBaseSqlRepository<IDomain>
 {
     private entity: any;
     protected repository: Repository<Entity>;
@@ -42,20 +42,10 @@ export default class BaseSqlRepository<Entity extends IDomain, IDomain> implemen
         return await this.repository.delete(id);
     }
 
-    async getBy(condition: {}, initThrow = false): Promise<IDomain[]>
+    async getOneBy(condition: {}, options: ISqlOptions = { initThrow: true }): Promise<IDomain>
     {
-        const entities: IDomain[] = await this.repository.find(condition);
+        const { initThrow } = options;
 
-        if(initThrow && entities.length === 0)
-        {
-            throw new NotFoundException(this.entity.name.replace('Entity',''));
-        }
-
-        return entities;
-    }
-
-    async getOneBy(condition: {}, initThrow = true): Promise<IDomain>
-    {
         const entity: IDomain = await this.repository.findOne(condition);
 
         if(initThrow && !entity)
@@ -64,5 +54,19 @@ export default class BaseSqlRepository<Entity extends IDomain, IDomain> implemen
         }
 
         return entity;
+    }
+
+    async getBy(condition: {}, options: ISqlOptions = { initThrow: false }): Promise<IDomain[]>
+    {
+        const { initThrow } = options;
+
+        const entities: IDomain[] = await this.repository.find(condition);
+
+        if(initThrow && entities.length === 0)
+        {
+            throw new NotFoundException(this.entity.name.replace('Entity',''));
+        }
+
+        return entities;
     }
 }

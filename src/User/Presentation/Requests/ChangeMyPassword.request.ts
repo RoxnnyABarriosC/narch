@@ -2,8 +2,9 @@ import {IsString, IsUUID, Length} from "class-validator";
 import Config from "config";
 import {Match} from "../../../App/Infrastructure/Shared/Decorators/match";
 import ChangeMyPasswordPayload from "../../InterfaceAdapters/Payloads/ChangeMyPassword.payload";
+import IdRequest from "../../../App/Presentation/Requests/Defaults/Id.request";
 
-export default class ChangeMyPasswordRequest implements ChangeMyPasswordPayload
+export default class ChangeMyPasswordRequest extends IdRequest implements ChangeMyPasswordPayload
 {
     @IsString()
     @Length(Config.get('validationSettings.password.min'), Config.get('validationSettings.password.max'))
@@ -22,6 +23,7 @@ export default class ChangeMyPasswordRequest implements ChangeMyPasswordPayload
 
     constructor(request: Request | any)
     {
+        super(request);
         this.currentPassword = request.body.currentPassword;
         this.newPassword = request.body.newPassword;
         this.newPasswordConfirmation = request.body.newPasswordConfirmation;

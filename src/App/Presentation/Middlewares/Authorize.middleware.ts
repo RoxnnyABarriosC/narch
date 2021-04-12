@@ -23,7 +23,7 @@ const AuthorizeMiddleware = (...handlerPermissions: any) =>
 
             let userRepository: IUserRepository<IUserDomain> = ContainerFactory.create<IUserRepository<IUserDomain>>(REPOSITORIES.IUserRepository);
 
-            let user: IUserDomain = await userRepository.getOneBy({email:tokenDecode.email},false);
+            let user: IUserDomain = await userRepository.getOneBy({email:tokenDecode.email}, { initThrow: false });
 
             if ( user.isSuperAdmin ) isAllowed = true;
 

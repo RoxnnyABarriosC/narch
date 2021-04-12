@@ -9,7 +9,7 @@ import {REPOSITORIES} from "../../../Repositories";
 import IToken from "../../InterfaceAdapters/Shared/IToken";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 import JWTToken from "../../Shared/JWTToken";
-import ITokenDomain from "../../InterfaceAdapters/IInfraestructure/ITokenDomain";
+import ITokenDomain from "../../InterfaceAdapters/IInfraestructure/IToken.domain";
 
 // TODO: Change logic with payload to extend and add new payload
 export default class TokenFactory

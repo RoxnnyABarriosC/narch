@@ -49,9 +49,4 @@ export default class UpdateRoleRequest extends IdRequest implements UpdateRolePa
     {
         return this.enable;
     }
-
-    getId(): string
-    {
-        return this.id;
-    }
 }

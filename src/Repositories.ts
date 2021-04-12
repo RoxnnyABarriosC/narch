@@ -1,4 +1,3 @@
-import INotificationRepository from "./App/InterfaceAdapters/IRepository/INotificationRepository";
 
 export const REPOSITORIES = {
     IUserRepository: "IUserRepository",
@@ -6,4 +5,5 @@ export const REPOSITORIES = {
     IFileRepository: "IFileRepository",
     ITokenRepository: "ITokenRepository",
     INotificationRepository: "INotificationRepository",
+    IItemRepository: "IItemRepository",
 }

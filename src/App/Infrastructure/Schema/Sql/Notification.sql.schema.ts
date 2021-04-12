@@ -1,6 +1,6 @@
 import { EntitySchema } from "typeorm";
 import {TypeNotificationEnum} from "@digichanges/shared-experience";
-import TypeNotificationEntity from "../Entities/TypeNotification.entity";
+import TypeNotificationEntity from "../../Entities/TypeNotification.entity";
 
 const TypeNotificationSqlSchema = new EntitySchema<TypeNotificationEntity>({
     name: "TypeNotificationEntity",

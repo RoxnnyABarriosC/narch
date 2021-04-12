@@ -1,4 +1,4 @@
-import IBaseRepository from "../../App/InterfaceAdapters/IRepository/IBase.repository";
 import IRoleDomain from "./IRole.domain";
+import IBaseSqlRepository from "../../App/InterfaceAdapters/IRepository/Shared/IBase.sql.repository";
 
-export default interface IRoleRepository<IDomain extends IRoleDomain> extends IBaseRepository<IDomain> {}
+export default interface IRoleRepository<IDomain extends IRoleDomain> extends IBaseSqlRepository<IDomain> {}

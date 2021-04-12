@@ -7,7 +7,7 @@ import path from "path";
 import {ErrorException} from "@digichanges/shared-experience";
 
 import EmailNotificationEntity from "../Entities/EmailNotification.entity";
-import NotificationSqlRepository from "../Repositories/Notification.sql.repository";
+import NotificationSqlRepository from "../Repositories/Sql/Notification.sql.repository";
 import PushNotificationEntity from "../Entities/PushNotification.entity";
 
 export default class Notificator

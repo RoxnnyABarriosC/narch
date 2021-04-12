@@ -1,4 +1,4 @@
-import IdPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/IdPayload";
+import IdPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/Id.payload";
 
 export default interface UpdateUserPayload extends IdPayload
 {

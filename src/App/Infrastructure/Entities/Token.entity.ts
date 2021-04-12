@@ -1,4 +1,4 @@
-import ITokenDomain from "../../InterfaceAdapters/IInfraestructure/ITokenDomain";
+import ITokenDomain from "../../InterfaceAdapters/IInfraestructure/IToken.domain";
 import BaseEntity from "../../Domain/Shared/Base.entity";
 
 export default class TokenEntity extends BaseEntity implements ITokenDomain

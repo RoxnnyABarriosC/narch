@@ -1,24 +1,24 @@
 import { Tedis } from "tedis";
 import {ICacheRepository} from "@digichanges/shared-experience";
 
-export default class RedisCacheRepository implements ICacheRepository
+export default class CacheRedisRepository implements ICacheRepository
 {
     private redis: Tedis;
-    private static instance: RedisCacheRepository;
+    private static instance: CacheRedisRepository;
 
     async createConnection(config: {})
     {
         this.redis = new Tedis(config);
     }
 
-    static getInstance(): RedisCacheRepository
+    static getInstance(): CacheRedisRepository
     {
-        if (!RedisCacheRepository.instance)
+        if (!CacheRedisRepository.instance)
         {
-            RedisCacheRepository.instance = new RedisCacheRepository();
+            CacheRedisRepository.instance = new CacheRedisRepository();
         }
 
-        return RedisCacheRepository.instance;
+        return CacheRedisRepository.instance;
     }
 
     async set(key: string, value: string, expires: number = null): Promise<any>

@@ -1,7 +1,7 @@
 import lazyInject from "../../../../LazyInject";
 import {REPOSITORIES} from "../../../../Repositories";
 import {ITokenRepository} from "@digichanges/shared-experience";
-import ITokenDomain from "../../../InterfaceAdapters/IInfraestructure/ITokenDomain";
+import ITokenDomain from "../../../InterfaceAdapters/IInfraestructure/IToken.domain";
 
 export default class SetTokenBlacklistUseCase
 {
