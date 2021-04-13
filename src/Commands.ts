@@ -49,7 +49,6 @@ import Config from "config";
     }
     catch (error)
     {
-        console.log(error)
         loggerCli.info('Command Error');
         loggerCli.error(error.message);
         exit();

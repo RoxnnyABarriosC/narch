@@ -62,11 +62,7 @@ const AuthenticationMiddleware = async (req: Request | any, res: Response, next:
 
             req.tokenDecode = authService.decodeToken(token);
 
-            req.authUser = await userRepository.getOneBy({
-                relations: ['roles'],
-                where: {
-                    _id: req.tokenDecode.userId
-                }}, { initThrow: false });
+            req.authUser = await userRepository.getOneBy({ _id: req.tokenDecode.userId }, { initThrow: false });
 
             next();
         }

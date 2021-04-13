@@ -31,58 +31,58 @@ export default class ItemHandler
         const _request = new SaveItemRequest(req);
         await ValidatorRequest.handle(_request);
 
-        const saveRoleUseCase = new SaveItemUseCase();
-        const item: IItemDomain = await saveRoleUseCase.handle(_request);
+        const saveItemUseCase = new SaveItemUseCase();
+        const item: IItemDomain = await saveItemUseCase.handle(_request);
 
         this.responder.send(item, req, res, StatusCode.HTTP_CREATED, new ItemTransformer());
     }
 
-  /*  @httpGet('/', AuthorizeMiddleware(Permissions.ROLES_LIST))
+    @httpGet('/', AuthorizeMiddleware(Permissions.ITEMS_LIST))
     public async list (@request() req: Request, @response() res: Response)
     {
         const _request = new ListItemsRequest(req);
         await ValidatorRequest.handle(_request);
 
-        const listRolesUseCase = new ListItemsUseCase();
-        const paginator: IPaginator = await listRolesUseCase.handle(_request);
+        const listItemsUseCase = new ListItemsUseCase();
+        const paginator: IPaginator = await listItemsUseCase.handle(_request);
 
         await this.responder.paginate(paginator, req, res, StatusCode.HTTP_OK, new ItemTransformer());
     }
 
-    @httpGet('/:id', AuthorizeMiddleware(Permissions.ROLES_SHOW))
+    @httpGet('/:id', AuthorizeMiddleware(Permissions.ITEMS_SHOW))
     public async getOne  (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
-        const _request = new IdRequest(req);
-        await ValidatorRequest.handle(_request);
+      const _request = new IdRequest(req);
+      await ValidatorRequest.handle(_request);
 
-        const getRoleUseCase = new GetItemUseCase();
-        const role: IItemDomain = await getRoleUseCase.handle(_request);
+      const getItemUseCase = new GetItemUseCase();
+      const item: IItemDomain = await getItemUseCase.handle(_request);
 
-        this.responder.send(role, req, res, StatusCode.HTTP_OK, new ItemTransformer());
-    }
+      this.responder.send(item, req, res, StatusCode.HTTP_OK, new ItemTransformer());
+  }
 
-    @httpPut('/:id', AuthorizeMiddleware(Permissions.ROLES_UPDATE))
+    @httpPut('/:id', AuthorizeMiddleware(Permissions.ITEMS_UPDATE))
     public async update (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new UpdateItemRequest(req);
         await ValidatorRequest.handle(_request);
 
-        const updateRoleUseCase = new UpdateItemUseCase();
-        const role: IItemDomain = await updateRoleUseCase.handle(_request);
+        const updateItemUseCase = new UpdateItemUseCase();
+        const role: IItemDomain = await updateItemUseCase.handle(_request);
 
         this.responder.send(role, req, res, StatusCode.HTTP_CREATED, new ItemTransformer());
     }
 
-    @httpDelete('/:id', AuthorizeMiddleware(Permissions.ROLES_DELETE))
+    @httpDelete('/:id', AuthorizeMiddleware(Permissions.ITEMS_REMOVE))
     public async remove (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new IdRequest(req);
         await ValidatorRequest.handle(_request);
 
-        const removeRoleUseCase = new RemoveItemUseCase();
-        const data = await removeRoleUseCase.handle(_request);
+        const removeItemUseCase = new RemoveItemUseCase();
+        const item: IItemDomain = await removeItemUseCase.handle(_request);
 
-        this.responder.send(data, req, res, StatusCode.HTTP_CREATED, new ItemTransformer());
-    }*/
+        this.responder.send(item, req, res, StatusCode.HTTP_CREATED, new ItemTransformer());
+    }
 }
 

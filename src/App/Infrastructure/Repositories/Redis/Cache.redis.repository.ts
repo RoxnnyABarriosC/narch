@@ -35,7 +35,6 @@ export default class CacheRedisRepository implements ICacheRepository
 
     async jset(key: string, value: any, expires: number | null = null): Promise<any>
     {
-        console.log('key redis',key);
         if (expires)
         {
             await this.redis.setex(key, expires, JSON.stringify(value));

@@ -5,7 +5,6 @@ export default class RoleUserTransformer extends Transformer
 {
     public transform(role: IRoleDomain)
     {
-        console.log(role);
         return {
             id: role.getId(),
             name: role.name,

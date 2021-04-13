@@ -1,5 +1,5 @@
 import {Request} from "express";
-import {IsArray, IsBoolean, IsOptional, IsString} from "class-validator";
+import {IsString} from "class-validator";
 import IdRequest from "../../../App/Presentation/Requests/Defaults/Id.request";
 import UpdateITemPayload from "../../InterfaceAdapters/Payloads/UpdateITem.payload";
 

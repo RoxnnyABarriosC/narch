@@ -18,7 +18,7 @@ export default class ItemTransformer extends Transformer
             id: role.getId(),
             name: role.name,
             createdBy: this.validate(role.getCreatedBy(),'userRelationshipTransformer'),
-            lastModifiedBy: this.validate(role.getLastModifiedBy(),'userRelationshipTransformer'),
+            updatedBy: this.validate(role.getUpdatedBy(),'userRelationshipTransformer'),
             createdAt: this.transformDate(role.createdAt),
             updatedAt: this.transformDate(role.updatedAt),
         };

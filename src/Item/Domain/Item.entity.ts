@@ -5,21 +5,21 @@ import IUserDomain from "../../User/InterfaceAdapters/IUser.domain";
 export default class ItemEntity extends BaseEntity implements IItemDomain
 {
     name: string;
-    createdBy: IUserDomain | string;
-    lastModifiedBy: IUserDomain | string;
+    createdBy: IUserDomain;
+    updatedBy: IUserDomain;
 
     constructor()
     {
       super()
     }
 
-    getCreatedBy(): IUserDomain | string
+    getCreatedBy(): IUserDomain
     {
         return this.createdBy;
     }
 
-    getLastModifiedBy(): IUserDomain | string
+    getUpdatedBy(): IUserDomain
     {
-        return this.lastModifiedBy;
+        return this.updatedBy;
     }
 }

@@ -8,24 +8,20 @@ import UpdateITemPayload from "../../InterfaceAdapters/Payloads/UpdateITem.paylo
 
 export default class UpdateItemUseCase
 {
-    @lazyInject(REPOSITORIES.IRoleRepository)
+    @lazyInject(REPOSITORIES.IItemRepository)
     private repository: IItemRepository<IItemDomain>;
 
     @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;
 
-    async handle(payload: UpdateITemPayload): Promise<any>
+    async handle(payload: UpdateITemPayload): Promise<IItemDomain>
     {
-        /*this.authService.validatePermissions(payload.getPermissions());
+        const item: IItemDomain = await this.repository.getOne(payload.getId());
 
-        const role: IItemDomain = await this.repository.getOne(payload.getId());
+        item.name = payload.getName();
+        item.updatedBy = payload.getAuthUser();
 
-        role.name = payload.getName();
-        role.slug = payload.getSlug();
-        role.permissions = payload.getPermissions();
-        role.enable = payload.getEnable();
-
-        return await this.repository.save(role);*/
+        return await this.repository.save(item);
     }
 }
 

@@ -14,14 +14,14 @@ export default class Permissions
     static readonly ITEMS_UPDATE: string = 'itemsUpdate';
     static readonly ITEMS_SHOW: string = 'itemsShow';
     static readonly ITEMS_LIST: string = 'itemsList';
-    static readonly ITEMS_DELETE: string = 'itemsDelete';
+    static readonly ITEMS_REMOVE: string = 'itemsRemove';
 
     // USERS
     static readonly USERS_SAVE: string = 'usersSave';
     static readonly USERS_UPDATE: string = 'usersUpdate';
     static readonly USERS_SHOW: string = 'usersShow';
     static readonly USERS_LIST: string = 'usersList';
-    static readonly USERS_DELETE: string = 'usersDelete';
+    static readonly USERS_REMOVE: string = 'usersRemove';
     static readonly USERS_ASSIGN_ROLE: string = 'usersAssignRole';
     static readonly USERS_CHANGE_MY_PASSWORD: string = 'usersChangeMyPassword';
     static readonly USERS_CHANGE_USER_PASSWORD:string = 'usersChangeUserPassword';
@@ -37,7 +37,7 @@ export default class Permissions
     static readonly ROLES_UPDATE: string = 'rolesUpdate';
     static readonly ROLES_SHOW: string = 'rolesShow';
     static readonly ROLES_LIST: string = 'rolesList';
-    static readonly ROLES_DELETE: string = 'rolesDelete';
+    static readonly ROLES_REMOVE: string = 'rolesRemove';
 
     static groupPermissions(): {}
     {
@@ -52,7 +52,7 @@ export default class Permissions
                 `${Permissions.USERS_UPDATE}`,
                 `${Permissions.USERS_SHOW}`,
                 `${Permissions.USERS_LIST}`,
-                `${Permissions.USERS_DELETE}`,
+                `${Permissions.USERS_REMOVE}`,
                 `${Permissions.USERS_CHANGE_MY_PASSWORD}`,
                 `${Permissions.USERS_CHANGE_USER_PASSWORD}`,
             ],
@@ -61,7 +61,7 @@ export default class Permissions
                 `${Permissions.ROLES_UPDATE}`,
                 `${Permissions.ROLES_SHOW}`,
                 `${Permissions.ROLES_LIST}`,
-                `${Permissions.ROLES_DELETE}`,
+                `${Permissions.ROLES_REMOVE}`,
             ],
             FILES: [
                 `${Permissions.FILES_UPLOAD}`,
@@ -73,7 +73,7 @@ export default class Permissions
                 `${Permissions.ITEMS_UPDATE}`,
                 `${Permissions.ITEMS_SHOW}`,
                 `${Permissions.ITEMS_LIST}`,
-                `${Permissions.ITEMS_DELETE}`,
+                `${Permissions.ITEMS_REMOVE}`,
             ],
         };
     }

@@ -73,7 +73,7 @@ export default class RoleHandler
         this.responder.send(role, req, res, StatusCode.HTTP_CREATED, new RoleTransformer());
     }
 
-    @httpDelete('/:id', AuthorizeMiddleware(Permissions.ROLES_DELETE))
+    @httpDelete('/:id', AuthorizeMiddleware(Permissions.ROLES_REMOVE))
     public async remove (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new IdRequest(req);

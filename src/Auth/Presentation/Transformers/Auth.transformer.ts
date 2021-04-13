@@ -19,8 +19,6 @@ export default class AuthTransformer extends Transformer
         const user: IUserDomain = token.getUser();
         const authService: AuthService = new AuthService();
 
-        console.log(user);
-
         return {
             user: {
                 id: user.getId(),

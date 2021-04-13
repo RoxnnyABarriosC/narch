@@ -43,12 +43,16 @@ export default class BaseMongoRepository<Entity , IDomain extends IBaseDocumentD
 
     async delete(id: string): Promise<IDomain>
     {
-        const entity = await this.repository.findByIdAndDelete({_id: id});
+        // @ts-ignore
+        const entity: IDomain = await this.repository.findOne({ _id: id });
 
         if (!entity)
         {
             throw new NotFoundException(this.entity.name.replace('Entity',''));
         }
+
+        // @ts-ignore
+        await this.repository.deleteOne({ _id: id });
 
         return entity;
     }

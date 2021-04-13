@@ -36,6 +36,7 @@ import IItemRepository from "./Item/InterfaceAdapters/IItem.repository";
 import IItemDomain from "./Item/InterfaceAdapters/IItem.domain";
 import ItemMongoRepository from "./Item/Infrastructure/Item.mongo.repository";
 import Config from "config";
+import ItemSqlRepository from "./Item/Infrastructure/Item.sql.repository";
 
 
 /* IServices */
@@ -51,6 +52,7 @@ if (Config.get('dbConfig.default') === 'TypeORM')
     container.bind<IUserRepository<IUserDomain>>(REPOSITORIES.IUserRepository).to(UserSqlRepository);
     container.bind<IRoleRepository<IRoleDomain>>(REPOSITORIES.IRoleRepository).to(RoleSqlRepository);
     container.bind<IFileRepository<IFileDomain>>(REPOSITORIES.IFileRepository).to(FileSqlRepository);
+    container.bind<IItemRepository<IItemDomain>>(REPOSITORIES.IItemRepository).to(ItemSqlRepository);
 }
 
 else if (Config.get('dbConfig.default') === 'Mongoose')

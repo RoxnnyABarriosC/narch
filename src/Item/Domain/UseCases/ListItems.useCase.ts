@@ -1,17 +1,17 @@
 import lazyInject from "../../../LazyInject";
-import {IPaginator} from "@digichanges/shared-experience";
 import IItemRepository from "../../InterfaceAdapters/IItem.repository";
 import {REPOSITORIES} from "../../../Repositories";
 import ICriteria from "../../../App/InterfaceAdapters/Shared/ICriteria";
 import IItemDomain from "../../InterfaceAdapters/IItem.domain";
+import IPaginator from "../../../App/InterfaceAdapters/Shared/IPaginator";
 
 export default class ListItemsUseCase
 {
-    @lazyInject(REPOSITORIES.IRoleRepository)
+    @lazyInject(REPOSITORIES.IItemRepository)
     private repository: IItemRepository<IItemDomain>;
 
-    async handle(payload: ICriteria): Promise<void>
+    async handle(payload: ICriteria): Promise<IPaginator>
     {
-        // return await this.repository.list(payload);
+        return await this.repository.list(payload);
     }
 }

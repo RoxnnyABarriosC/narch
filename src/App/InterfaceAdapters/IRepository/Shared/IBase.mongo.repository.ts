@@ -11,8 +11,8 @@ export default interface IBaseMongoRepository<IDomain> extends IBaseRepository<I
 {
     getBy(conditions: {}, options?: IMongoOptions): Promise<IDomain[]>;
     getOneBy(conditions: {}, options?: IMongoOptions): Promise<IDomain>;
-    updateAndUpsert(find: {}, updateFields: {}): Promise<IDomain>
-    getByAggregation(pipeline: any[]): Promise<any>
-    updateMany(find: {}, updateFields: {}): Promise<any>
+    updateAndUpsert?(find: {}, updateFields: {}): Promise<IDomain>
+    getByAggregation?(pipeline: any[]): Promise<any>
+    updateMany?(find: {}, updateFields: {}): Promise<any>
 }
 

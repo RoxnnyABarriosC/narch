@@ -19,8 +19,8 @@ import CronFactory from "./App/Infrastructure/Factories/Cron.factory";
 
         await DatabaseFactory.create().create();
 
-       /* const deeds = new SeedFactory();
-        deeds.init();*/
+       /* const seeds = new SeedFactory();
+        seeds.init();*/
 
         let cache: ICacheRepository = CacheFactory.createRedisCache(); // Create for redis repository
         await cache.createConnection(Config.get("cache.redis")); // Create connection for cache

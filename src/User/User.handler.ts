@@ -92,7 +92,7 @@ export default class UserHandler
         this.responder.send(_response, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
     }
 
-    @httpDelete('/:id', AuthorizeMiddleware(Permissions.USERS_DELETE))
+    @httpDelete('/:id', AuthorizeMiddleware(Permissions.USERS_REMOVE))
     public async remove (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new IdRequest(req);

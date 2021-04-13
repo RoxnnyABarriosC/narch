@@ -6,11 +6,11 @@ import IdPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/Id.paylo
 
 export default class GetItemUseCase
 {
-    @lazyInject(REPOSITORIES.IRoleRepository)
+    @lazyInject(REPOSITORIES.IItemRepository)
     private repository: IItemRepository<IItemDomain>;
 
-    async handle(payload: IdPayload): Promise<void>
+    async handle(payload: IdPayload): Promise<IItemDomain>
     {
-        // return await this.repository.getOne(payload.getId());
+        return await this.repository.getOne(payload.getId());
     }
 }

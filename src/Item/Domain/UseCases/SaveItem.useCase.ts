@@ -26,19 +26,8 @@ export default class SaveItemUseCase
 
         item.name = payload.getName();
         item.createdBy = payload.getAuthUser();
-        item.lastModifiedBy = payload.getAuthUser();
+        item.updatedBy = payload.getAuthUser();
 
-        item = await this.repository.save(item);
-
-        item.setId('allalsals');
-        console.log(item.getId());
-        console.log(item.name);
-
-        item.createdBy  = 'assssssssssssssssss';
-        item.lastModifiedBy = payload.getAuthUser();
-
-        console.log(item)
-
-        return item;
+        return await this.repository.save(item);
     }
 }
