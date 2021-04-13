@@ -4,6 +4,8 @@ import {SERVICES} from "./Services";
 import {Types} from "./Types";
 import {REPOSITORIES} from "./Repositories";
 
+import Config from "config";
+
 import IAuthService from "./App/InterfaceAdapters/IServices/IAuthService";
 import AuthService from "./App/Infrastructure/Services/Auth.service";
 
@@ -34,9 +36,13 @@ import NotificationSqlRepository from "./App/Infrastructure/Repositories/Sql/Not
 
 import IItemRepository from "./Item/InterfaceAdapters/IItem.repository";
 import IItemDomain from "./Item/InterfaceAdapters/IItem.domain";
-import ItemMongoRepository from "./Item/Infrastructure/Item.mongo.repository";
-import Config from "config";
 import ItemSqlRepository from "./Item/Infrastructure/Item.sql.repository";
+import ItemMongoRepository from "./Item/Infrastructure/Item.mongo.repository";
+
+import ILogRepository from "./Log/InterfaceAdapters/ILog.repository";
+import ILogDomain from "./Log/InterfaceAdapters/ILog.domain";
+import LogSqlRepository from "./Log/Infrastructure/Log.sql.repository";
+import LogMongoRepository from "./Log/Infrastructure/Log.mongo.repository";
 
 
 /* IServices */
@@ -52,6 +58,7 @@ if (Config.get('dbConfig.default') === 'TypeORM')
     container.bind<IUserRepository<IUserDomain>>(REPOSITORIES.IUserRepository).to(UserSqlRepository);
     container.bind<IRoleRepository<IRoleDomain>>(REPOSITORIES.IRoleRepository).to(RoleSqlRepository);
     container.bind<IFileRepository<IFileDomain>>(REPOSITORIES.IFileRepository).to(FileSqlRepository);
+    container.bind<ILogRepository<ILogDomain>>(REPOSITORIES.ILogRepository).to(LogSqlRepository);
     container.bind<IItemRepository<IItemDomain>>(REPOSITORIES.IItemRepository).to(ItemSqlRepository);
 }
 
@@ -60,6 +67,7 @@ else if (Config.get('dbConfig.default') === 'Mongoose')
     container.bind<IUserRepository<IUserDomain>>(REPOSITORIES.IUserRepository).to(UserMongoRepository);
     container.bind<IRoleRepository<IRoleDomain>>(REPOSITORIES.IRoleRepository).to(RoleMongoRepository);
     container.bind<IFileRepository<IFileDomain>>(REPOSITORIES.IFileRepository).to(FileMongoRepository);
+    container.bind<ILogRepository<ILogDomain>>(REPOSITORIES.ILogRepository).to(LogMongoRepository);
     container.bind<IItemRepository<IItemDomain>>(REPOSITORIES.IItemRepository).to(ItemMongoRepository);
 }
 

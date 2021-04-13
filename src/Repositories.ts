@@ -5,5 +5,6 @@ export const REPOSITORIES = {
     IFileRepository: "IFileRepository",
     ITokenRepository: "ITokenRepository",
     INotificationRepository: "INotificationRepository",
+    ILogRepository: "ILogRepository",
     IItemRepository: "IItemRepository",
 }
