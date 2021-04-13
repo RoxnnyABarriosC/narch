@@ -68,13 +68,12 @@ export default class SaveLogItemUseCase
 
     private processEntity(): {}
     {
-        const deleteAttributes: string[] = ['_id','createdBy', 'updatedBy'];
-        const createdBy: string = this.entity.getCreatedBy().getId();
+        const deleteAttributes: string[] = ['_id','createdBy', 'updatedBy','__v'];
 
-        _.map(deleteAttributes, attr => delete this.entity[attr]);
+        const metadata = JSON.parse(JSON.stringify(this.entity));
 
-        this.entity.createdBy = createdBy;
+        _.map(deleteAttributes, attr => delete metadata[attr]);
 
-        return this.entity;
+        return metadata;
     }
 }
