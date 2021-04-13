@@ -9,13 +9,6 @@ export default class Permissions
     static readonly AUTH_SYNC_PERMISSIONS: string = 'authSyncPermissions';
     static readonly GET_PERMISSIONS: string = 'getPermissions';
 
-    // ITEMS
-    static readonly ITEMS_SAVE: string = 'itemsSave';
-    static readonly ITEMS_UPDATE: string = 'itemsUpdate';
-    static readonly ITEMS_SHOW: string = 'itemsShow';
-    static readonly ITEMS_LIST: string = 'itemsList';
-    static readonly ITEMS_REMOVE: string = 'itemsRemove';
-
     // USERS
     static readonly USERS_SAVE: string = 'usersSave';
     static readonly USERS_UPDATE: string = 'usersUpdate';
@@ -38,6 +31,17 @@ export default class Permissions
     static readonly ROLES_SHOW: string = 'rolesShow';
     static readonly ROLES_LIST: string = 'rolesList';
     static readonly ROLES_REMOVE: string = 'rolesRemove';
+
+    // ITEMS
+    static readonly ITEMS_SAVE: string = 'itemsSave';
+    static readonly ITEMS_UPDATE: string = 'itemsUpdate';
+    static readonly ITEMS_SHOW: string = 'itemsShow';
+    static readonly ITEMS_LIST: string = 'itemsList';
+    static readonly ITEMS_REMOVE: string = 'itemsRemove';
+
+    // LOGS
+    static readonly LOGS_SHOW: string = 'logsShow';
+    static readonly LOGS_LIST: string = 'logsList';
 
     static groupPermissions(): {}
     {
@@ -74,6 +78,10 @@ export default class Permissions
                 `${Permissions.ITEMS_SHOW}`,
                 `${Permissions.ITEMS_LIST}`,
                 `${Permissions.ITEMS_REMOVE}`,
+            ],
+            LOGS: [
+                `${Permissions.LOGS_SHOW}`,
+                `${Permissions.LOGS_LIST}`,
             ],
         };
     }
