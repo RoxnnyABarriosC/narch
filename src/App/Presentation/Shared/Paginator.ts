@@ -70,11 +70,11 @@ export default class Paginator implements IPaginator
         let sorts = this.sort.get();
 
         sorts.forEach((value: string, key: string ) => {
-            let order: string = value.toUpperCase();
+        let order: string = value.toUpperCase();
             order = (order === 'DESC') ? "DESC" : "ASC";
 
             // @ts-ignore
-            this.queryBuilder.addOrderBy(key, order);
+            this.queryBuilder.addOrderBy(`${this.queryBuilder.alias}.${key}`, order);
         });
     }
 
