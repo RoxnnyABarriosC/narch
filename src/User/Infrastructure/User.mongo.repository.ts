@@ -30,6 +30,7 @@ export default class UserMongoRepository extends BaseMongoRepository<UserEntity,
 
             void queryBuilder.where(UserFilter.ENABLE).equals(enable);
         }
+
         if (filter.has(UserFilter.EMAIL))
         {
             const email = filter.get(UserFilter.EMAIL);
@@ -37,6 +38,7 @@ export default class UserMongoRepository extends BaseMongoRepository<UserEntity,
 
             void queryBuilder.where(UserFilter.EMAIL).regex(rsearch);
         }
+
         if (filter.has(UserFilter.IS_SUPER_ADMIN))
         {
             const isSuperAdmin: boolean = filter.get(UserFilter.IS_SUPER_ADMIN);

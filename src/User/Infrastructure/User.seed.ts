@@ -9,7 +9,7 @@ import RoleEntity from "../../Role/Domain/Role.entity";
 import UserEntity from "../Domain/User.entity";
 import IUserDomain from "../InterfaceAdapters/IUser.domain";
 
-export default class UserSqlSeed
+export default class UserSeed
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private userRepository: IUserRepository<IUserDomain>;

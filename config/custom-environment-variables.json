@@ -7,18 +7,18 @@
   },
   "dbConfig": {
     "TypeORM": {
-      "host": "DB_SQL_HOST",
-      "port": "DB_SQL_PORT",
-      "username": "DB_SQL_USER",
-      "password": "DB_SQL_PASSWORD",
-      "database": "DB_SQL_DATABASE"
+      "host": "DB_HOST",
+      "port": "DB_PORT",
+      "username": "DB_USER",
+      "password": "DB_PASSWORD",
+      "database": "DB_DATABASE"
     },
     "Mongoose": {
-      "host": "DB_NO_SQL_HOST",
-      "port": "DB_NO_SQL_PORT",
-      "username": "DB_NO_SQL_USER",
-      "password": "DB_NO_SQL_PASSWORD",
-      "database": "DB_NO_SQL_DATABASE"
+      "host": "DB_HOST",
+      "port": "DB_PORT",
+      "username": "DB_USER",
+      "password": "DB_PASSWORD",
+      "database": "DB_DATABASE"
     },
     "default" : "DB_TYPE_DEFAULT"
   },

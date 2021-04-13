@@ -3,14 +3,13 @@ dotenv.config(); // Need before get config
 
 import {validateEnv} from "./Config/validateEnv";
 import DatabaseFactory from "./App/Infrastructure/Factories/Database.factory";
-import ICreateConnection from "./App/InterfaceAdapters/IDatabase/ICreateConnection";
 import {ICacheRepository} from "@digichanges/shared-experience";
 import CacheFactory from "./App/Infrastructure/Factories/Cache.factory";
 import EventHandler from "./App/Infrastructure/Events/EventHandler";
 import App from "./App/App";
 import {loggerCli} from "./App/Infrastructure/Shared/Logger";
 import Config from "config";
-import SqlSeedFactory from "./App/Infrastructure/Factories/SqlSeed.factory";
+import SeedFactory from "./App/Infrastructure/Factories/Seed.factory";
 import CronFactory from "./App/Infrastructure/Factories/Cron.factory";
 
 (async () => {
@@ -18,12 +17,10 @@ import CronFactory from "./App/Infrastructure/Factories/Cron.factory";
         // Initialize configuration
         validateEnv();
 
-        await DatabaseFactory.create('TypeORM').create();
+        await DatabaseFactory.create().create();
 
-        await DatabaseFactory.create('Mongoose').create();
-
-       /* const sqlSeeds = new SqlSeedFactory();
-        sqlSeeds.init();*/
+       /* const deeds = new SeedFactory();
+        deeds.init();*/
 
         let cache: ICacheRepository = CacheFactory.createRedisCache(); // Create for redis repository
         await cache.createConnection(Config.get("cache.redis")); // Create connection for cache

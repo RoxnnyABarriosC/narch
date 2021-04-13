@@ -19,17 +19,19 @@ export default class AuthTransformer extends Transformer
         const user: IUserDomain = token.getUser();
         const authService: AuthService = new AuthService();
 
+        console.log(user);
+
         return {
             user: {
-                id: token.getUser().getId(),
-                firstName: token.getUser().firstName,
-                lastName: token.getUser().lastName,
-                email: token.getUser().email,
-                enable: token.getUser().enable,
+                id: user.getId(),
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                enable: user.enable,
                 permissions: authService.getPermissions(user),
-                roles:  this.validate(token.getUser().roles,'roleUserTransformer'),
-                createdAt: this.transformDate(token.getUser().createdAt),
-                updatedAt: this.transformDate(token.getUser().updatedAt),
+                roles: this.validate(user.getRoles(),'roleUserTransformer'),
+                createdAt: this.transformDate(user.createdAt),
+                updatedAt: this.transformDate(user.updatedAt),
             },
             expires: token.getExpires(),
             token: token.getHash()

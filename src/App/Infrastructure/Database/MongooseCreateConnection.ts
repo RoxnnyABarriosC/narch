@@ -17,6 +17,15 @@ import PushNotificationEntity from "../Entities/PushNotification.entity";
 import TokenMongoSchema from "../Schema/Mongo/Token.mongo.schema";
 import TokenEntity from "../Entities/Token.entity";
 import ITokenDocument from "../../InterfaceAdapters/IInfraestructure/IToken.document";
+import IUserDocument from "../../../User/InterfaceAdapters/IUser.document";
+import UserEntity from "../../../User/Domain/User.entity";
+import UserMongoSchema from "../../../User/Infrastructure/User.mongo.schema";
+import IRoleDocument from "../../../Role/InterfaceAdapters/IRole.document";
+import RoleEntity from "../../../Role/Domain/Role.entity";
+import RoleMongoSchema from "../../../Role/Infrastructure/Role.mongo.schema";
+import IFileDocument from "../../../File/InterfaceAdapters/IFile.document";
+import FileEntity from "../../../File/Domain/File.entity";
+import FileMongoSchema from "../../../File/Infrastructure/File.mongo.schema";
 
 export let connection: Connection = null;
 
@@ -47,6 +56,10 @@ export default class MongooseCreateConnection implements ICreateConnection
         loggerCli.debug(this.uri.replace(`${this.config.username}:${this.config.password}@`,''));
         connection = await mongoose.createConnection(this.uri, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true});
 
+        connection.model<IUserDocument>(UserEntity.name.replace('Entity',''), UserMongoSchema);
+        connection.model<IRoleDocument>(RoleEntity.name.replace('Entity',''), RoleMongoSchema);
+        connection.model<IFileDocument>(FileEntity.name.replace('Entity',''), FileMongoSchema);
+        connection.model<ITokenDocument>(TokenEntity.name.replace('Entity',''), TokenMongoSchema);
         connection.model<IItemDocument>(ItemEntity.name.replace('Entity',''), ItemMongoSchema);
 
         // Infrastructure

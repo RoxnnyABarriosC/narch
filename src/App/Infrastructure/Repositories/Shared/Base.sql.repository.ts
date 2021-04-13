@@ -1,5 +1,5 @@
 import {injectable, unmanaged} from "inversify";
-import {DeleteResult, EntitySchema, getRepository, Repository} from "typeorm";
+import {EntitySchema, getRepository, Repository} from "typeorm";
 import NotFoundException from "../../Exceptions/NotFound.exception";
 import IBaseSqlRepository, {ISqlOptions} from "../../../InterfaceAdapters/IRepository/Shared/IBase.sql.repository";
 
@@ -37,9 +37,18 @@ export default class BaseSqlRepository<Entity extends IDomain, IDomain> implemen
         await this.repository.save(entity);
     }
 
-    async delete(id: string): Promise<DeleteResult>
+    async delete(id: string): Promise<IDomain>
     {
-        return await this.repository.delete(id);
+        const entity: IDomain = await this.repository.findOne(id);
+
+        if (!entity)
+        {
+            throw new NotFoundException(this.entity.name.replace('Entity',''));
+        }
+
+        await this.repository.delete(id);
+
+        return entity;
     }
 
     async getOneBy(condition: {}, options: ISqlOptions = { initThrow: true }): Promise<IDomain>

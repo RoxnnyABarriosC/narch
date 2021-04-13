@@ -18,6 +18,7 @@ import CreateBucketCommand from "./File/Presentation/Commands/CreateBucket.comma
 import {validateEnv} from "./Config/validateEnv";
 import DatabaseFactory from "./App/Infrastructure/Factories/Database.factory";
 import ICreateConnection from "./App/InterfaceAdapters/IDatabase/ICreateConnection";
+import Config from "config";
 
 (async() => 
 {
@@ -27,7 +28,10 @@ import ICreateConnection from "./App/InterfaceAdapters/IDatabase/ICreateConnecti
 
         const createConnection: ICreateConnection = DatabaseFactory.create();
 
-        createConnection.setAttrConfig('synchronize', false);
+        if (Config.get('dbConfig.default') === 'TypeORM')
+        {
+            createConnection.setAttrConfig('synchronize', false);
+        }
 
         await createConnection.create();
 
@@ -45,6 +49,7 @@ import ICreateConnection from "./App/InterfaceAdapters/IDatabase/ICreateConnecti
     }
     catch (error)
     {
+        console.log(error)
         loggerCli.info('Command Error');
         loggerCli.error(error.message);
         exit();
