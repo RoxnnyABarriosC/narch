@@ -29,15 +29,16 @@ import CronFactory from "./App/Infrastructure/Factories/Cron.factory";
         EventHandler.getInstance();
 
         const cronFactory = new CronFactory();
-        // cronFactory.start();
+        cronFactory.start();
 
         const app = new App();
         await app.initConfig();
         await app.build();
         await app.listen();
     }
-    catch (error) // TODO: Change this error catch
+    catch (error)
     {
+        console.log(error)
         loggerCli.info('Error while connecting to the database', error);
         return error;
     }

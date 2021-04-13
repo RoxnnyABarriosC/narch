@@ -27,13 +27,13 @@ const ItemSqlSchema = new EntitySchema<ItemEntity>({
     },
     relations: {
         createdBy: {
-            type: "one-to-many",
+            type: "many-to-one",
             target: "UserEntity",
             joinColumn: true,
             eager: true,
         },
         updatedBy: {
-            type: "one-to-many",
+            type: "many-to-one",
             target: "UserEntity",
             joinColumn: true,
             eager: true,

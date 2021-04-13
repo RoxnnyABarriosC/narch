@@ -5,16 +5,16 @@ import ICriteria from "../../App/InterfaceAdapters/Shared/ICriteria";
 import BaseSqlRepository from "../../App/Infrastructure/Repositories/Shared/Base.sql.repository";
 import ItemEntity from "../Domain/Item.entity";
 import IItemDomain from "../InterfaceAdapters/IItem.domain";
-import FileSqlSchema from "../../File/Infrastructure/File.sql.schema";
 import ItemFilter from "./../Presentation/Criterias/Item.filter";
 import IItemRepository from "../InterfaceAdapters/IItem.repository";
+import ItemSqlSchema from "./Item.sql.schema";
 
 @injectable()
 export default class ItemSqlRepository extends BaseSqlRepository<ItemEntity,IItemDomain> implements IItemRepository<IItemDomain>
 {
     constructor()
     {
-        super(ItemEntity,FileSqlSchema);
+        super(ItemEntity,ItemSqlSchema);
     }
 
     async list(criteria: ICriteria): Promise<IPaginator>
