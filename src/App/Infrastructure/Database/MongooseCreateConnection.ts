@@ -26,6 +26,9 @@ import RoleMongoSchema from "../../../Role/Infrastructure/Role.mongo.schema";
 import IFileDocument from "../../../File/InterfaceAdapters/IFile.document";
 import FileEntity from "../../../File/Domain/File.entity";
 import FileMongoSchema from "../../../File/Infrastructure/File.mongo.schema";
+import ILogDocument from "../../../Log/InterfaceAdapters/ILog.document";
+import LogEntity from "../../../Log/Domain/Log.entity";
+import LogMongoSchema from "../../../Log/Infrastructure/Log.mongo.schema";
 
 export let connection: Connection = null;
 
@@ -60,6 +63,7 @@ export default class MongooseCreateConnection implements ICreateConnection
         connection.model<IRoleDocument>(RoleEntity.name.replace('Entity',''), RoleMongoSchema);
         connection.model<IFileDocument>(FileEntity.name.replace('Entity',''), FileMongoSchema);
         connection.model<ITokenDocument>(TokenEntity.name.replace('Entity',''), TokenMongoSchema);
+        connection.model<ILogDocument>(LogEntity.name.replace('Entity',''), LogMongoSchema);
         connection.model<IItemDocument>(ItemEntity.name.replace('Entity',''), ItemMongoSchema);
 
         // Infrastructure
