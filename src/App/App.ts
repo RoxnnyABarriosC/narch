@@ -13,6 +13,7 @@ import "./App.handler";
 import "./../User/User.handler";
 import "./../Auth/Auth.handler";
 import "./../File/File.handler";
+import "./../Log/Log.handler";
 import "./../Item/Item.handler";
 
 import container from "../Inversify.config";
