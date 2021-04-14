@@ -11,6 +11,7 @@ import i18n from 'i18n';
 
 import "./App.handler";
 import "./../User/User.handler";
+import "./../Role/Role.handler";
 import "./../Auth/Auth.handler";
 import "./../File/File.handler";
 import "./../Log/Log.handler";
