@@ -89,7 +89,7 @@ export default class BaseSqlRepository<Entity extends IDomain, IDomain> implemen
 
         const exist = await this.repository.findOne(conditionMap);
 
-        if(initThrow && exist)
+        if(initThrow && !exist)
         {
             throw new NotFoundException(this.entity.name.replace('Entity',''));
         }

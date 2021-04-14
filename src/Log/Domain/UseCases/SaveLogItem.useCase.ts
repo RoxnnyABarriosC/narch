@@ -43,7 +43,7 @@ export default class SaveLogItemUseCase
         const log: ILogDomain = new LogEntity();
 
         log.action = logAction;
-        log.entity = LogEntity.name;
+        log.entity = ItemEntity.name;
         log.entityId = this.entity.getId();
         log.description = `${this.authUser.email} created the item`;
         log.createdBy = this.authUser;

@@ -4,7 +4,6 @@ import {REPOSITORIES} from "../../../Repositories";
 import ILogDomain from "../../InterfaceAdapters/ILog.domain";
 import LogActionEnum from "../../Infrastructure/Enum/LogActionEnum";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
-import IItemDomain from "../../../Item/InterfaceAdapters/IItem.domain";
 import LogEntity from "../Log.entity";
 import _ from "lodash";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
@@ -15,8 +14,8 @@ export default class SaveLogRoleUseCase
     @lazyInject(REPOSITORIES.ILogRepository)
     private repository: ILogRepository<ILogDomain>;
 
-    private authUser: IUserDomain;
-    private entity: IItemDomain | any;
+    private readonly authUser: IUserDomain;
+    private readonly entity: IRoleDomain | any;
 
     constructor(authUser: IUserDomain, entity: IRoleDomain)
     {
@@ -44,7 +43,7 @@ export default class SaveLogRoleUseCase
         const log: ILogDomain = new LogEntity();
 
         log.action = logAction;
-        log.entity = LogEntity.name;
+        log.entity = RoleEntity.name;
         log.entityId = this.entity.getId();
         log.description = `${this.authUser.email} created the role`;
         log.createdBy = this.authUser;

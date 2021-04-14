@@ -104,7 +104,7 @@ export default class BaseMongoRepository<Entity , IDomain extends IBaseDocumentD
     {
         const exist =  await this.repository.findOne(condition, select.join(' '));
 
-        if(initThrow && exist)
+        if(initThrow && !exist)
         {
             throw new NotFoundException(this.entity.name.replace('Entity',''));
         }
