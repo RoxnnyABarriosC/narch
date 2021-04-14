@@ -1,5 +1,5 @@
 import {injectable, unmanaged} from "inversify";
-import {EntitySchema, getRepository, Repository} from "typeorm";
+import {EntitySchema, FindOneOptions, getRepository, Repository} from "typeorm";
 import NotFoundException from "../../Exceptions/NotFound.exception";
 import IBaseSqlRepository, {ISqlOptions} from "../../../InterfaceAdapters/IRepository/Shared/IBase.sql.repository";
 
@@ -39,7 +39,7 @@ export default class BaseSqlRepository<Entity extends IDomain, IDomain> implemen
 
     async delete(id: string): Promise<IDomain>
     {
-        const entity: IDomain = await this.repository.findOne(id);
+        const entity: IDomain = await this.repository.findOne(id, {loadEagerRelations: false});
 
         if (!entity)
         {
@@ -77,5 +77,23 @@ export default class BaseSqlRepository<Entity extends IDomain, IDomain> implemen
         }
 
         return entities;
+    }
+
+    async exist(condition: {}, select: string[], initThrow: boolean = false): Promise<any>
+    {
+        const conditionMap: FindOneOptions = {
+            select,
+            where: condition,
+            loadEagerRelations: false,
+        }
+
+        const exist = await this.repository.findOne(conditionMap);
+
+        if(initThrow && exist)
+        {
+            throw new NotFoundException(this.entity.name.replace('Entity',''));
+        }
+
+        return exist;
     }
 }

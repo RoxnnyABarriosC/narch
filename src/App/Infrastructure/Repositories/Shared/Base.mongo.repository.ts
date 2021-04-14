@@ -99,4 +99,16 @@ export default class BaseMongoRepository<Entity , IDomain extends IBaseDocumentD
     {
         return await this.repository.updateMany(find, updateFields, {multi: true});
     }
+
+    async exist(condition: {}, select: string[], initThrow: boolean = false): Promise<any>
+    {
+        const exist =  await this.repository.findOne(condition, select.join(' '));
+
+        if(initThrow && exist)
+        {
+            throw new NotFoundException(this.entity.name.replace('Entity',''));
+        }
+
+        return exist
+    }
 }
