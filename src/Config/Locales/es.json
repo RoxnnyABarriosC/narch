@@ -12,7 +12,13 @@
 			"wrongPermissions": "Error en los permisos.",
 			"routeNotFound": "Ruta no encontrada.",
 			"tokenExpired": "Debes estar autenticado.",
-			"forbidden": "No tienes acceso."
+			"forbidden": "No tienes acceso.",
+			"deleteRoleOfSystem": "Los roles del sistema no pueden ser eliminados."
+		},
+		"uniques": {
+			"role": {
+				"slug": "El slug ya se encuentra en uso."
+			}
 		}
 	}
 }
