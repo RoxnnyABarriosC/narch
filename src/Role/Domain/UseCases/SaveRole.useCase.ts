@@ -6,6 +6,8 @@ import {SERVICES} from "../../../Services";
 import IRoleDomain from "../../InterfaceAdapters/IRole.domain";
 import SaveRolePayload from "../../InterfaceAdapters/Payloads/SaveRole.payload";
 import RoleEntity from "../Role.entity";
+import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
+import SaveLogRoleUseCase from "../../../Log/Domain/UseCases/SaveLogRole.useCase";
 
 export default class SaveRoleUseCase
 {
@@ -25,6 +27,9 @@ export default class SaveRoleUseCase
         role.slug = payload.getSlug();
         role.permissions = payload.getPermissions();
         role.enable = payload.getEnable();
+
+        const log = new SaveLogRoleUseCase(payload.getAuthUser(), role);
+        await log.handle(LogActionEnum.SAVE);
 
         return await this.repository.save(role);
     }

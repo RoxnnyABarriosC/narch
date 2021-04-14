@@ -5,6 +5,9 @@ import IRoleRepository from "../../InterfaceAdapters/IRole.repository";
 import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuthService";
 import IRoleDomain from "../../InterfaceAdapters/IRole.domain";
 import UpdateRolePayload from "../../InterfaceAdapters/Payloads/UpdateRole.payload";
+import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
+import SaveLogRoleUseCase from "../../../Log/Domain/UseCases/SaveLogRole.useCase";
+import _ from "lodash";
 
 export default class UpdateRoleUseCase
 {
@@ -19,11 +22,15 @@ export default class UpdateRoleUseCase
         this.authService.validatePermissions(payload.getPermissions());
 
         const role: IRoleDomain = await this.repository.getOne(payload.getId());
+        const oldRole: IRoleDomain = _.clone<IRoleDomain>(role);
 
         role.name = payload.getName();
         role.slug = payload.getSlug();
         role.permissions = payload.getPermissions();
         role.enable = payload.getEnable();
+
+        const log = new SaveLogRoleUseCase(payload.getAuthUser(), oldRole);
+        await log.handle(LogActionEnum.UPDATE);
 
         return await this.repository.save(role);
     }
