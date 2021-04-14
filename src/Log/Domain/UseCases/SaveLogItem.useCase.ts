@@ -7,14 +7,15 @@ import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 import IItemDomain from "../../../Item/InterfaceAdapters/IItem.domain";
 import LogEntity from "../Log.entity";
 import _ from "lodash";
+import ItemEntity from "../../../Item/Domain/Item.entity";
 
 export default class SaveLogItemUseCase
 {
     @lazyInject(REPOSITORIES.ILogRepository)
     private repository: ILogRepository<ILogDomain>;
 
-    private authUser: IUserDomain;
-    private entity: IItemDomain | any;
+    private readonly authUser: IUserDomain;
+    private readonly entity: IItemDomain | any;
 
     constructor(authUser: IUserDomain, entity: IItemDomain)
     {
@@ -57,7 +58,7 @@ export default class SaveLogItemUseCase
         const action: string = logAction === LogActionEnum.UPDATE ? 'updated' : 'deleted';
 
         log.action = logAction;
-        log.entity = LogEntity.name;
+        log.entity = ItemEntity.name;
         log.entityId = this.entity.getId();
         log.description = `${this.authUser.email} ${action} the item`;
         log.createdBy = this.authUser;
