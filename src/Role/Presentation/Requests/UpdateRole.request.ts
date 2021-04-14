@@ -1,14 +1,26 @@
 import {Request} from "express";
-import {IsArray, IsBoolean, IsOptional, IsString} from "class-validator";
+import {IsArray, IsBoolean, IsOptional, IsString, Length} from "class-validator";
 import IdRequest from "../../../App/Presentation/Requests/Defaults/Id.request";
 import UpdateRolePayload from "../../InterfaceAdapters/Payloads/UpdateRole.payload";
+import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique"
+import {REPOSITORIES} from "../../../Repositories";
+import {Locales} from "../../../App/App";
 
 export default class UpdateRoleRequest extends IdRequest implements UpdateRolePayload
 {
+    @Length(3, 30)
     @IsString()
     name: string;
 
+    @Length(3, 30)
     @IsString()
+    @Unique({
+            repository: REPOSITORIES.IRoleRepository,
+            property: 'id'
+        },
+        {
+            message: () =>  Locales.__('general.uniques.role.slug'),
+        })
     slug: string;
 
     @IsArray()

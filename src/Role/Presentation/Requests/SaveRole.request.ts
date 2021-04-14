@@ -1,8 +1,12 @@
 import {Request} from "express";
 import {IsArray, IsBoolean, IsOptional, IsString, Length} from "class-validator";
 import SaveRolePayload from "../../InterfaceAdapters/Payloads/SaveRole.payload";
+import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique"
+import {REPOSITORIES} from "../../../Repositories";
+import {Locales} from "../../../App/App";
+import AuthUserRequest from "../../../App/Presentation/Requests/Defaults/AuthUser.request";
 
-export default class SaveRoleRequest implements SaveRolePayload
+export default class SaveRoleRequest extends AuthUserRequest implements SaveRolePayload
 {
     @Length(3, 30)
     @IsString()
@@ -10,6 +14,12 @@ export default class SaveRoleRequest implements SaveRolePayload
 
     @Length(3, 30)
     @IsString()
+    @Unique({
+            repository: REPOSITORIES.IRoleRepository
+        },
+        {
+            message: () =>  Locales.__('general.uniques.role.slug'),
+        })
     slug: string;
 
     @IsArray()
@@ -24,6 +34,7 @@ export default class SaveRoleRequest implements SaveRolePayload
 
     constructor(request: Request | any)
     {
+        super(request);
         this.name = request.body.name;
         this.slug = request.body.slug;
         this.permissions = request.body.permissions;
