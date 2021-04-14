@@ -10,18 +10,30 @@ import StatusCode from "../../Presentation/Shared/StatusCode";
 import NotFoundHttpException from "../../Presentation/Exceptions/NotFoundHttp.exception";
 import TokenExpiredHttpException from "../../Presentation/Exceptions/TokenExpiredHttp.exception";
 import DuplicateEntityHttpException from "../../Presentation/Exceptions/DuplicateEntityHttp.exception";
+import DeleteRoleOfSystemException from "../../../Role/Infrastructure/Exceptions/DeleteRoleOfSystem.exception";
+import DeleteRoleOfSystemHttpException from "../../../Role/Presentation/Exceptions/DeleteRoleOfSystemHttp.exception";
+import DecryptForbiddenException from "../Exceptions/DecryptForbidden.exception";
+import BadCredentialsException from "../../../Auth/Domain/Exceptions/BadCredentials.exception";
+import UserDisabledException from "../../../User/Domain/Exceptions/UserDisabled.exception";
+import RoleDisabledException from "../../../Role/Domain/Exceptions/RoleDisabled.exception";
+import CantDisabledException from "../../../Auth/Domain/Exceptions/CantDisabled.exception";
+import PasswordWrongException from "../../../Auth/Domain/Exceptions/PasswordWrong.exception";
+import NotFoundException from "../Exceptions/NotFound.exception";
+import WrongPermissionsException from "../Exceptions/WrongPermissions.exception";
 
 export default class ExceptionFactory
 {
     private exceptionsMapper: any = {
-        'DecryptForbiddenException': new DecryptForbiddenHttpException(),
-        'BadCredentialsException': new BadCredentialsHttpException(),
-        'UserDisabledException': new UserDisabledHttpException(),
-        'RoleDisabledException': new RoleDisabledHttpException(),
-        'CantDisabledException': new CantDisabledHttpException(),
-        'PasswordWrongException': new PasswordWrongHttpException(),
-        'NotFoundException': new NotFoundHttpException(),
-        'WrongPermissionsException': new WrongPermissionsHttpException(),
+        [DecryptForbiddenException.name]: new DecryptForbiddenHttpException(),
+        [BadCredentialsException.name]: new BadCredentialsHttpException(),
+        [UserDisabledException.name]: new UserDisabledHttpException(),
+        [RoleDisabledException.name]: new RoleDisabledHttpException(),
+        [CantDisabledException.name]: new CantDisabledHttpException(),
+        [PasswordWrongException.name]: new PasswordWrongHttpException(),
+        [NotFoundException.name]: new NotFoundHttpException(),
+        [WrongPermissionsException.name]: new WrongPermissionsHttpException(),
+        [DeleteRoleOfSystemException.name]: new DeleteRoleOfSystemHttpException(),
+
         'Error': new ErrorHttpException(StatusCode.HTTP_INTERNAL_SERVER_ERROR, "Internal Error", []),
         'TypeError': new ErrorHttpException(StatusCode.HTTP_INTERNAL_SERVER_ERROR, "Internal Error", []),
         'ErrorHttpException': new ErrorHttpException(StatusCode.HTTP_INTERNAL_SERVER_ERROR, "Internal Error", []),
