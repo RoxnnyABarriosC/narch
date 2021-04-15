@@ -4,6 +4,9 @@ import {IsString, IsEmail, Length, IsBoolean} from "class-validator";
 import {Match} from "../../../App/Infrastructure/Shared/Decorators/match";
 import RegisterPayload from "../../InterfaceAdapters/Payloads/Register.payload";
 import Roles from "../../../Config/Roles";
+import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique";
+import {REPOSITORIES} from "../../../Repositories";
+import {Locales} from "../../../App/App";
 
 export default class RegisterRequest implements RegisterPayload
 {
@@ -16,6 +19,12 @@ export default class RegisterRequest implements RegisterPayload
     lastName: string
 
     @IsEmail()
+    @Unique({
+            repository: REPOSITORIES.IUserRepository
+        },
+        {
+            message: () =>  Locales.__('general.uniques.user.email'),
+        })
     email: string
 
     @Length(Config.get('validationSettings.password.min'), Config.get('validationSettings.password.max'))
