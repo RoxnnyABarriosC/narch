@@ -12,8 +12,9 @@ export default class UserEntity extends BaseEntity implements IUserDomain
     permissions: string[];
     enable: boolean;
     isSuperAdmin: boolean;
-    confirmationToken: string ;
-    passwordRequestedAt: Date ;
+    confirmationToken: string;
+    passwordRequestedAt: Date;
+    deletedAt: Date;
 
     constructor()
     {

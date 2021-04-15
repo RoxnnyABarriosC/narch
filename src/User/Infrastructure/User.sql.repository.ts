@@ -26,11 +26,11 @@ export default class UserSqlRepository extends BaseSqlRepository<UserEntity,IUse
 
         queryBuilder.where("1 = 1");
 
-        filter.createFilter(queryBuilder,UserFilter,UserFilter.EMAIL,'andWhere', 'ilike');
-        filter.createFilter(queryBuilder,UserFilter,UserFilter.ENABLE,'andWhere', '=');
-        filter.createFilter(queryBuilder,RoleFilter,RoleFilter.NAME,'andWhere', 'ilike', 'role');
-        filter.createFilter(queryBuilder,RoleFilter,RoleFilter.SLUG,'andWhere', '=', 'role');
-        filter.createFilter(queryBuilder,RoleFilter,RoleFilter.ENABLE,'andWhere', '=', 'role');
+        filter.createFilter(queryBuilder,UserFilter,'EMAIL','andWhere', 'ilike');
+        filter.createFilter(queryBuilder,UserFilter,'ENABLE','andWhere', '=');
+        filter.createFilter(queryBuilder,RoleFilter,'NAME','andWhere', 'ilike', 'role');
+        filter.createFilter(queryBuilder,RoleFilter,'SLUG','andWhere', '=', 'role');
+        filter.createFilter(queryBuilder,RoleFilter,'ENABLE','andWhere', '=', 'role');
 
         queryBuilder.leftJoinAndSelect("i.roles", "role");
 

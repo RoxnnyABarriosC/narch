@@ -53,7 +53,12 @@ const UserSqlSchema = new EntitySchema<UserEntity>({
             name: 'updatedAt',
             type: 'timestamp with time zone',
             updateDate: true,
-        }
+        },
+        deletedAt: {
+            name: 'deletedAt',
+            type: 'timestamp with time zone',
+            nullable: true,
+        },
     },
     relations: {
         roles: {

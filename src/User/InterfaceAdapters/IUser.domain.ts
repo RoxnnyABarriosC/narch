@@ -13,6 +13,7 @@ export default interface IUserDomain extends IBaseEntityDomain
     isSuperAdmin: boolean;
     confirmationToken: string;
     passwordRequestedAt: Date;
+    deletedAt: Date;
 
     getFullName(): string;
     setRole(role: IRoleDomain): void;
