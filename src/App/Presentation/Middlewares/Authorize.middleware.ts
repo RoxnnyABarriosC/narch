@@ -1,9 +1,6 @@
 import {NextFunction, Response} from 'express';
 import Config from 'config';
 import AuthService from "../../Infrastructure/Services/Auth.service";
-import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
-import ContainerFactory from "../../Infrastructure/Factories/Container.factory";
-import {REPOSITORIES} from "../../../Repositories";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 import ForbiddenHttpException from "../Exceptions/ForbiddenHttp.exception";
 import _ from "lodash";
@@ -19,15 +16,11 @@ const AuthorizeMiddleware = (...handlerPermissions: any) =>
 
             let handlerPermission = handlerPermissions[0];
             let isAllowed: boolean = Config.get('auth.authorization') !== 'true';
-            let tokenDecode = req.tokenDecode;
+            let authUser: IUserDomain = req.authUser;
 
-            let userRepository: IUserRepository<IUserDomain> = ContainerFactory.create<IUserRepository<IUserDomain>>(REPOSITORIES.IUserRepository);
+            if ( authUser.isSuperAdmin ) isAllowed = true;
 
-            let user: IUserDomain = await userRepository.getOneBy({email:tokenDecode.email}, { initThrow: false });
-
-            if ( user.isSuperAdmin ) isAllowed = true;
-
-            let totalPermissions = authService.getPermissions(user);
+            let totalPermissions = authService.getPermissions(authUser);
 
             _.map(totalPermissions, (permission: string) => {
                 if ( permission === handlerPermission || permission === Permissions.ALL) isAllowed = true;

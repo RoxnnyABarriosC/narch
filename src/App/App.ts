@@ -16,6 +16,7 @@ import "./../Auth/Auth.handler";
 import "./../File/File.handler";
 import "./../Log/Log.handler";
 import "./../Item/Item.handler";
+import "./../Permission/Permission.handler";
 
 import container from "../Inversify.config";
 import LoggerWinstonMiddleware from "./Presentation/Middlewares/LoggerWinston.middleware";

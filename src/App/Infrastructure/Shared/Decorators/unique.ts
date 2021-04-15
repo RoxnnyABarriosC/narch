@@ -27,8 +27,6 @@ export class UniqueConstraint implements ValidatorConstraintInterface
 {
     async validate(value: any, args: ValidationArguments)
     {
-        console.log({[args.property]:value})
-
         // tslint:disable-next-line:no-shadowed-variable
         const [params] = args.constraints;
         // @ts-ignore
