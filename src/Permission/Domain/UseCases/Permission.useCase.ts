@@ -1,4 +1,3 @@
-import _ from "lodash";
 import Permissions from "../../../Config/Permissions";
 
 export default class PermissionUseCase
