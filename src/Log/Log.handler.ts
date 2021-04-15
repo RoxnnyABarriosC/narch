@@ -20,7 +20,7 @@ export default class LogHandler
     @inject(Types.Responder)
     private responder: Responder;
 
-    @httpGet('/', AuthorizeMiddleware(Permissions.LOGS_LIST))
+    @httpGet('/', AuthorizeMiddleware(Permissions.LIST_LOGS))
     public async list (@request() req: Request, @response() res: Response)
     {
         const _request = new ListLogsRequest(req);
@@ -32,7 +32,7 @@ export default class LogHandler
         await this.responder.paginate(paginator, req, res, StatusCode.HTTP_OK, new LogTransformer());
     }
 
-    @httpGet('/:id', AuthorizeMiddleware(Permissions.ITEMS_SHOW))
+    @httpGet('/:id', AuthorizeMiddleware(Permissions.SHOW_LOGS))
     public async getOne  (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
       const _request = new IdRequest(req);
