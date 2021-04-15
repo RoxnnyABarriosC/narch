@@ -52,4 +52,9 @@ export default class SaveRoleCommandRequest implements SaveRolePayload
     {
         return null
     }
+
+    getTokenId(): string
+    {
+        return null;
+    }
 }

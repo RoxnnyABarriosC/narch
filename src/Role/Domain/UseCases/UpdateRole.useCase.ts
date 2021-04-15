@@ -2,7 +2,7 @@ import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
 import {SERVICES} from "../../../Services";
 import IRoleRepository from "../../InterfaceAdapters/IRole.repository";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuthService";
+import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
 import IRoleDomain from "../../InterfaceAdapters/IRole.domain";
 import UpdateRolePayload from "../../InterfaceAdapters/Payloads/UpdateRole.payload";
 import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
