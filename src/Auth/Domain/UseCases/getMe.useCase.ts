@@ -1,12 +1,12 @@
 import lazyInject from "../../../LazyInject";
-import TokenFactory from "../../../App/Infrastructure/Factories/Token.factory";
-import KeepAlivePayload from "../../InterfaceAdapters/Payloads/KeepAlive.payload";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
-import {SERVICES} from "../../../Services";
+import AuthUserPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/AuthUser.payload";
 import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
+import {SERVICES} from "../../../Services";
+import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
+import TokenFactory from "../../../App/Infrastructure/Factories/Token.factory";
 
-export default class KeepAliveUseCase
+export default class GetMeUseCase
 {
     @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;
@@ -18,7 +18,7 @@ export default class KeepAliveUseCase
         this.tokenFactory = new TokenFactory();
     }
 
-    async handle(payload: KeepAlivePayload): Promise<IToken>
+    async handle(payload: AuthUserPayload): Promise<IToken>
     {
         const user: IUserDomain = payload.getAuthUser();
         const tokenId: string = payload.getTokenId();

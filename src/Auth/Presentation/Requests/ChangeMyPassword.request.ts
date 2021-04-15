@@ -1,10 +1,10 @@
-import {IsString, IsUUID, Length} from "class-validator";
 import Config from "config";
+import {IsString, Length} from "class-validator";
 import {Match} from "../../../App/Infrastructure/Shared/Decorators/match";
 import ChangeMyPasswordPayload from "../../InterfaceAdapters/Payloads/ChangeMyPassword.payload";
-import IdRequest from "../../../App/Presentation/Requests/Defaults/Id.request";
+import AuthUserRequest from "../../../App/Presentation/Requests/Defaults/AuthUser.request";
 
-export default class ChangeMyPasswordRequest extends IdRequest implements ChangeMyPasswordPayload
+export default class ChangeMyPasswordRequest extends AuthUserRequest implements ChangeMyPasswordPayload
 {
     @IsString()
     @Length(Config.get('validationSettings.password.min'), Config.get('validationSettings.password.max'))
@@ -18,16 +18,12 @@ export default class ChangeMyPasswordRequest extends IdRequest implements Change
     @Match('newPassword', {message: "newPassword don't match"})
     newPasswordConfirmation: string;
 
-    @IsUUID("4")
-    userId: boolean;
-
     constructor(request: Request | any)
     {
         super(request);
         this.currentPassword = request.body.currentPassword;
         this.newPassword = request.body.newPassword;
         this.newPasswordConfirmation = request.body.newPasswordConfirmation;
-        this.userId = request.tokenDecode.userId;
     }
 
     getCurrentPassword(): string
@@ -43,10 +39,5 @@ export default class ChangeMyPasswordRequest extends IdRequest implements Change
     getNewPasswordConfirmation(): string
     {
         return this.newPasswordConfirmation;
-    }
-
-    getId(): any
-    {
-        return this.userId;
     }
 }

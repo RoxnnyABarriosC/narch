@@ -1,3 +1,13 @@
-import SaveUserPayload from "../../../User/InterfaceAdapters/Payloads/SaveUser.payload";
 
-export default interface RegisterPayload extends SaveUserPayload {}
+export default interface RegisterPayload
+{
+    getFirstName(): string
+    getLastName(): string;
+    getEmail(): string;
+    getPassword(): string;
+    getPasswordConfirmation(): string;
+    getEnable(): boolean;
+    getRoles(): any[];
+    getPermissions(): string[];
+    getIsSuperAdmin(): boolean;
+}

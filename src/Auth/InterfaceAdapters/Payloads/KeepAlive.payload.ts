@@ -1,6 +1,5 @@
+import AuthUserPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/AuthUser.payload";
 
-export default interface KeepAlivePayload
-{
-    getEmail(): string;
-    getTokenId(): string;
-}
+export default interface KeepAlivePayload extends AuthUserPayload {}
+
+

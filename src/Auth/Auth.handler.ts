@@ -1,10 +1,10 @@
-import {controller, httpPost, request, response, next, httpGet} from "inversify-express-utils";
+import {controller, httpPost, request, response, next, httpGet, httpPut} from "inversify-express-utils";
 import { NextFunction, Request, Response } from "express";
 import {StatusCode} from "@digichanges/shared-experience";
 
 import {inject} from "inversify";
 import {SERVICES} from "../Services";
-import IAuthService from "../App/InterfaceAdapters/IServices/IAuthService";
+import IAuthService from "../App/InterfaceAdapters/IServices/IAuth.service";
 import {Types} from "../Types";
 import Responder from "../App/Presentation/Shared/Responder";
 import AuthRequest from "./Presentation/Requests/Auth.request";
@@ -19,21 +19,49 @@ import ForgotPasswordRequest from "./Presentation/Requests/ForgotPassword.reques
 import ForgotPasswordUseCase from "./Domain/UseCases/ForgotPassword.useCase";
 import ChangeForgotPasswordRequest from "./Presentation/Requests/ChangeForgotPassword.request";
 import ChangeForgotPasswordUseCase from "./Domain/UseCases/ChangeForgotPassword.useCase";
-import PermissionUseCase from "./Domain/UseCases/Permission.useCase";
-import PermissionsTransformer from "./Presentation/Transformers/Permissions.transformer";
-import SyncRolesPermissionUseCase from "./Domain/UseCases/SyncRolesPermission.useCase";
 import RegisterRequest from "./Presentation/Requests/Register.request";
 import RegisterUseCase from "./Domain/UseCases/Register.useCase";
 import IToken from "../App/InterfaceAdapters/Shared/IToken";
+import ChangeMyPasswordRequest from "./Presentation/Requests/ChangeMyPassword.request";
+import ChangeMyPasswordUseCase from "./Domain/UseCases/ChangeMyPassword.useCase";
+import AuthUserRequest from "../App/Presentation/Requests/Defaults/AuthUser.request";
+import GetMeUseCase from "./Domain/UseCases/getMe.useCase";
+import KeepAliveTransformer from "./Presentation/Transformers/KeepAlive.transformer";
+import UpdateMeUseCase from "./Domain/UseCases/UpdateMe.useCase";
+import UpdateMeRequest from "./Presentation/Requests/UpdateMe.request";
 
 @controller('/api/auth')
-class AuthHandler
+export default class AuthHandler
 {
     @inject(SERVICES.IAuthService)
     private service: IAuthService;
 
     @inject(Types.Responder)
     private responder: Responder;
+
+    @httpGet('/me', AuthorizeMiddleware(Permissions.SHOW_ME))
+    public async me (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
+    {
+        const _request = new AuthUserRequest(req);
+        await ValidatorRequest.handle(_request);
+
+        const getMeUseCase = new GetMeUseCase();
+        const payload: IToken = await getMeUseCase.handle(_request);
+
+        this.responder.send(payload, null, res, StatusCode.HTTP_OK, new AuthTransformer());
+    }
+
+    @httpPut('/me', AuthorizeMiddleware(Permissions.UPDATE_ME))
+    public async updateAuthUser (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
+    {
+        const _request = new UpdateMeRequest(req);
+        await ValidatorRequest.handle(_request);
+
+        const updateMeUseCase = new UpdateMeUseCase();
+        const payload: IToken = await updateMeUseCase.handle(_request);
+
+        this.responder.send(payload, null, res, StatusCode.HTTP_OK, new AuthTransformer());
+    }
 
     @httpPost('/login')
     public async login (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
@@ -59,7 +87,7 @@ class AuthHandler
         this.responder.send(payload, null, res, StatusCode.HTTP_CREATED, new AuthTransformer());
     }
 
-    @httpPost('/keepAlive', AuthorizeMiddleware(Permissions.AUTH_KEEP_ALIVE))
+    @httpPost('/keepAlive', AuthorizeMiddleware(Permissions.KEEP_ALIVE))
     public async keepAlive (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new KeepAliveRequest(req);
@@ -68,7 +96,7 @@ class AuthHandler
         const keepAliveUseCase = new KeepAliveUseCase();
         const payload: IToken = await keepAliveUseCase.handle(_request);
 
-        this.responder.send(payload, null, res, StatusCode.HTTP_CREATED, new AuthTransformer());
+        this.responder.send(payload, null, res, StatusCode.HTTP_CREATED, new KeepAliveTransformer());
     }
 
     @httpPost('/forgotPassword')
@@ -95,21 +123,15 @@ class AuthHandler
         this.responder.send(payload, null, res, StatusCode.HTTP_CREATED, null);
     }
 
-    @httpGet('/permissions', AuthorizeMiddleware(Permissions.GET_PERMISSIONS))
-    public async permissions (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
+    @httpPost('/changeMyPassword', AuthorizeMiddleware(Permissions.CHANGE_MY_PASSWORD))
+    public async changeMyPassword (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
-        const permissionUseCase = new PermissionUseCase();
-        const payload = await permissionUseCase.handle();
+        const _request = new ChangeMyPasswordRequest(req);
+        await ValidatorRequest.handle(_request);
 
-        this.responder.send(payload, req, res, StatusCode.HTTP_OK, new PermissionsTransformer());
-    }
+        const changeMyPasswordUseCase = new ChangeMyPasswordUseCase();
+        const payload: IToken = await changeMyPasswordUseCase.handle(_request);
 
-    @httpPost('/syncRolesPermissions', AuthorizeMiddleware(Permissions.AUTH_SYNC_PERMISSIONS))
-    public async syncRolesPermissions (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
-    {
-        const syncRolesPermissionUseCase = new SyncRolesPermissionUseCase();
-        await syncRolesPermissionUseCase.handle();
-
-        this.responder.send({message: "Sync Successfully"}, req, res, StatusCode.HTTP_CREATED, null);
+        this.responder.send(payload, req, res, StatusCode.HTTP_CREATED, new AuthTransformer());
     }
 }
