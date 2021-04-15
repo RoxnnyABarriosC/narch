@@ -2,19 +2,19 @@ import {Sort} from "@digichanges/shared-experience";
 
 export default class ItemSort extends Sort
 {
-    static readonly NAME: string = 'NAME';
+    static readonly CREATED_AT: string = 'createdAt';
 
     getFields(): any
     {
         return [
-            ItemSort.NAME
+            ItemSort.CREATED_AT
         ];
     }
 
     getDefaultSorts(): any
     {
         return [
-            {[ItemSort.NAME]: 'asc'}
+            {[ItemSort.CREATED_AT]: 'desc'}
         ];
     }
 }

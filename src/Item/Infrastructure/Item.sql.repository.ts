@@ -23,12 +23,12 @@ export default class ItemSqlRepository extends BaseSqlRepository<ItemEntity,IIte
 
         const filter = criteria.getFilter();
 
-        filter.createFilter(queryBuilder, ItemFilter, ItemFilter.NAME, 'andWhere','ilike');
+        queryBuilder.where("1 = 1");
+
+        filter.createFilter(queryBuilder, ItemFilter, 'NAME', 'andWhere','ilike');
 
         queryBuilder.innerJoinAndSelect("i.createdBy", "createdBy");
         queryBuilder.innerJoinAndSelect("i.updatedBy", "updatedBy");
-
-        queryBuilder.where("1 = 1");
 
         return new Paginator(queryBuilder, criteria);
     }

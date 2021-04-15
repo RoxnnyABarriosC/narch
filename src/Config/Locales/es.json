@@ -13,7 +13,8 @@
 			"routeNotFound": "Ruta no encontrada.",
 			"tokenExpired": "Debes estar autenticado.",
 			"forbidden": "No tienes acceso.",
-			"deleteRoleOfSystem": "Los roles del sistema no pueden ser eliminados."
+			"deleteRoleOfSystem": "Los roles del sistema no pueden ser eliminados.",
+			"tokenBlackListed": "general.exceptions.tokenBlackListed"
 		},
 		"uniques": {
 			"role": {

@@ -2,19 +2,21 @@ import {Sort} from "@digichanges/shared-experience";
 
 export default class RoleSort extends Sort
 {
-    static readonly SLUG: string = 'slug';
+    static readonly ENABLE: string = 'enable';
+    static readonly CREATED_AT: string = 'createdAt';
 
     getFields(): any
     {
         return [
-            RoleSort.SLUG
+            RoleSort.ENABLE,
+            RoleSort.CREATED_AT,
         ];
     }
 
     getDefaultSorts(): any
     {
         return [
-            {[RoleSort.SLUG]: 'asc'}
+            {[RoleSort.CREATED_AT]: 'desc'}
         ];
     }
 }

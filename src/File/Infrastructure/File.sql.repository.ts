@@ -23,7 +23,7 @@ export default class FileSqlRepository extends BaseSqlRepository<FileEntity,IFil
 
         const filter = criteria.getFilter();
 
-        filter.createFilter(queryBuilder,FileFilter, FileFilter.NAME, 'andWhere','ilike');
+        filter.createFilter(queryBuilder,FileFilter, 'NAME', 'andWhere','ilike');
 
         queryBuilder.where("1 = 1");
 

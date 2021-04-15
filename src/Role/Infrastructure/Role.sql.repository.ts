@@ -25,9 +25,9 @@ export default class RoleSqlRepository extends BaseSqlRepository<RoleEntity,IRol
 
         queryBuilder.where("1 = 1");
 
-        filter.createFilter(queryBuilder,RoleFilter,RoleFilter.NAME,'andWhere', 'ilike');
-        filter.createFilter(queryBuilder,RoleFilter,RoleFilter.SLUG,'andWhere', '=');
-        filter.createFilter(queryBuilder,RoleFilter,RoleFilter.ENABLE,'andWhere', '=');
+        filter.createFilter(queryBuilder, RoleFilter,'NAME','andWhere', 'ilike');
+        filter.createFilter(queryBuilder, RoleFilter,'SLUG','andWhere', 'ilike');
+        filter.createFilter(queryBuilder, RoleFilter,'ENABLE','andWhere', '=');
 
         return new Paginator(queryBuilder, criteria);
     }
