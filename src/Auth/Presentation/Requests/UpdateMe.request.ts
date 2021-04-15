@@ -1,5 +1,5 @@
 import { Request } from "express";
-import {IsString, IsEmail, Length} from "class-validator";
+import {IsString, IsEmail, Length, IsUUID} from "class-validator";
 import UpdateMePayload from "../../InterfaceAdapters/Payloads/UpdateMe.payload";
 import AuthUserRequest from "../../../App/Presentation/Requests/Defaults/AuthUser.request";
 import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique";
@@ -8,6 +8,10 @@ import {Locales} from "../../../App/App";
 
 export default class UpdateMeRequest extends AuthUserRequest implements UpdateMePayload
 {
+    @IsString()
+    @IsUUID('4')
+    id: string;
+
     @Length(3, 50)
     @IsString()
     firstName: string
@@ -18,7 +22,8 @@ export default class UpdateMeRequest extends AuthUserRequest implements UpdateMe
 
     @IsEmail()
     @Unique({
-            repository: REPOSITORIES.IUserRepository
+            repository: REPOSITORIES.IUserRepository,
+            property: 'id'
         },
         {
             message: () =>  Locales.__('general.uniques.user.email'),
@@ -31,6 +36,7 @@ export default class UpdateMeRequest extends AuthUserRequest implements UpdateMe
         this.firstName = request.body.firstName;
         this.lastName = request.body.lastName;
         this.email = request.body.email;
+        this.id = request.tokenDecode.userId;
     }
 
     getFirstName(): string
