@@ -1,21 +1,21 @@
 import {Request} from 'express';
-import {IsBoolean, IsOptional} from "class-validator";
+import {IsOptional, IsString} from "class-validator";
 import ListObjectsPayload from "../../InterfaceAdapters/Payloads/ListObjectsPayload";
 
 export default class ListObjectsRequest implements ListObjectsPayload
 {
     @IsOptional()
-    @IsBoolean()
+    @IsString()
     recursive: string;
 
     @IsOptional()
-    @IsBoolean()
+    @IsString()
     prefix: string;
 
     constructor(request: Request | any)
     {
         this.recursive = request.query.recursive ? String(request.query.recursive): undefined;
-        this.prefix = request.query.hasOwnProperty('prefix') ? String(request.query.prefix) : undefined;;
+        this.prefix = request.query.hasOwnProperty('prefix') ? String(request.query.prefix) : undefined;
     }
 
     getRecursive(): boolean

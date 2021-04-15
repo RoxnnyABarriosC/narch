@@ -95,19 +95,6 @@ export default class FileHandler
         this.responder.send({presignedGetObject}, req, res, StatusCode.HTTP_OK, null);
     }
 
-    @httpGet('/:id', AuthorizeMiddleware(Permissions.DOWNLOAD_FILES))
-    public async downloadStreamFile (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
-    {
-        const _request = new IdRequest(req);
-        await ValidatorRequest.handle(_request);
-
-        const downloadUseCase = new DownloadUseCase();
-
-        const fileDto: IFileDTO = await downloadUseCase.handle(_request);
-
-        this.responder.sendStream(fileDto, req, res, StatusCode.HTTP_OK);
-    }
-
     @httpPut('/base64/:id', AuthorizeMiddleware(Permissions.UPDATE_FILES))
     public async updateBase64 (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
@@ -130,6 +117,19 @@ export default class FileHandler
         const file: IFileDomain = await updateFileMultipartUseCase.handle(_request);
 
         this.responder.send(file, req, res, StatusCode.HTTP_CREATED , new FileTransformer());
+    }
+
+    @httpGet('/:id', AuthorizeMiddleware(Permissions.DOWNLOAD_FILES))
+    public async downloadStreamFile (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
+    {
+        const _request = new IdRequest(req);
+        await ValidatorRequest.handle(_request);
+
+        const downloadUseCase = new DownloadUseCase();
+
+        const fileDto: IFileDTO = await downloadUseCase.handle(_request);
+
+        this.responder.sendStream(fileDto, req, res, StatusCode.HTTP_OK);
     }
 }
 
