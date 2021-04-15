@@ -5,84 +5,94 @@ export default class Permissions
     static readonly ALL: string = 'all';
 
     // AUTH
-    static readonly AUTH_KEEP_ALIVE: string = 'authKeepAlive';
-    static readonly AUTH_SYNC_PERMISSIONS: string = 'authSyncPermissions';
-    static readonly GET_PERMISSIONS: string = 'getPermissions';
+    static readonly KEEP_ALIVE: string = 'keepAlive';
+    static readonly UPDATE_ME: string = 'updateMe';
+    static readonly SHOW_ME: string = 'showMe';
+    static readonly CHANGE_MY_PASSWORD: string = 'ChangeMyPassword';
 
     // USERS
-    static readonly USERS_SAVE: string = 'usersSave';
-    static readonly USERS_UPDATE: string = 'usersUpdate';
-    static readonly USERS_SHOW: string = 'usersShow';
-    static readonly USERS_LIST: string = 'usersList';
-    static readonly USERS_REMOVE: string = 'usersRemove';
-    static readonly USERS_ASSIGN_ROLE: string = 'usersAssignRole';
-    static readonly USERS_CHANGE_MY_PASSWORD: string = 'usersChangeMyPassword';
-    static readonly USERS_CHANGE_USER_PASSWORD:string = 'usersChangeUserPassword';
+    static readonly SAVE_USERS: string = 'saveUsers';
+    static readonly UPDATE_USERS: string = 'updateUsers';
+    static readonly SHOW_USERS: string = 'showUsers';
+    static readonly LIST_USERS: string = 'listUsers';
+    static readonly REMOVE_USERS: string = 'removeUsers';
+    static readonly ASSING_ROLES_TO_USERS: string = 'assingRolesToUsers';
+    static readonly CHANGE_PASSWORDS_USERS:string = 'changePasswordsUsers';
 
     // FILES
-    static readonly FILES_UPLOAD: string = 'filesUpload';
-    static readonly FILES_UPDATE: string = 'filesUpdate';
-    static readonly FILES_DOWNLOAD: string = 'filesDownload';
-    static readonly FILES_LIST: string = 'filesList';
+    static readonly UPLOAD_FILES: string = 'uploadFiles';
+    static readonly UPDATE_FILES: string = 'updateFiles';
+    static readonly DOWNLOAD_FILES: string = 'downloadFiles';
+    static readonly LIST_FILES: string = 'listFiles';
 
     // ROLES
-    static readonly ROLES_SAVE: string = 'rolesSave';
-    static readonly ROLES_UPDATE: string = 'rolesUpdate';
-    static readonly ROLES_SHOW: string = 'rolesShow';
-    static readonly ROLES_LIST: string = 'rolesList';
-    static readonly ROLES_REMOVE: string = 'rolesRemove';
+    static readonly SAVE_ROLES: string = 'saveRoles';
+    static readonly UPDATE_ROLES: string = 'updateRoles';
+    static readonly SHOW_ROLES: string = 'showRoles';
+    static readonly LIST_ROLES: string = 'listRoles';
+    static readonly REMOVE_ROLES: string = 'removeRoles';
 
     // ITEMS
-    static readonly ITEMS_SAVE: string = 'itemsSave';
-    static readonly ITEMS_UPDATE: string = 'itemsUpdate';
-    static readonly ITEMS_SHOW: string = 'itemsShow';
-    static readonly ITEMS_LIST: string = 'itemsList';
-    static readonly ITEMS_REMOVE: string = 'itemsRemove';
+    static readonly SAVE_ITEMS: string = 'saveItems';
+    static readonly UPDATE_ITEMS: string = 'updateItems';
+    static readonly SHOW_ITEMS: string = 'showItems';
+    static readonly LIST_ITEMS: string = 'listItems';
+    static readonly REMOVE_ITEMS: string = 'removeItems';
 
     // LOGS
-    static readonly LOGS_SHOW: string = 'logsShow';
-    static readonly LOGS_LIST: string = 'logsList';
+    static readonly SHOW_LOGS: string = 'showLogs';
+    static readonly LIST_LOGS: string = 'listLogs';
+
+    // OTHER
+    static readonly SYNC_PERMISSIONS: string = 'syncPermissions';
+    static readonly GET_PERMISSIONS: string = 'getPermissions';
 
     static groupPermissions(): {}
     {
         return {
-            OTHERS: [
-                `${Permissions.AUTH_KEEP_ALIVE}`,
-                `${Permissions.AUTH_SYNC_PERMISSIONS}`,
-                `${Permissions.GET_PERMISSIONS}`,
+            AUTH: [
+                `${Permissions.KEEP_ALIVE}`,
+                `${Permissions.UPDATE_ME}`,
+                `${Permissions.SHOW_ME}`,
+                `${Permissions.CHANGE_MY_PASSWORD}`,
             ],
             USERS: [
-                `${Permissions.USERS_SAVE}`,
-                `${Permissions.USERS_UPDATE}`,
-                `${Permissions.USERS_SHOW}`,
-                `${Permissions.USERS_LIST}`,
-                `${Permissions.USERS_REMOVE}`,
-                `${Permissions.USERS_CHANGE_MY_PASSWORD}`,
-                `${Permissions.USERS_CHANGE_USER_PASSWORD}`,
+                `${Permissions.SAVE_USERS}`,
+                `${Permissions.UPDATE_USERS}`,
+                `${Permissions.SHOW_USERS}`,
+                `${Permissions.LIST_USERS}`,
+                `${Permissions.REMOVE_USERS}`,
+                `${Permissions.CHANGE_PASSWORDS_USERS}`,
+                `${Permissions.CHANGE_MY_PASSWORD}`,
+                `${Permissions.UPDATE_ME}`,
             ],
             ROLES: [
-                `${Permissions.ROLES_SAVE}`,
-                `${Permissions.ROLES_UPDATE}`,
-                `${Permissions.ROLES_SHOW}`,
-                `${Permissions.ROLES_LIST}`,
-                `${Permissions.ROLES_REMOVE}`,
+                `${Permissions.SAVE_ROLES}`,
+                `${Permissions.UPDATE_ROLES}`,
+                `${Permissions.SHOW_ROLES}`,
+                `${Permissions.LIST_ROLES}`,
+                `${Permissions.REMOVE_ROLES}`,
             ],
             FILES: [
-                `${Permissions.FILES_UPLOAD}`,
-                `${Permissions.FILES_UPDATE}`,
-                `${Permissions.FILES_DOWNLOAD}`
+                `${Permissions.UPLOAD_FILES}`,
+                `${Permissions.UPDATE_FILES}`,
+                `${Permissions.DOWNLOAD_FILES}`
             ],
             ITEMS: [
-                `${Permissions.ITEMS_SAVE}`,
-                `${Permissions.ITEMS_UPDATE}`,
-                `${Permissions.ITEMS_SHOW}`,
-                `${Permissions.ITEMS_LIST}`,
-                `${Permissions.ITEMS_REMOVE}`,
+                `${Permissions.SAVE_ITEMS}`,
+                `${Permissions.UPDATE_ITEMS}`,
+                `${Permissions.SHOW_ITEMS}`,
+                `${Permissions.LIST_ITEMS}`,
+                `${Permissions.REMOVE_ITEMS}`,
             ],
             LOGS: [
-                `${Permissions.LOGS_SHOW}`,
-                `${Permissions.LOGS_LIST}`,
+                `${Permissions.SHOW_LOGS}`,
+                `${Permissions.LIST_LOGS}`,
             ],
+            OTHER: [
+                `${Permissions.SYNC_PERMISSIONS}`,
+                `${Permissions.GET_PERMISSIONS}`,
+            ]
         };
     }
 

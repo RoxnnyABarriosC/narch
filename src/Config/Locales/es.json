@@ -18,6 +18,9 @@
 		"uniques": {
 			"role": {
 				"slug": "El slug ya se encuentra en uso."
+			},
+			"user": {
+				"email": "El email ya se encuentra en uso."
 			}
 		}
 	}

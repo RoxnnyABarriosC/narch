@@ -16,14 +16,17 @@ export default class Roles
                 Permissions.ALL
             ],
             [Roles.OPERATOR]: [
-                Permissions.USERS_CHANGE_MY_PASSWORD,
-                Permissions.ITEMS_SAVE,
-                Permissions.ITEMS_UPDATE,
-                Permissions.ITEMS_SHOW,
-                Permissions.ITEMS_LIST,
-                Permissions.FILES_UPLOAD,
-                Permissions.FILES_DOWNLOAD,
-                Permissions.FILES_LIST,
+                Permissions.CHANGE_MY_PASSWORD,
+                Permissions.SAVE_ITEMS,
+                Permissions.UPDATE_ITEMS,
+                Permissions.SHOW_ITEMS,
+                Permissions.LIST_ITEMS,
+                Permissions.UPLOAD_FILES,
+                Permissions.DOWNLOAD_FILES,
+                Permissions.LIST_FILES,
+                Permissions.UPDATE_ME,
+                Permissions.KEEP_ALIVE,
+                Permissions.SHOW_ME,
             ]
         };
     }
