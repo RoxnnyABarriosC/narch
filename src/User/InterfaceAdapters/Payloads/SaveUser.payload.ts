@@ -1,5 +1,6 @@
+import AuthUserPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/AuthUser.payload";
 
-export default interface SaveUserPayload
+export default interface SaveUserPayload extends AuthUserPayload
 {
     getFirstName(): string
     getLastName(): string;

@@ -1,6 +1,7 @@
 import {IsArray, IsBoolean, IsString} from 'class-validator';
 import SaveUserPayload from "../../../InterfaceAdapters/Payloads/SaveUser.payload";
 import IRoleDomain from "../../../../Role/InterfaceAdapters/IRole.domain";
+import IUserDomain from "../../../InterfaceAdapters/IUser.domain";
 
 export default class SaveUserCommandRequest implements SaveUserPayload
 {
@@ -98,5 +99,15 @@ export default class SaveUserCommandRequest implements SaveUserPayload
     getIsSuperAdmin(): boolean
     {
         return this.isSuperAdmin;
+    }
+
+    getAuthUser(): IUserDomain
+    {
+        return null;
+    }
+
+    getTokenId(): string
+    {
+        return null;
     }
 }

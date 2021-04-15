@@ -1,5 +1,6 @@
+import lazyInject from "../../../LazyInject";
 import IUserRepository from "../../InterfaceAdapters/IUser.repository";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuthService";
+import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
 import {REPOSITORIES} from "../../../Repositories";
 import {SERVICES} from "../../../Services";
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
@@ -9,7 +10,8 @@ import Roles from "../../../Config/Roles";
 import CantDisabledException from "../../../Auth/Domain/Exceptions/CantDisabled.exception";
 import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
-import lazyInject from "../../../LazyInject";
+import _ from "lodash";
+import IUserService from "../../../App/InterfaceAdapters/IServices/IUser.service";
 
 export default class UpdateUserUseCase
 {
@@ -22,6 +24,9 @@ export default class UpdateUserUseCase
     @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;
 
+    @lazyInject(SERVICES.IUserService)
+    private userService: IUserService;
+
     async handle(payload: UpdateUserPayload): Promise<IUserDomain>
     {
         const user: IUserDomain = await this.repository.getOne(payload.getId());
@@ -33,20 +38,7 @@ export default class UpdateUserUseCase
             enable = true;
         }
 
-        if(typeof user.roles !== 'undefined' && enable !== null) // TODO: Refactoring
-        {
-            let checkRole: CheckUserRolePayload = {
-                roleToCheck: Roles.SUPER_ADMIN.toLocaleLowerCase(),
-                user
-            }
-
-            const verifyRole = await this.checkIfUserHasRole(checkRole);
-
-            if(verifyRole && !enable)
-            {
-                throw new CantDisabledException();
-            }
-        }
+        await this.isSuperAdmin(user,enable);
 
         user.firstName = payload.getFirstName();
         user.lastName = payload.getLastName();
@@ -54,25 +46,24 @@ export default class UpdateUserUseCase
         user.email = payload.getEmail();
         user.permissions = payload.getPermissions();
 
-        await this.repository.save(user);
-
-        return user;
+        return await this.repository.save(user);
     }
 
-    public async checkIfUserHasRole (payload: CheckUserRolePayload): Promise<boolean> // TODO: Create a user service
+    private async isSuperAdmin(user: IUserDomain, enable: boolean): Promise<void>
     {
-        let count = payload.user.roles.length;
-
-        for (let i = 0; i < count; i++)
+        if(!_.isUndefined(user?.roles) && !_.isNull(enable))
         {
-            const role: IRoleDomain = await this.roleRepository.getOne(payload.user.roles[i].getId());
+            let checkRole: CheckUserRolePayload = {
+                roleToCheck: Roles.SUPER_ADMIN.toLocaleLowerCase(),
+                user
+            }
 
-            if(role.slug === payload.roleToCheck)
+            const verifyRole = await this.userService.checkIfUserHasRole(checkRole);
+
+            if(verifyRole && !enable)
             {
-                return true;
+                throw new CantDisabledException();
             }
         }
-
-        return false;
     }
 }

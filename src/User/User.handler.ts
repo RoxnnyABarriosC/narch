@@ -21,8 +21,6 @@ import UpdateUserUseCase from "./Domain/UseCases/UpdateUser.useCase";
 import UserAssignRoleRequest from "./Presentation/Requests/UserAssignRole.request";
 import AssignRoleUseCase from "./Domain/UseCases/AssignRole.useCase";
 import RemoveUserUseCase from "./Domain/UseCases/RemoveUser.useCase";
-import ChangeMyPasswordRequest from "./Presentation/Requests/ChangeMyPassword.request";
-import ChangeMyPasswordUseCase from "./Domain/UseCases/ChangeMyPassword.useCase";
 import ChangeUserPasswordRequest from "./Presentation/Requests/ChangeUserPassword.request";
 import ChangeUserPasswordUseCase from "./Domain/UseCases/ChangeUserPassword.useCase";
 
@@ -32,7 +30,7 @@ export default class UserHandler
     @inject(Types.Responder)
     private responder: Responder;
 
-    @httpPost('/', AuthorizeMiddleware(Permissions.USERS_SAVE))
+    @httpPost('/', AuthorizeMiddleware(Permissions.SAVE_USERS))
     public async save (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new SaveUserRequest(req);
@@ -44,7 +42,7 @@ export default class UserHandler
         this.responder.send(user, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
     }
 
-    @httpGet('/', AuthorizeMiddleware(Permissions.USERS_LIST))
+    @httpGet('/', AuthorizeMiddleware(Permissions.LIST_USERS))
     public async list (@request() req: Request, @response() res: Response)
     {
         const _request = new ListUserRequest(req);
@@ -56,7 +54,7 @@ export default class UserHandler
         await this.responder.paginate(paginator, req, res, StatusCode.HTTP_OK, new UserTransformer());
     }
 
-    @httpGet('/:id', AuthorizeMiddleware(Permissions.USERS_SHOW))
+    @httpGet('/:id', AuthorizeMiddleware(Permissions.SHOW_USERS))
     public async getOne  (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new IdRequest(req);
@@ -68,7 +66,7 @@ export default class UserHandler
         this.responder.send(user, req, res, StatusCode.HTTP_OK, new UserTransformer());
     }
 
-    @httpPut('/:id', AuthorizeMiddleware(Permissions.USERS_UPDATE))
+    @httpPut('/:id', AuthorizeMiddleware(Permissions.UPDATE_USERS))
     public async update (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new UpdateUserRequest(req);
@@ -80,7 +78,7 @@ export default class UserHandler
         this.responder.send(user, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
     }
 
-    @httpPut('/assignRole/:id', AuthorizeMiddleware(Permissions.USERS_ASSIGN_ROLE))
+    @httpPut('/assignRole/:id', AuthorizeMiddleware(Permissions.ASSING_ROLES_TO_USERS))
     public async assignRole (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new UserAssignRoleRequest(req);
@@ -92,7 +90,7 @@ export default class UserHandler
         this.responder.send(_response, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
     }
 
-    @httpDelete('/:id', AuthorizeMiddleware(Permissions.USERS_REMOVE))
+    @httpDelete('/:id', AuthorizeMiddleware(Permissions.REMOVE_USERS))
     public async remove (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new IdRequest(req);
@@ -104,19 +102,7 @@ export default class UserHandler
         this.responder.send(data, req, res, StatusCode.HTTP_OK, new UserTransformer());
     }
 
-    @httpPost('/changeMyPassword', AuthorizeMiddleware(Permissions.USERS_CHANGE_MY_PASSWORD))
-    public async changeMyPassword (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
-    {
-        const _request = new ChangeMyPasswordRequest(req);
-        await ValidatorRequest.handle(_request);
-
-        const changeMyPasswordUseCase = new ChangeMyPasswordUseCase();
-        const user: IUserDomain = await changeMyPasswordUseCase.handle(_request);
-
-        this.responder.send(user, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
-    }
-
-    @httpPut('/changeUserPassword/:id', AuthorizeMiddleware(Permissions.USERS_CHANGE_USER_PASSWORD))
+    @httpPut('/changeUserPassword/:id', AuthorizeMiddleware(Permissions.CHANGE_PASSWORDS_USERS))
     public async changeUserPassword (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new ChangeUserPasswordRequest(req);

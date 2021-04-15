@@ -64,6 +64,7 @@ export default class UpdateUserRequest extends IdRequest implements UpdateUserPa
     {
         return this.userId;
     }
+
     getPermissions(): string[]
     {
         return this.permissions;
