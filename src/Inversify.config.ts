@@ -6,8 +6,11 @@ import {REPOSITORIES} from "./Repositories";
 
 import Config from "config";
 
-import IAuthService from "./App/InterfaceAdapters/IServices/IAuthService";
+import IAuthService from "./App/InterfaceAdapters/IServices/IAuth.service";
 import AuthService from "./App/Infrastructure/Services/Auth.service";
+
+import IUserService from "./App/InterfaceAdapters/IServices/IUser.service";
+import UserService from "./App/Infrastructure/Services/User.service";
 
 import Responder from "./App/Presentation/Shared/Responder";
 import IFormatResponder from "./App/InterfaceAdapters/Shared/IFormatResponder";
@@ -44,9 +47,9 @@ import ILogDomain from "./Log/InterfaceAdapters/ILog.domain";
 import LogSqlRepository from "./Log/Infrastructure/Log.sql.repository";
 import LogMongoRepository from "./Log/Infrastructure/Log.mongo.repository";
 
-
 /* IServices */
 container.bind<IAuthService>(SERVICES.IAuthService).to(AuthService);
+container.bind<IUserService>(SERVICES.IUserService).to(UserService);
 
 /** Libs */
 container.bind<Responder>(Types.Responder).to(Responder);
