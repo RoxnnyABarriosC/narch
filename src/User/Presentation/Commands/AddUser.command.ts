@@ -1,8 +1,8 @@
 import commander from 'commander';
 import {loggerCli} from '../../../App/Infrastructure/Shared/Logger';
-import SaveUserUseCase from "../../Domain/UseCases/SaveUser.useCase";
 import SaveUserPayload from "../../InterfaceAdapters/Payloads/SaveUser.payload";
 import SaveUserCommandRequest from "../Requests/Commands/SaveUser.command.request";
+import SaveUserCommandUseCase from "../../Domain/UseCases/Commands/SaveUserCommand.useCase";
 
 const AddUserCommand = new commander.Command('addUser');
 
@@ -16,9 +16,10 @@ AddUserCommand
     .requiredOption('-isa, --isSuperAdmin <isSuperAdmin>', 'Set if User is Super Admin')
     .action(async(env) => 
     {
-        const saveUserUseCase = new SaveUserUseCase();
 
+        const saveUserUseCase = new SaveUserCommandUseCase();
         const userCommandRequest: SaveUserPayload = new SaveUserCommandRequest(env);
+
         const user = await saveUserUseCase.handle(userCommandRequest);
 
         if (user)

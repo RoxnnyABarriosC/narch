@@ -11,3 +11,6 @@ npx ts-node ./src/Commands.ts addUser --email operator@narchjs.com --firstName O
 npx ts-node ./src/Commands.ts assignRoleToUser --slug superadmin --email superadmin@narchjs.com
 npx ts-node ./src/Commands.ts assignRoleToUser --slug admin --email admin@narchjs.com
 npx ts-node ./src/Commands.ts assignRoleToUser --slug operator --email operator@narchjs.com
+
+npx ts-node ./src/Commands.ts syncRolesPermission
+
