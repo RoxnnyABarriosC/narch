@@ -35,7 +35,7 @@ export default class FileHandler
     @inject(Types.Responder)
     private responder: Responder;
 
-    @httpGet('/', AuthorizeMiddleware(Permissions.FILES_LIST))
+    @httpGet('/', AuthorizeMiddleware(Permissions.LIST_FILES))
     public async list (@request() req: Request, @response() res: Response)
     {
         const _request = new ListFilesRequest(req);
@@ -47,7 +47,7 @@ export default class FileHandler
         await this.responder.paginate(paginator, req, res, StatusCode.HTTP_OK, new FileTransformer());
     }
 
-    @httpGet('/objects', AuthorizeMiddleware(Permissions.FILES_LIST))
+    @httpGet('/objects', AuthorizeMiddleware(Permissions.LIST_FILES))
     public async listFilesystemObjects (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new ListObjectsRequest(req);
@@ -59,7 +59,7 @@ export default class FileHandler
         this.responder.send(objects, req, res, StatusCode.HTTP_OK, new ObjectTransformer());
     }
 
-    @httpPost('/base64', AuthorizeMiddleware(Permissions.FILES_UPLOAD))
+    @httpPost('/base64', AuthorizeMiddleware(Permissions.UPLOAD_FILES))
     public async uploadBase64 (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new SaveFileBase64Request(req);
@@ -71,7 +71,7 @@ export default class FileHandler
         this.responder.send(file, req, res, StatusCode.HTTP_CREATED , new FileTransformer());
     }
 
-    @httpPost('/', SaveFileMulterMiddleware.single('file'), AuthorizeMiddleware(Permissions.FILES_UPLOAD))
+    @httpPost('/', SaveFileMulterMiddleware.single('file'), AuthorizeMiddleware(Permissions.UPLOAD_FILES))
     public async uploadMultipart (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new SaveFileMultipartRequest(req);
@@ -83,7 +83,7 @@ export default class FileHandler
         this.responder.send(file, req, res, StatusCode.HTTP_CREATED , new FileTransformer());
     }
 
-    @httpPost('/presignedGetObject', AuthorizeMiddleware(Permissions.FILES_DOWNLOAD))
+    @httpPost('/presignedGetObject', AuthorizeMiddleware(Permissions.DOWNLOAD_FILES))
     public async getPresignedGetObject (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new SavePresignedFileRequest(req);
@@ -95,7 +95,7 @@ export default class FileHandler
         this.responder.send({presignedGetObject}, req, res, StatusCode.HTTP_OK, null);
     }
 
-    @httpGet('/:id', AuthorizeMiddleware(Permissions.FILES_DOWNLOAD))
+    @httpGet('/:id', AuthorizeMiddleware(Permissions.DOWNLOAD_FILES))
     public async downloadStreamFile (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new IdRequest(req);
@@ -108,7 +108,7 @@ export default class FileHandler
         this.responder.sendStream(fileDto, req, res, StatusCode.HTTP_OK);
     }
 
-    @httpPut('/base64/:id', AuthorizeMiddleware(Permissions.FILES_UPDATE))
+    @httpPut('/base64/:id', AuthorizeMiddleware(Permissions.UPDATE_FILES))
     public async updateBase64 (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new UpdateFileBase64Request(req);
@@ -120,7 +120,7 @@ export default class FileHandler
         this.responder.send(file, req, res, StatusCode.HTTP_CREATED , new FileTransformer());
     }
 
-    @httpPut('/:id',SaveFileMulterMiddleware.single('file'), AuthorizeMiddleware(Permissions.FILES_UPDATE))
+    @httpPut('/:id',SaveFileMulterMiddleware.single('file'), AuthorizeMiddleware(Permissions.UPDATE_FILES))
     public async updateMultipart (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new UpdateFileMultipartRequest(req);
