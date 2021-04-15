@@ -20,7 +20,9 @@ const AuthorizeMiddleware = (...handlerPermissions: any) =>
 
             if ( authUser.isSuperAdmin ) isAllowed = true;
 
-            let totalPermissions = authService.getPermissions(authUser);
+            const userPermissions: IUserDomain = _.cloneDeep<IUserDomain>(authUser)
+
+            let totalPermissions = authService.getPermissions(userPermissions);
 
             _.map(totalPermissions, (permission: string) => {
                 if ( permission === handlerPermission || permission === Permissions.ALL) isAllowed = true;
