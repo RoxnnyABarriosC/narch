@@ -25,7 +25,7 @@ export default class ItemHandler
     @inject(Types.Responder)
     private responder: Responder;
 
-    @httpPost('/', AuthorizeMiddleware(Permissions.ITEMS_SAVE))
+    @httpPost('/', AuthorizeMiddleware(Permissions.SAVE_ITEMS))
     public async save (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new SaveItemRequest(req);
@@ -37,7 +37,7 @@ export default class ItemHandler
         this.responder.send(item, req, res, StatusCode.HTTP_CREATED, new ItemTransformer());
     }
 
-    @httpGet('/', AuthorizeMiddleware(Permissions.ITEMS_LIST))
+    @httpGet('/', AuthorizeMiddleware(Permissions.LIST_ITEMS))
     public async list (@request() req: Request, @response() res: Response)
     {
         const _request = new ListItemsRequest(req);
@@ -49,7 +49,7 @@ export default class ItemHandler
         await this.responder.paginate(paginator, req, res, StatusCode.HTTP_OK, new ItemTransformer());
     }
 
-    @httpGet('/:id', AuthorizeMiddleware(Permissions.ITEMS_SHOW))
+    @httpGet('/:id', AuthorizeMiddleware(Permissions.SHOW_ITEMS))
     public async getOne  (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
       const _request = new IdRequest(req);
@@ -61,7 +61,7 @@ export default class ItemHandler
       this.responder.send(item, req, res, StatusCode.HTTP_OK, new ItemTransformer());
   }
 
-    @httpPut('/:id', AuthorizeMiddleware(Permissions.ITEMS_UPDATE))
+    @httpPut('/:id', AuthorizeMiddleware(Permissions.UPDATE_ITEMS))
     public async update (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new UpdateItemRequest(req);
@@ -73,7 +73,7 @@ export default class ItemHandler
         this.responder.send(role, req, res, StatusCode.HTTP_CREATED, new ItemTransformer());
     }
 
-    @httpDelete('/:id', AuthorizeMiddleware(Permissions.ITEMS_REMOVE))
+    @httpDelete('/:id', AuthorizeMiddleware(Permissions.REMOVE_ITEMS))
     public async remove (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new IdRequest(req);
