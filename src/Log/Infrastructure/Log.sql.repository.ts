@@ -23,9 +23,9 @@ export default class LogSqlRepository extends BaseSqlRepository<LogEntity,ILogDo
 
         const filter = criteria.getFilter();
 
-        filter.createFilter(queryBuilder, LogFilter, LogFilter.ACTION, 'andWhere','=');
-        filter.createFilter(queryBuilder, LogFilter, LogFilter.ENTITY, 'andWhere','=');
-        filter.createFilter(queryBuilder, LogFilter, LogFilter.ENTITY_ID, 'andWhere','=');
+        filter.createFilter(queryBuilder, LogFilter,'ACTION', 'andWhere','=');
+        filter.createFilter(queryBuilder, LogFilter, 'ENTITY', 'andWhere','=');
+        filter.createFilter(queryBuilder, LogFilter, 'ENTITY_ID', 'andWhere','=');
 
         queryBuilder.innerJoinAndSelect("i.createdBy", "createdBy");
 
