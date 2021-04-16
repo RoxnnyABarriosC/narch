@@ -102,7 +102,7 @@ export default class UserHandler
         this.responder.send(data, req, res, StatusCode.HTTP_OK, new UserTransformer());
     }
 
-    @httpPut('/changeUserPassword/:id', AuthorizeMiddleware(Permissions.CHANGE_PASSWORDS_USERS))
+    @httpPut('/:id/changePassword', AuthorizeMiddleware(Permissions.CHANGE_PASSWORDS_USERS))
     public async changeUserPassword (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new ChangeUserPasswordRequest(req);
