@@ -11,9 +11,9 @@ import {loggerCli} from "./App/Infrastructure/Shared/Logger";
 
 import AddUserCommand from "./User/Presentation/Commands/AddUser.command";
 import AddRoleCommand from "./Role/Presentation/Commands/AddRole.command";
-import AssignRoleToUserCommand from "./Role/Presentation/Commands/AssingRoleToUser.command";
+import AssignRoleToUserCommand from "./User/Presentation/Commands/AssingRoleToUser.command";
 import CreateVapIDCommand from "./App/Presentation/Commands/CreateVapID.command";
-import SyncRolesPermissionCommand from "./Role/Presentation/Commands/SyncRolesPermission.command";
+import SyncRolesPermissionCommand from "./Permission/Presentation/Commands/SyncRolesPermission.command";
 import CreateBucketCommand from "./File/Presentation/Commands/CreateBucket.command";
 import {validateEnv} from "./Config/validateEnv";
 import DatabaseFactory from "./App/Infrastructure/Factories/Database.factory";
