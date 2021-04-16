@@ -21,7 +21,7 @@ export default class UpdateItemUseCase
     {
         const item: IItemDomain = await this.repository.getOne(payload.getId());
 
-        const oldItem: IItemDomain = _.clone<IItemDomain>(item);
+        const oldItem: IItemDomain = _.cloneDeep<IItemDomain>(item);
 
         item.name = payload.getName();
         item.updatedBy = payload.getAuthUser();
