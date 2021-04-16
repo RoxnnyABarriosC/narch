@@ -4,8 +4,8 @@ import IAuthService from "../../../../App/InterfaceAdapters/IServices/IAuth.serv
 import {REPOSITORIES} from "../../../../Repositories";
 import {SERVICES} from "../../../../Services";
 import IRoleDomain from "../../../InterfaceAdapters/IRole.domain";
-import SaveRolePayload from "../../../InterfaceAdapters/Payloads/SaveRole.payload";
 import RoleEntity from "../../Role.entity";
+import SaveRoleCommandPayload from "../../../InterfaceAdapters/Payloads/Commands/SaveRoleCommand.payload";
 
 export default class SaveRoleCommandUseCase
 {
@@ -15,7 +15,7 @@ export default class SaveRoleCommandUseCase
     @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;
 
-    async handle(payload: SaveRolePayload): Promise<IRoleDomain>
+    async handle(payload: SaveRoleCommandPayload): Promise<IRoleDomain>
     {
         this.authService.validatePermissions(payload.getPermissions());
 

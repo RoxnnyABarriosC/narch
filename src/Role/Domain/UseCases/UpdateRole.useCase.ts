@@ -22,7 +22,7 @@ export default class UpdateRoleUseCase
         this.authService.validatePermissions(payload.getPermissions());
 
         const role: IRoleDomain = await this.repository.getOne(payload.getId());
-        const oldRole: IRoleDomain = _.clone<IRoleDomain>(role);
+        const oldRole: IRoleDomain = _.cloneDeep<IRoleDomain>(role);
 
         role.name = payload.getName();
         role.slug = payload.getSlug();

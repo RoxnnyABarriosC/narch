@@ -1,8 +1,7 @@
 import {IsArray, IsBoolean, IsOptional, IsString} from 'class-validator';
-import SaveRolePayload from "../../../InterfaceAdapters/Payloads/SaveRole.payload";
-import IUserDomain from "../../../../User/InterfaceAdapters/IUser.domain";
+import SaveRoleCommandPayload from "../../../InterfaceAdapters/Payloads/Commands/SaveRoleCommand.payload";
 
-export default class SaveRoleCommandRequest implements SaveRolePayload
+export default class SaveRoleCommandRequest implements SaveRoleCommandPayload
 {
     @IsString()
     name: string;
@@ -46,15 +45,5 @@ export default class SaveRoleCommandRequest implements SaveRolePayload
     getPermissions(): any[]
     {
         return [];
-    }
-
-    getAuthUser(): IUserDomain
-    {
-        return null
-    }
-
-    getTokenId(): string
-    {
-        return null;
     }
 }
