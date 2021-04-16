@@ -29,6 +29,12 @@ export default class UpdateUserRequest extends IdRequest implements UpdateUserPa
     })
     permissions: string[];
 
+    @IsArray()
+    @IsUUID("4", {
+        each: true,
+    })
+    rolesId: string[];
+
     @IsOptional()
     @IsString()
     @IsUUID('4')
@@ -44,6 +50,7 @@ export default class UpdateUserRequest extends IdRequest implements UpdateUserPa
         this.permissions = request.body.permissions;
         this.userId = request.tokenDecode.userId;
         this.mainPictureId = request.body.mainPictureId;
+        this.rolesId = request.body.rolesId;
     }
 
     getFirstName(): string
@@ -79,5 +86,10 @@ export default class UpdateUserRequest extends IdRequest implements UpdateUserPa
     getMainPictureId(): string
     {
         return this.mainPictureId;
+    }
+
+    getRolesId(): string[]
+    {
+        return this.rolesId;
     }
 }

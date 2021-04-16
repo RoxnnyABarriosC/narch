@@ -15,6 +15,8 @@ import IUserService from "../../../App/InterfaceAdapters/IServices/IUser.service
 import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
 import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
 import UseCaseHelpers from "../../../App/Infrastructure/Helpers/UseCaseHelpers";
+import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
+import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
 
 export default class UpdateUserUseCase extends UseCaseHelpers
 {
@@ -35,7 +37,8 @@ export default class UpdateUserUseCase extends UseCaseHelpers
 
     async handle(payload: UpdateUserPayload): Promise<IUserDomain>
     {
-        const user: IUserDomain = await this.repository.getOne(payload.getId());
+        let user: IUserDomain = await this.repository.getOne(payload.getId());
+        const oldUser: IUserDomain = _.cloneDeep<IUserDomain>(user);
 
         let enable = payload.getEnable();
 
@@ -53,7 +56,20 @@ export default class UpdateUserUseCase extends UseCaseHelpers
         user.permissions = payload.getPermissions();
         user.mainPicture =  await this.updateOrCreateRelationshipById<IUserDomain,IFileDomain>(user,'mainPicture', payload.getMainPictureId(),'fileRepository');
 
-        return await this.repository.save(user);
+        user.clearRoles();
+
+        for await (const roleId of payload.getRolesId())
+        {
+            const role = await this.roleRepository.getOne(roleId);
+            user.setRole(role);
+        }
+
+        user = await this.repository.save(user);
+
+        const log = new SaveLogUserUseCase(payload.getAuthUser(), oldUser);
+        await log.handle(LogActionEnum.UPDATE);
+
+        return user;
     }
 
     private async isSuperAdmin(user: IUserDomain, enable: boolean): Promise<void>

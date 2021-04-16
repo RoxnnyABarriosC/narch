@@ -3,7 +3,6 @@ import Config from "config";
 import {ArrayMinSize, IsArray, IsBoolean, IsEmail, IsOptional, IsString, IsUUID, Length} from "class-validator";
 import {Match} from "../../../App/Infrastructure/Shared/Decorators/match";
 import SaveUserPayload from "../../InterfaceAdapters/Payloads/SaveUser.payload";
-import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 import AuthUserRequest from "../../../App/Presentation/Requests/Defaults/AuthUser.request";
 import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique";
 import {REPOSITORIES} from "../../../Repositories";
@@ -48,6 +47,12 @@ export default class SaveUserRequest extends AuthUserRequest implements SaveUser
     })
     permissions: string[]
 
+    @IsArray()
+    @IsUUID("4", {
+        each: true,
+    })
+    rolesId: string[];
+
     @IsOptional()
     @IsString()
     @IsUUID('4')
@@ -65,6 +70,7 @@ export default class SaveUserRequest extends AuthUserRequest implements SaveUser
         this.passwordConfirmation = request.body.passwordConfirmation;
         this.enable = request.body.hasOwnProperty('enable') ? request.body.enable : true;
         this.mainPictureId = request.body.mainPicture;
+        this.rolesId = request.body.rolesId;
     }
 
     getFirstName(): string
@@ -97,19 +103,9 @@ export default class SaveUserRequest extends AuthUserRequest implements SaveUser
         return this.enable;
     }
 
-    getConfirmationToken(): null
+    getRolesId(): string[]
     {
-        return null;
-    }
-
-    getPasswordRequestedAt(): null
-    {
-        return null;
-    }
-
-    getRoles(): IRoleDomain[]
-    {
-        return [];
+        return this.rolesId;
     }
 
     getPermissions(): string[]

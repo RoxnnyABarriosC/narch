@@ -5,8 +5,11 @@ import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
 import UserAssignRolePayload from "../../InterfaceAdapters/Payloads/UserAssignRole.payload";
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
+import _ from "lodash";
+import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
+import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
 
-export default class AssignRoleUseCase
+export default class AssignRolesUseCase
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;
@@ -17,6 +20,7 @@ export default class AssignRoleUseCase
     async handle(payload: UserAssignRolePayload): Promise<IUserDomain>
     {
         let user: IUserDomain = await this.repository.getOne(payload.getId());
+        const oldUser: IUserDomain = _.cloneDeep<IUserDomain>(user);
 
         user.clearRoles();
 
@@ -25,6 +29,9 @@ export default class AssignRoleUseCase
             const role = await this.roleRepository.getOne(roleId);
             user.setRole(role);
         }
+
+        const log = new SaveLogUserUseCase(payload.getAuthUser(), oldUser);
+        await log.handle(LogActionEnum.UPDATE);
 
         return await this.repository.save(user);
     }

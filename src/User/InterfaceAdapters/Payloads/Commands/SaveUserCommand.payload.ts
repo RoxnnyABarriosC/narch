@@ -1,6 +1,5 @@
-import AuthUserPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/AuthUser.payload";
 
-export default interface SaveUserPayload extends AuthUserPayload
+export default interface SaveUserCommandPayload
 {
     getFirstName(): string
     getLastName(): string;
@@ -8,8 +7,6 @@ export default interface SaveUserPayload extends AuthUserPayload
     getPassword(): string;
     getPasswordConfirmation(): string;
     getEnable(): boolean;
-    getRolesId(): string[];
     getPermissions(): string[];
     getIsSuperAdmin(): boolean;
-    getMainPictureId(): string;
 }

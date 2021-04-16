@@ -4,7 +4,7 @@ import IUserRepository from "../../../InterfaceAdapters/IUser.repository";
 import IUserDomain from "../../../InterfaceAdapters/IUser.domain";
 import IRoleRepository from "../../../../Role/InterfaceAdapters/IRole.repository";
 import IRoleDomain from "../../../../Role/InterfaceAdapters/IRole.domain";
-import UserAssignRoleByPayload from "../../../InterfaceAdapters/Payloads/UserAssignRoleBy.payload";
+import AssignRoleBySlugCommandPayload from "../../../InterfaceAdapters/Payloads/Commands/AssignRoleBySlugCommand.payload";
 
 export default class AssignRoleBySlugCommandUseCase
 {
@@ -14,7 +14,7 @@ export default class AssignRoleBySlugCommandUseCase
     @lazyInject(REPOSITORIES.IRoleRepository)
     private roleRepository: IRoleRepository<IRoleDomain>;
 
-    async handle(payload: UserAssignRoleByPayload): Promise<IUserDomain>
+    async handle(payload: AssignRoleBySlugCommandPayload): Promise<IUserDomain>
     {
         const email = payload.getEmail();
         const slug = payload.getSlugRole();

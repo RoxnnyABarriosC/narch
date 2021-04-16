@@ -13,11 +13,18 @@ import UserCreatedEvent from "../../Infrastructure/Event/UserCreated.event";
 import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
 import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
 import UseCaseHelpers from "../../../App/Infrastructure/Helpers/UseCaseHelpers";
+import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
+import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
+import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
+import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 
 export default class SaveUserUseCase extends UseCaseHelpers
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;
+
+    @lazyInject(REPOSITORIES.IRoleRepository)
+    private roleRepository: IRoleRepository<IRoleDomain>;
 
     @lazyInject(REPOSITORIES.IFileRepository)
     private fileRepository: IFileRepository<IFileDomain>;
@@ -45,8 +52,15 @@ export default class SaveUserUseCase extends UseCaseHelpers
         user.password = await this.encryption.encrypt(payload.getPassword());
         user.enable = payload.getEnable();
         user.permissions = payload.getPermissions();
-        user.roles = payload.getRoles();
         user.isSuperAdmin = payload.getIsSuperAdmin();
+
+        user.clearRoles();
+
+        for await (const roleId of payload.getRolesId())
+        {
+            const role = await this.roleRepository.getOne(roleId);
+            user.setRole(role);
+        }
 
         user.mainPicture = await this.updateOrCreateRelationshipById<IUserDomain,IFileDomain>(user,'mainPicture', payload.getMainPictureId(),'fileRepository');
 
@@ -55,6 +69,9 @@ export default class SaveUserUseCase extends UseCaseHelpers
         const eventHandler = EventHandler.getInstance();
 
         eventHandler.execute(UserCreatedEvent.USER_CREATED_EVENT, {email: user.email});
+
+        const log = new SaveLogUserUseCase(payload.getAuthUser(),user);
+        await log.handle(LogActionEnum.SAVE);
 
         return user;
     }

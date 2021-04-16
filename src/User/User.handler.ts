@@ -19,7 +19,7 @@ import GetUserUseCase from "./Domain/UseCases/GetUser.useCase";
 import UpdateUserRequest from "./Presentation/Requests/UpdateUser.request";
 import UpdateUserUseCase from "./Domain/UseCases/UpdateUser.useCase";
 import UserAssignRoleRequest from "./Presentation/Requests/UserAssignRole.request";
-import AssignRoleUseCase from "./Domain/UseCases/AssignRole.useCase";
+import AssignRolesUseCase from "./Domain/UseCases/AssignRoles.useCase";
 import RemoveUserUseCase from "./Domain/UseCases/RemoveUser.useCase";
 import ChangeUserPasswordRequest from "./Presentation/Requests/ChangeUserPassword.request";
 import ChangeUserPasswordUseCase from "./Domain/UseCases/ChangeUserPassword.useCase";
@@ -78,14 +78,14 @@ export default class UserHandler
         this.responder.send(user, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
     }
 
-    @httpPut('/assignRole/:id', AuthorizeMiddleware(Permissions.ASSING_ROLES_TO_USERS))
+    @httpPut('/:id/assignRoles', AuthorizeMiddleware(Permissions.ASSING_ROLES_TO_USERS))
     public async assignRole (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new UserAssignRoleRequest(req);
         await ValidatorRequest.handle(_request);
 
-        const assignRoleUseCase = new AssignRoleUseCase();
-        const _response: IUserDomain = await assignRoleUseCase.handle(_request);
+        const assignRolesUseCase = new AssignRolesUseCase();
+        const _response: IUserDomain = await assignRolesUseCase.handle(_request);
 
         this.responder.send(_response, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
     }

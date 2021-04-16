@@ -6,8 +6,8 @@ import {SERVICES} from "../../../../Services";
 import IAuthService from "../../../../App/InterfaceAdapters/IServices/IAuth.service";
 import IEncryption from "../../../../App/InterfaceAdapters/Shared/IEncryption";
 import EncryptionFactory from "../../../../App/Infrastructure/Factories/Encryption.factory";
-import SaveUserPayload from "../../../InterfaceAdapters/Payloads/SaveUser.payload";
 import UserEntity from "../../User.entity";
+import SaveUserCommandPayload from "../../../InterfaceAdapters/Payloads/Commands/SaveUserCommand.payload";
 
 export default class SaveUserCommandUseCase
 {
@@ -24,7 +24,7 @@ export default class SaveUserCommandUseCase
         this.encryption = EncryptionFactory.create();
     }
 
-    async handle(payload: SaveUserPayload): Promise<IUserDomain>
+    async handle(payload: SaveUserCommandPayload): Promise<IUserDomain>
     {
         this.authService.validatePermissions(payload.getPermissions());
 
@@ -36,7 +36,6 @@ export default class SaveUserCommandUseCase
         user.password = await this.encryption.encrypt(payload.getPassword());
         user.enable = payload.getEnable();
         user.permissions = payload.getPermissions();
-        user.roles = payload.getRoles();
         user.isSuperAdmin = payload.getIsSuperAdmin();
 
         return await this.repository.save(user);
