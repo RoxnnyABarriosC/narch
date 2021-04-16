@@ -1,15 +1,18 @@
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
 import RoleTransformer from "../../../Role/Presentation/Transformers/Role.transformer";
 import Transformer from "../../../App/Presentation/Shared/Transformer";
+import FileTransformer from "../../../File/Presentation/Transformers/File.transformer";
 
 export default class UserTransformer extends Transformer
 {
     private roleTransformer: RoleTransformer;
+    private fileTransformer: FileTransformer;
 
     constructor()
     {
         super();
         this.roleTransformer = new RoleTransformer();
+        this.fileTransformer = new FileTransformer();
     }
 
     public transform(user: IUserDomain)
@@ -20,8 +23,9 @@ export default class UserTransformer extends Transformer
             lastName: user.lastName,
             email: user.email,
             enable: user.enable,
-            roles: this.validate(user?.getRoles(),'roleTransformer'),
             permissions: user.permissions,
+            roles: this.validate(user?.getRoles(),'roleTransformer'),
+            mainPicture: this.validate(user?.getMainPicture(),'fileRepository'),
             createdAt: this.transformDate(user.createdAt),
             updatedAt: this.transformDate(user.updatedAt),
         };

@@ -1,5 +1,5 @@
 import { Request } from "express";
-import {IsString, IsEmail, Length, IsUUID} from "class-validator";
+import {IsString, IsEmail, Length, IsUUID, IsOptional} from "class-validator";
 import UpdateMePayload from "../../InterfaceAdapters/Payloads/UpdateMe.payload";
 import AuthUserRequest from "../../../App/Presentation/Requests/Defaults/AuthUser.request";
 import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique";
@@ -30,6 +30,11 @@ export default class UpdateMeRequest extends AuthUserRequest implements UpdateMe
         })
     email: string
 
+    @IsOptional()
+    @IsString()
+    @IsUUID('4')
+    mainPictureId: string
+
     constructor(request: Request | any)
     {
         super(request);
@@ -37,6 +42,7 @@ export default class UpdateMeRequest extends AuthUserRequest implements UpdateMe
         this.lastName = request.body.lastName;
         this.email = request.body.email;
         this.id = request.tokenDecode.userId;
+        this.mainPictureId = request.body.mainPicture;
     }
 
     getFirstName(): string
@@ -52,5 +58,10 @@ export default class UpdateMeRequest extends AuthUserRequest implements UpdateMe
     getEmail(): string
     {
         return this.email;
+    }
+
+    getMainPictureId(): string
+    {
+        return this.mainPictureId;
     }
 }

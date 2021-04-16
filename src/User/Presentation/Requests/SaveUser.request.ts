@@ -1,6 +1,6 @@
 import {Request} from "express";
 import Config from "config";
-import {ArrayMinSize, IsArray, IsBoolean, IsEmail, IsString, Length} from "class-validator";
+import {ArrayMinSize, IsArray, IsBoolean, IsEmail, IsOptional, IsString, IsUUID, Length} from "class-validator";
 import {Match} from "../../../App/Infrastructure/Shared/Decorators/match";
 import SaveUserPayload from "../../InterfaceAdapters/Payloads/SaveUser.payload";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
@@ -48,6 +48,11 @@ export default class SaveUserRequest extends AuthUserRequest implements SaveUser
     })
     permissions: string[]
 
+    @IsOptional()
+    @IsString()
+    @IsUUID('4')
+    mainPictureId: string
+
     constructor(request: Request | any)
     {
         super(request);
@@ -59,6 +64,7 @@ export default class SaveUserRequest extends AuthUserRequest implements SaveUser
         this.permissions = request.body.permissions;
         this.passwordConfirmation = request.body.passwordConfirmation;
         this.enable = request.body.hasOwnProperty('enable') ? request.body.enable : true;
+        this.mainPictureId = request.body.mainPicture;
     }
 
     getFirstName(): string
@@ -114,5 +120,10 @@ export default class SaveUserRequest extends AuthUserRequest implements SaveUser
     getIsSuperAdmin(): boolean
     {
         return false;
+    }
+
+    getMainPictureId(): string
+    {
+        return this.mainPictureId;
     }
 }

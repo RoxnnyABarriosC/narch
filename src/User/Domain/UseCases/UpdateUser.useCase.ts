@@ -12,14 +12,20 @@ import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 import _ from "lodash";
 import IUserService from "../../../App/InterfaceAdapters/IServices/IUser.service";
+import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
+import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
+import UseCaseHelpers from "../../../App/Infrastructure/Helpers/UseCaseHelpers";
 
-export default class UpdateUserUseCase
+export default class UpdateUserUseCase extends UseCaseHelpers
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;
 
     @lazyInject(REPOSITORIES.IRoleRepository)
     private roleRepository: IRoleRepository<IRoleDomain>;
+
+    @lazyInject(REPOSITORIES.IFileRepository)
+    private fileRepository: IFileRepository<IFileDomain>;
 
     @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;
@@ -45,6 +51,7 @@ export default class UpdateUserUseCase
         user.enable = payload.getEnable();
         user.email = payload.getEmail();
         user.permissions = payload.getPermissions();
+        user.mainPicture =  await this.updateOrCreateRelationshipById<IUserDomain,IFileDomain>(user,'mainPicture', payload.getMainPictureId(),'fileRepository');
 
         return await this.repository.save(user);
     }

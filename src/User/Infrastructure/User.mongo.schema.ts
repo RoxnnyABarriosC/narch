@@ -11,6 +11,7 @@ const UserMongoSchema = new Schema({
     password: {type: String, required: true},
     permissions: {type: Array, required: true},
     roles: [{type: Schema.Types.String, ref: 'Role', autopopulate: true}],
+    mainPicture: {type: Schema.Types.String, ref: 'File', autopopulate: true},
     enable: {type: Boolean, required: true},
     isSuperAdmin: {type: Boolean, required: true},
     confirmationToken: {type: String},

@@ -11,4 +11,5 @@ export default interface SaveUserPayload extends AuthUserPayload
     getRoles(): any[];
     getPermissions(): string[];
     getIsSuperAdmin(): boolean;
+    getMainPictureId(): string;
 }

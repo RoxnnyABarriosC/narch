@@ -1,6 +1,7 @@
 import IUserDomain from "../InterfaceAdapters/IUser.domain";
 import IRoleDomain from "../../Role/InterfaceAdapters/IRole.domain";
 import BaseEntity from "../../App/Domain/Shared/Base.entity";
+import IFileDomain from "../../File/InterfaceAdapters/IFile.domain";
 
 export default class UserEntity extends BaseEntity implements IUserDomain
 {
@@ -14,6 +15,7 @@ export default class UserEntity extends BaseEntity implements IUserDomain
     isSuperAdmin: boolean;
     confirmationToken: string;
     passwordRequestedAt: Date;
+    mainPicture: IFileDomain;
     deletedAt: Date;
 
     constructor()
@@ -45,6 +47,11 @@ export default class UserEntity extends BaseEntity implements IUserDomain
     getRoles(): IRoleDomain[]
     {
         return this.roles;
+    }
+
+    getMainPicture(): IFileDomain
+    {
+        return this.mainPicture;
     }
 }
 

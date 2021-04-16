@@ -74,6 +74,13 @@ const UserSqlSchema = new EntitySchema<UserEntity>({
                     name: 'role_id'
                 }
             }
+        },
+        mainPicture: {
+            type: 'one-to-one',
+            target: 'FileEntity',
+            joinColumn: true,
+            nullable: true,
+            eager: true,
         }
     },
 });

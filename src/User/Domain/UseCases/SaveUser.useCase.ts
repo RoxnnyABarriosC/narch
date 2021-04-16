@@ -10,11 +10,17 @@ import SaveUserPayload from "../../InterfaceAdapters/Payloads/SaveUser.payload";
 import UserEntity from "../User.entity";
 import EventHandler from "../../../App/Infrastructure/Events/EventHandler";
 import UserCreatedEvent from "../../Infrastructure/Event/UserCreated.event";
+import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
+import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
+import UseCaseHelpers from "../../../App/Infrastructure/Helpers/UseCaseHelpers";
 
-export default class SaveUserUseCase
+export default class SaveUserUseCase extends UseCaseHelpers
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;
+
+    @lazyInject(REPOSITORIES.IFileRepository)
+    private fileRepository: IFileRepository<IFileDomain>;
 
     @lazyInject(SERVICES.IAuthService)
     private authService: IAuthService;
@@ -23,6 +29,7 @@ export default class SaveUserUseCase
 
     constructor()
     {
+        super();
         this.encryption = EncryptionFactory.create();
     }
 
@@ -40,6 +47,8 @@ export default class SaveUserUseCase
         user.permissions = payload.getPermissions();
         user.roles = payload.getRoles();
         user.isSuperAdmin = payload.getIsSuperAdmin();
+
+        user.mainPicture = await this.updateOrCreateRelationshipById<IUserDomain,IFileDomain>(user,'mainPicture', payload.getMainPictureId(),'fileRepository');
 
         user = await this.repository.save(user);
 

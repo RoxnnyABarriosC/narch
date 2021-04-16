@@ -8,5 +8,6 @@ export default interface UpdateUserPayload extends IdPayload
     getEnable(): boolean;
     getTokenUserId(): string;
     getPermissions(): string[];
+    getMainPictureId(): string;
 }
 

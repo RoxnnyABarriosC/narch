@@ -1,4 +1,4 @@
-import {ArrayMinSize, IsArray, IsBoolean, IsEmail, IsString, Length} from "class-validator";
+import {ArrayMinSize, IsArray, IsBoolean, IsEmail, IsOptional, IsString, IsUUID, Length} from "class-validator";
 import UpdateUserPayload from "../../InterfaceAdapters/Payloads/UpdateUser.payload";
 import IdRequest from "../../../App/Presentation/Requests/Defaults/Id.request";
 
@@ -27,7 +27,12 @@ export default class UpdateUserRequest extends IdRequest implements UpdateUserPa
         each: true,
 
     })
-    permissions: string[]
+    permissions: string[];
+
+    @IsOptional()
+    @IsString()
+    @IsUUID('4')
+    mainPictureId: string
 
     constructor(request: any)
     {
@@ -38,6 +43,7 @@ export default class UpdateUserRequest extends IdRequest implements UpdateUserPa
         this.enable = request.body.enable;
         this.permissions = request.body.permissions;
         this.userId = request.tokenDecode.userId;
+        this.mainPictureId = request.body.mainPictureId;
     }
 
     getFirstName(): string
@@ -68,5 +74,10 @@ export default class UpdateUserRequest extends IdRequest implements UpdateUserPa
     getPermissions(): string[]
     {
         return this.permissions;
+    }
+
+    getMainPictureId(): string
+    {
+        return this.mainPictureId;
     }
 }

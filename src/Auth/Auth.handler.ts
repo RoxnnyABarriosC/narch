@@ -52,7 +52,7 @@ export default class AuthHandler
     }
 
     @httpPut('/me', AuthorizeMiddleware(Permissions.UPDATE_ME))
-    public async updateAuthUser (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
+    public async updateMe (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new UpdateMeRequest(req);
         await ValidatorRequest.handle(_request);
