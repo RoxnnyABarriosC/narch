@@ -23,13 +23,13 @@ export default class LogSqlRepository extends BaseSqlRepository<LogEntity,ILogDo
 
         const filter = criteria.getFilter();
 
+        queryBuilder.where("1 = 1");
+
         filter.createFilter(queryBuilder, LogFilter,'ACTION', 'andWhere','=');
         filter.createFilter(queryBuilder, LogFilter, 'ENTITY', 'andWhere','=');
         filter.createFilter(queryBuilder, LogFilter, 'ENTITY_ID', 'andWhere','=');
 
         queryBuilder.innerJoinAndSelect("i.createdBy", "createdBy");
-
-        queryBuilder.where("1 = 1");
 
         return new Paginator(queryBuilder, criteria);
     }
