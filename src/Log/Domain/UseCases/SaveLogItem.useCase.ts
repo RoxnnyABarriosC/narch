@@ -15,7 +15,7 @@ export default class SaveLogItemUseCase
     private repository: ILogRepository<ILogDomain>;
 
     private readonly authUser: IUserDomain;
-    private readonly entity: IItemDomain | any;
+    private readonly entity: IItemDomain;
 
     constructor(authUser: IUserDomain, entity: IItemDomain)
     {
@@ -25,51 +25,43 @@ export default class SaveLogItemUseCase
 
     async handle(logAction: LogActionEnum): Promise<void>
     {
+        const log: ILogDomain = new LogEntity();
+
+        log.action = logAction;
+        log.entity = ItemEntity.name;
+        log.entityId = this.entity.getId();
+        log.createdBy = this.authUser;
+
         switch (logAction)
         {
             case LogActionEnum.SAVE :
-               await this.save(logAction);
+               await this.save(log,logAction);
                break
             case LogActionEnum.UPDATE :
             case LogActionEnum.REMOVE :
-                await this.updateOrDelete(logAction);
+                await this.updateOrDelete(log,logAction);
                 break
         }
 
+        await this.repository.save(log);
     }
 
-    private async save(logAction: LogActionEnum): Promise<void>
+    private async save(log: ILogDomain, logAction: LogActionEnum): Promise<void>
     {
-        const log: ILogDomain = new LogEntity();
-
-        log.action = logAction;
-        log.entity = ItemEntity.name;
-        log.entityId = this.entity.getId();
         log.description = `${this.authUser.email} created the item`;
-        log.createdBy = this.authUser;
-
-        await this.repository.save(log);
     }
 
-    private async updateOrDelete(logAction: LogActionEnum): Promise<void>
+    private async updateOrDelete(log: ILogDomain, logAction: LogActionEnum): Promise<void>
     {
-        const log: ILogDomain = new LogEntity();
+       const action: string = logAction === LogActionEnum.UPDATE ? 'updated' : 'deleted';
 
-        const action: string = logAction === LogActionEnum.UPDATE ? 'updated' : 'deleted';
-
-        log.action = logAction;
-        log.entity = ItemEntity.name;
-        log.entityId = this.entity.getId();
         log.description = `${this.authUser.email} ${action} the item`;
-        log.createdBy = this.authUser;
         log.metadata = this.processEntity();
-
-        await this.repository.save(log);
     }
 
     private processEntity(): {}
     {
-        const deleteAttributes: string[] = ['_id','createdBy', 'updatedBy','__v'];
+        const deleteAttributes: string[] = ['_id', '__v', 'createdAt', 'updatedAt','createdBy', 'updatedBy'];
 
         const metadata = JSON.parse(JSON.stringify(this.entity));
 
