@@ -2,7 +2,7 @@ import {Request} from "express";
 import IFilter, {
     AttributeConfig, AttributeDBConfig,
     FilterCondition,
-    FilterOperator,
+    FilterOperator, KeyAttribute,
     MultiFilterOperator, SearchConfig, SetweightRelevance
 } from "../../InterfaceAdapters/Shared/IFilter";
 import {SelectQueryBuilder} from "typeorm/query-builder/SelectQueryBuilder";
@@ -72,7 +72,7 @@ export default abstract class Filter implements IFilter
         return this.filters;
     }
 
-    createFilter(queryBuilder: SelectQueryBuilder<any>, entityFilter: any, attributeConfig: string | AttributeConfig, condition: FilterCondition, operator: FilterOperator, alias: string = 'i'): void
+    createFilter<F = any>(queryBuilder: SelectQueryBuilder<any>, entityFilter: F, attributeConfig: AttributeConfig<F>, condition: FilterCondition, operator: FilterOperator, alias: string = 'i'): void
     {
         let attribute: string = attributeConfig as string;
         let dbAttribute: string;
@@ -81,6 +81,7 @@ export default abstract class Filter implements IFilter
 
         if (_.isObject(attributeConfig))
         {
+            // @ts-ignore
             attribute = attributeConfig.attribute;
 
             if (attributeConfig.dbAttribute)
@@ -101,12 +102,16 @@ export default abstract class Filter implements IFilter
 
         if (_.isString(attributeConfig) || _.isUndefined(dbAttribute))
         {
+            // @ts-ignore
             dbAttribute = `${entityFilter[attribute]}`;
         }
 
+        // @ts-ignore
         if (this.has(entityFilter[attribute]))
         {
+            // @ts-ignore
             let valueAttr: string | string[] | boolean = this.get(entityFilter[attribute]).trim();
+            // @ts-ignore
             let aliasAttr: string = `:${entityFilter[attribute]}`;
 
             if (booleanAttribute)
@@ -116,12 +121,15 @@ export default abstract class Filter implements IFilter
 
             if (operator === 'in')
             {
+                // @ts-ignore
                 aliasAttr = `(:...${entityFilter[attribute]})`;
+                // @ts-ignore
                 valueAttr = this.getMultiFilter(entityFilter, attribute);
             }
 
             if (operator === 'ilike')
             {
+                // @ts-ignore
                 aliasAttr = `:${entityFilter[attribute]}`;
                 valueAttr = `%${valueAttr}%`;
             }
@@ -137,16 +145,19 @@ export default abstract class Filter implements IFilter
 
             }
 
+            // @ts-ignore
             queryBuilder.setParameter(entityFilter[attribute], valueAttr);
         }
     }
 
-    getMultiFilter(entityFilter: any, attribute: string): string[]
+    getMultiFilter<F = any>(entityFilter: F, attribute: KeyAttribute<F>): string[]
     {
         let filters: string[] = [];
 
+        // @ts-ignore
         if (this.has(entityFilter[attribute]))
         {
+            // @ts-ignore
             this.get(entityFilter[attribute]).trim().split(',').map(attr => {
                 if (attr.trim().length > 0) {
                     filters.push(attr.trim());
@@ -157,10 +168,12 @@ export default abstract class Filter implements IFilter
         return filters;
     }
 
-    createBooleanMultiFilter(queryBuilder: SelectQueryBuilder<any>, entityFilter: any, attribute: string, value: boolean = true, condition: FilterCondition = 'andWhere', alias: string = 'i'): void
+    createBooleanMultiFilter<F = any>(queryBuilder: SelectQueryBuilder<any>, entityFilter: F, attribute: KeyAttribute<F>, value: boolean = true, condition: FilterCondition = 'andWhere', alias: string = 'i'): void
     {
+        // @ts-ignore
         if (this.has(entityFilter[attribute]))
         {
+            // @ts-ignore
             this.get(entityFilter[attribute]).trim().split(',').map((attr: string, index: number) => {
                 const where: string = index === 0 ? condition : `orWhere`;
                 if (attr.trim().length > 0)
@@ -173,7 +186,7 @@ export default abstract class Filter implements IFilter
         }
     }
 
-    createMultiFilter(queryBuilder: SelectQueryBuilder<any>, entityFilter: any, attributeConfig: string | AttributeConfig, condition: FilterCondition, operator: MultiFilterOperator, alias: string = 'i'): void
+    createMultiFilter<F = any>(queryBuilder: SelectQueryBuilder<any>, entityFilter: F, attributeConfig: AttributeConfig<F>, condition: FilterCondition, operator: MultiFilterOperator, alias: string = 'i'): void
     {
         let attribute: string = attributeConfig as string;
         let dbAttribute: string;
@@ -181,6 +194,7 @@ export default abstract class Filter implements IFilter
 
         if (_.isObject(attributeConfig))
         {
+            // @ts-ignore
             attribute = attributeConfig.attribute;
 
             if (attributeConfig.dbAttribute)
@@ -196,15 +210,19 @@ export default abstract class Filter implements IFilter
 
         if (_.isString(attributeConfig) || _.isUndefined(dbAttribute))
         {
+            // @ts-ignore
             dbAttribute = `${entityFilter[attribute]}`;
         }
 
+        // @ts-ignore
         if (this.has(entityFilter[attribute]))
         {
             queryBuilder[condition]( new Brackets( qb => {
+                // @ts-ignore
                 this.get(entityFilter[attribute]).trim().split(',').map((attr: string, index: number) => {
                     const where: string = index === 0 ? `where` : `orWhere`;
 
+                    // @ts-ignore
                     let aliasAttr: string = `${entityFilter[attribute]}_${index}`;
                     let valueAttr: string = attr.trim();
 
@@ -232,8 +250,9 @@ export default abstract class Filter implements IFilter
         }
     }
 
-    createSearchVector(queryBuilder: SelectQueryBuilder<any>, entityFilter: any, attribute: string , searchConfig: SearchConfig, condition: FilterCondition, alias: string = 'i'): void
+    createSearchVector<F = any>(queryBuilder: SelectQueryBuilder<any>, entityFilter: F, attribute: KeyAttribute , searchConfig: SearchConfig, condition: FilterCondition, alias: string = 'i'): void
     {
+        // @ts-ignore
         const aliasAttr = `:${entityFilter[attribute]}`;
 
         const partialMatch: boolean =  _.isUndefined(searchConfig?.partialMatch) ? true : searchConfig.partialMatch;
@@ -282,8 +301,10 @@ export default abstract class Filter implements IFilter
             }
         }
 
+        // @ts-ignore
         if (this.has(entityFilter[attribute]))
         {
+            // @ts-ignore
             let valueAttr: string | string[] = this.get(entityFilter[attribute]).trim();
 
             if (valueAttr.length > 0)
@@ -295,13 +316,14 @@ export default abstract class Filter implements IFilter
 
                 queryBuilder.addSelect(`ts_rank_cd( (${searchAtt}) , to_tsquery(${aliasAttr}))`, 'rank');
                 queryBuilder[condition](`to_tsquery(${aliasAttr}) @@ (${searchAtt})`);
+                // @ts-ignore
                 queryBuilder.setParameter(entityFilter[attribute], valueAttr);
                 queryBuilder.orderBy('rank', 'DESC');
             }
         }
     }
 
-    createSearchLike(queryBuilder: SelectQueryBuilder<any>, entityFilter: any, attribute: string , searchConfig: SearchConfig, condition: FilterCondition, alias: string = 'i'): void
+    createSearchLike<F = any>(queryBuilder: SelectQueryBuilder<any>, entityFilter: F, attribute: KeyAttribute<F> , searchConfig: SearchConfig, condition: FilterCondition, alias: string = 'i'): void
     {
         const aliasAttr = `:${entityFilter[attribute]}`;
 
@@ -343,13 +365,16 @@ export default abstract class Filter implements IFilter
             }
         }
 
+        // @ts-ignore
         if (this.has(entityFilter[attribute]))
         {
+            // @ts-ignore
             let valueAttr: string | string[] = this.get(entityFilter[attribute]).trim().split(' ').map((attr) => `%${attr}%`).join(' ');
 
             if (valueAttr.length > 0)
             {
                 queryBuilder[condition](`${searchAtt} ILIKE ${aliasAttr}`);
+                // @ts-ignore
                 queryBuilder.setParameter(entityFilter[attribute], valueAttr);
             }
         }
