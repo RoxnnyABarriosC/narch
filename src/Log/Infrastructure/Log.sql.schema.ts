@@ -24,7 +24,7 @@ const LogSqlSchema = new EntitySchema<LogEntity>({
             type: "varchar"
         },
         metadata: {
-            type: "json",
+            type: "jsonb",
             nullable: true,
         },
         createdAt: {
