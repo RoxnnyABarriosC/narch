@@ -3,7 +3,7 @@ import {controller, httpGet, BaseHttpController, response, request, next} from "
 import {StatusCode} from "@digichanges/shared-experience";
 import {Types} from "../Types";
 import Responder from "./Presentation/Shared/Responder";
-import {Locales} from "./App";
+import {Locales} from "../App";
 import {NextFunction, Request, Response} from "express";
 import GetLogViewUseCase from "./Domain/UseCases/Log/GetLogView.useCase";
 

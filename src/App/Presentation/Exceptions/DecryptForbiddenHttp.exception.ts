@@ -1,4 +1,4 @@
-import {Locales} from "../../App";
+import {Locales} from "../../../App";
 import ErrorHttpException from "../../Shared/ErrorHttpException";
 import StatusCode from "../Shared/StatusCode";
 

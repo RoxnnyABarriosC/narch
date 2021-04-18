@@ -6,26 +6,26 @@ import compression from 'compression';
 import cors from 'cors';
 import helmet from 'helmet';
 import exphbs from 'express-handlebars';
-import Config from 'config';
 import i18n from 'i18n';
+import Config from "config";
 
-import "./App.handler";
-import "./../User/User.handler";
-import "./../Role/Role.handler";
-import "./../Auth/Auth.handler";
-import "./../File/File.handler";
-import "./../Log/Log.handler";
-import "./../Item/Item.handler";
-import "./../Permission/Permission.handler";
+import "./App/App.handler";
+import "./User/User.handler";
+import "./Role/Role.handler";
+import "./Auth/Auth.handler";
+import "./File/File.handler";
+import "./Log/Log.handler";
+import "./Item/Item.handler";
+import "./Permission/Permission.handler";
 
-import container from "../Inversify.config";
-import LoggerWinstonMiddleware from "./Presentation/Middlewares/LoggerWinston.middleware";
-import ThrottleMiddleware from "./Presentation/Middlewares/Throttle.middleware";
-import AuthenticationMiddleware from "../Auth/Presentation/Middlewares/Authentication.middleware";
-import VerifyTokenMiddleware from "./Presentation/Middlewares/VerifyToken.middleware";
-import ErrorHandler from "./Presentation/Shared/ErrorHandler";
-import RedirectRouteNotFoundMiddleware from "./Presentation/Middlewares/RedirectRouteNotFound.middleware";
-import {loggerCli} from "./Infrastructure/Shared/Logger";
+import container from "./Inversify.config";
+import LoggerWinstonMiddleware from "./App/Presentation/Middlewares/LoggerWinston.middleware";
+import ThrottleMiddleware from "./App/Presentation/Middlewares/Throttle.middleware";
+import AuthenticationMiddleware from "./Auth/Presentation/Middlewares/Authentication.middleware";
+import VerifyTokenMiddleware from "./App/Presentation/Middlewares/VerifyToken.middleware";
+import ErrorHandler from "./App/Presentation/Shared/ErrorHandler";
+import RedirectRouteNotFoundMiddleware from "./App/Presentation/Middlewares/RedirectRouteNotFound.middleware";
+import {loggerCli} from "./App/Infrastructure/Shared/Logger";
 import path from "path";
 
 export let Locales = i18n;
@@ -50,7 +50,7 @@ export default class App
     {
         Locales.configure({
             locales: ['en', 'es'],
-            directory: path.join(__dirname, "../Config/Locales"),
+            directory: path.join(__dirname, "Config/Locales"),
             defaultLocale,
             objectNotation: true
         });
@@ -58,7 +58,7 @@ export default class App
 
     public initHandlebars(): void
     {
-        this.viewRoute = path.join(__dirname, "/Presentation/Views");
+        this.viewRoute = path.join(__dirname, "App/Presentation/Views");
 
         this.hbs = exphbs.create({
             defaultLayout: 'main',

@@ -6,7 +6,7 @@ import DatabaseFactory from "./App/Infrastructure/Factories/Database.factory";
 import {ICacheRepository} from "@digichanges/shared-experience";
 import CacheFactory from "./App/Infrastructure/Factories/Cache.factory";
 import EventHandler from "./App/Infrastructure/Events/EventHandler";
-import App from "./App/App";
+import App from "./App";
 import {loggerCli} from "./App/Infrastructure/Shared/Logger";
 import Config from "config";
 import SeedFactory from "./App/Infrastructure/Factories/Seed.factory";
@@ -29,7 +29,7 @@ import CronFactory from "./App/Infrastructure/Factories/Cron.factory";
         EventHandler.getInstance();
 
         const cronFactory = new CronFactory();
-        cronFactory.start();
+        // cronFactory.test.start();
 
         const app = new App();
         await app.initConfig();

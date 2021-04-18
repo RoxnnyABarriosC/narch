@@ -2,7 +2,7 @@ import Transformer from "../../../App/Presentation/Shared/Transformer";
 import RoleUserTransformer from "../../../Role/Presentation/Transformers/RoleUser.transformer";
 import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
-import AuthService from "../../../App/Infrastructure/Services/Auth.service";
+import AuthService from "../../Infrastructure/Services/Auth.service";
 import FileTransformer from "../../../File/Presentation/Transformers/File.transformer";
 
 export default class AuthTransformer extends Transformer

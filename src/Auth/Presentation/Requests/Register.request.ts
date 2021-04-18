@@ -6,7 +6,7 @@ import RegisterPayload from "../../InterfaceAdapters/Payloads/Register.payload";
 import Roles from "../../../Config/Roles";
 import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique";
 import {REPOSITORIES} from "../../../Repositories";
-import {Locales} from "../../../App/App";
+import {Locales} from "../../../App";
 
 export default class RegisterRequest implements RegisterPayload
 {

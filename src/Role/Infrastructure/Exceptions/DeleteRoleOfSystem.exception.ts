@@ -1,4 +1,4 @@
-import {Locales} from "../../../App/App";
+import {Locales} from "../../../App";
 import ErrorException from "../../../App/Shared/ErrorException";
 
 export default class DeleteRoleOfSystemException extends ErrorException

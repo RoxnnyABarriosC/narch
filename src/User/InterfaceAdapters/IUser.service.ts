@@ -1,4 +1,4 @@
-import CheckUserRolePayload from "../../../User/InterfaceAdapters/Payloads/CheckUserRole.payload";
+import CheckUserRolePayload from "./Payloads/CheckUserRole.payload";
 
 export default interface IUserService
 {

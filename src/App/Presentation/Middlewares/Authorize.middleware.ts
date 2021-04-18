@@ -1,6 +1,6 @@
 import {NextFunction, Response} from 'express';
 import Config from 'config';
-import AuthService from "../../Infrastructure/Services/Auth.service";
+import AuthService from "../../../Auth/Infrastructure/Services/Auth.service";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 import ForbiddenHttpException from "../Exceptions/ForbiddenHttp.exception";
 import _ from "lodash";

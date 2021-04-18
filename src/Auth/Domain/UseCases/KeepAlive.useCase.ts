@@ -2,7 +2,7 @@ import lazyInject from "../../../LazyInject";
 import TokenFactory from "../../../App/Infrastructure/Factories/Token.factory";
 import KeepAlivePayload from "../../InterfaceAdapters/Payloads/KeepAlive.payload";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
+import IAuthService from "../../../User/InterfaceAdapters/IAuth.service";
 import {SERVICES} from "../../../Services";
 import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
 

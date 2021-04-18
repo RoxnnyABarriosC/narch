@@ -1,6 +1,6 @@
 import ErrorHttpException from "../../Shared/ErrorHttpException";
 import StatusCode from "../Shared/StatusCode";
-import {Locales} from "../../App";
+import {Locales} from "../../../App";
 
 export default class TokenExpiredHttpException extends ErrorHttpException
 {

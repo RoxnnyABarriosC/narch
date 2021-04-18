@@ -6,11 +6,11 @@ import {REPOSITORIES} from "./Repositories";
 
 import Config from "config";
 
-import IAuthService from "./App/InterfaceAdapters/IServices/IAuth.service";
-import AuthService from "./App/Infrastructure/Services/Auth.service";
+import IAuthService from "./User/InterfaceAdapters/IAuth.service";
+import AuthService from "./Auth/Infrastructure/Services/Auth.service";
 
-import IUserService from "./App/InterfaceAdapters/IServices/IUser.service";
-import UserService from "./App/Infrastructure/Services/User.service";
+import IUserService from "./User/InterfaceAdapters/IUser.service";
+import UserService from "./User/Infrastructure/Services/User.service";
 
 import Responder from "./App/Presentation/Shared/Responder";
 import IFormatResponder from "./App/InterfaceAdapters/Shared/IFormatResponder";

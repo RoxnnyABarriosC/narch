@@ -4,7 +4,7 @@ import {StatusCode} from "@digichanges/shared-experience";
 
 import {inject} from "inversify";
 import {SERVICES} from "../Services";
-import IAuthService from "../App/InterfaceAdapters/IServices/IAuth.service";
+import IAuthService from "../User/InterfaceAdapters/IAuth.service";
 import {Types} from "../Types";
 import Responder from "../App/Presentation/Shared/Responder";
 import AuthRequest from "./Presentation/Requests/Auth.request";

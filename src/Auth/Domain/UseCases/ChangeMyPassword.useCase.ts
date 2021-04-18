@@ -9,7 +9,7 @@ import PasswordWrongException from "../Exceptions/PasswordWrong.exception";
 import TokenFactory from "../../../App/Infrastructure/Factories/Token.factory";
 import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
 import {SERVICES} from "../../../Services";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
+import IAuthService from "../../../User/InterfaceAdapters/IAuth.service";
 
 export default class ChangeMyPasswordUseCase
 {

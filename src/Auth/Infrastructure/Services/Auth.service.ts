@@ -3,16 +3,16 @@ import jwt, { TAlgorithm } from "jwt-simple";
 import _ from "lodash";
 import Config from "config";
 
-import EncryptionFactory from "../Factories/Encryption.factory";
-import IAuthService from "../../InterfaceAdapters/IServices/IAuth.service";
-import WrongPermissionsException from "../Exceptions/WrongPermissions.exception";
+import EncryptionFactory from "../../../App/Infrastructure/Factories/Encryption.factory";
+import IAuthService from "../../../User/InterfaceAdapters/IAuth.service";
+import WrongPermissionsException from "../../../App/Infrastructure/Exceptions/WrongPermissions.exception";
 import {IEncryption, ITokenRepository} from "@digichanges/shared-experience";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 import Permissions from "../../../Config/Permissions";
 import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
-import SetTokenBlacklistUseCase from "../../Domain/UseCases/Tokens/SetTokenBlacklist.useCase";
+import SetTokenBlacklistUseCase from "../../../App/Domain/UseCases/Tokens/SetTokenBlacklist.useCase";
 
 @injectable()
 export default class AuthService implements IAuthService

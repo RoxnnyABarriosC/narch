@@ -2,7 +2,7 @@ import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
 import {SERVICES} from "../../../Services";
 import IItemRepository from "../../InterfaceAdapters/IItem.repository";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
+import IAuthService from "../../../User/InterfaceAdapters/IAuth.service";
 import IItemDomain from "../../InterfaceAdapters/IItem.domain";
 import UpdateITemPayload from "../../InterfaceAdapters/Payloads/UpdateITem.payload";
 import _ from "lodash";

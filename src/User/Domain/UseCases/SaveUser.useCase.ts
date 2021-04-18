@@ -3,7 +3,7 @@ import {REPOSITORIES} from "../../../Repositories";
 import {SERVICES} from "../../../Services";
 import {IEncryption} from "@digichanges/shared-experience";
 import IUserRepository from "../../InterfaceAdapters/IUser.repository";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
+import IAuthService from "../../InterfaceAdapters/IAuth.service";
 import EncryptionFactory from "../../../App/Infrastructure/Factories/Encryption.factory";
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
 import SaveUserPayload from "../../InterfaceAdapters/Payloads/SaveUser.payload";

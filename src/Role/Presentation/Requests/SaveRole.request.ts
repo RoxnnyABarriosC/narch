@@ -3,7 +3,7 @@ import {IsArray, IsBoolean, IsOptional, IsString, Length} from "class-validator"
 import SaveRolePayload from "../../InterfaceAdapters/Payloads/SaveRole.payload";
 import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique"
 import {REPOSITORIES} from "../../../Repositories";
-import {Locales} from "../../../App/App";
+import {Locales} from "../../../App";
 import AuthUserRequest from "../../../App/Presentation/Requests/Defaults/AuthUser.request";
 
 export default class SaveRoleRequest extends AuthUserRequest implements SaveRolePayload

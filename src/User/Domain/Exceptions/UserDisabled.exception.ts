@@ -1,5 +1,5 @@
 import ErrorException from "../../../App/Shared/ErrorException";
-import {Locales} from "../../../App/App";
+import {Locales} from "../../../App";
 
 export default class UserDisabledException extends ErrorException
 {

@@ -6,7 +6,7 @@ import SaveUserPayload from "../../InterfaceAdapters/Payloads/SaveUser.payload";
 import AuthUserRequest from "../../../App/Presentation/Requests/Defaults/AuthUser.request";
 import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique";
 import {REPOSITORIES} from "../../../Repositories";
-import {Locales} from "../../../App/App";
+import {Locales} from "../../../App";
 
 export default class SaveUserRequest extends AuthUserRequest implements SaveUserPayload
 {

@@ -1,6 +1,6 @@
 import lazyInject from "../../../../LazyInject";
 import IRoleRepository from "../../../InterfaceAdapters/IRole.repository";
-import IAuthService from "../../../../App/InterfaceAdapters/IServices/IAuth.service";
+import IAuthService from "../../../../User/InterfaceAdapters/IAuth.service";
 import {REPOSITORIES} from "../../../../Repositories";
 import {SERVICES} from "../../../../Services";
 import IRoleDomain from "../../../InterfaceAdapters/IRole.domain";

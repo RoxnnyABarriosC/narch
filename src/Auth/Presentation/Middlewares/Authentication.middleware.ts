@@ -4,7 +4,7 @@ import _ from "lodash";
 
 import TokenExpiredHttpException from "../../../App/Presentation/Exceptions/TokenExpiredHttp.exception";
 import TokenNotFoundHttpException from "../../../App/Presentation/Exceptions/TokenNotFoundHttp.exception";
-import AuthService from "../../../App/Infrastructure/Services/Auth.service";
+import AuthService from "../../Infrastructure/Services/Auth.service";
 import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 import ContainerFactory from "../../../App/Infrastructure/Factories/Container.factory";

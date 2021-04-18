@@ -9,7 +9,7 @@ export default class TestCron implements  ICreateCron
     {
         this.scheduledTask = cron.schedule(time, async () => {
            console.log("CRON STARTING");
-        });
+        }, {scheduled: false});
     }
 
     start (): ScheduledTask

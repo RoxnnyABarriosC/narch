@@ -1,5 +1,5 @@
 import {ErrorException} from "@digichanges/shared-experience";
-import {Locales} from "../../../App/App";
+import {Locales} from "../../../App";
 
 export default class CantDisabledException extends ErrorException
 {

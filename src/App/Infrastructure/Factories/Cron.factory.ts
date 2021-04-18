@@ -2,7 +2,7 @@ import TestCron from "../Cron/Test.cron";
 
 export default class CronFactory
 {
-    private test: TestCron;
+    public test: TestCron;
 
     constructor()
     {

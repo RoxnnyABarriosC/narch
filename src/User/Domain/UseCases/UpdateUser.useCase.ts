@@ -1,6 +1,6 @@
 import lazyInject from "../../../LazyInject";
 import IUserRepository from "../../InterfaceAdapters/IUser.repository";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
+import IAuthService from "../../InterfaceAdapters/IAuth.service";
 import {REPOSITORIES} from "../../../Repositories";
 import {SERVICES} from "../../../Services";
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
@@ -11,7 +11,7 @@ import CantDisabledException from "../../../Auth/Domain/Exceptions/CantDisabled.
 import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 import _ from "lodash";
-import IUserService from "../../../App/InterfaceAdapters/IServices/IUser.service";
+import IUserService from "../../InterfaceAdapters/IUser.service";
 import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
 import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
 import UseCaseHelpers from "../../../App/Infrastructure/Helpers/UseCaseHelpers";

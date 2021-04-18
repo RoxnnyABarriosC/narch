@@ -1,4 +1,4 @@
-import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
+import IUserDomain from "./IUser.domain";
 
 export default interface IAuthService
 {

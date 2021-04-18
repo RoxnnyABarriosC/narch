@@ -4,7 +4,7 @@ import UpdateMePayload from "../../InterfaceAdapters/Payloads/UpdateMe.payload";
 import AuthUserRequest from "../../../App/Presentation/Requests/Defaults/AuthUser.request";
 import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique";
 import {REPOSITORIES} from "../../../Repositories";
-import {Locales} from "../../../App/App";
+import {Locales} from "../../../App";
 
 export default class UpdateMeRequest extends AuthUserRequest implements UpdateMePayload
 {

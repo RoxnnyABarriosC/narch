@@ -2,7 +2,7 @@ import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";
 import {SERVICES} from "../../../Services";
 import {IEncryption} from "@digichanges/shared-experience";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
+import IAuthService from "../../../User/InterfaceAdapters/IAuth.service";
 import EncryptionFactory from "../../../App/Infrastructure/Factories/Encryption.factory";
 import EventHandler from "../../../App/Infrastructure/Events/EventHandler";
 import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";

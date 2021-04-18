@@ -2,8 +2,8 @@ import {injectable} from "inversify";
 import _ from "lodash";
 
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
-import IUserService from "../../InterfaceAdapters/IServices/IUser.service";
-import CheckUserRolePayload from "../../../User/InterfaceAdapters/Payloads/CheckUserRole.payload";
+import IUserService from "../../InterfaceAdapters/IUser.service";
+import CheckUserRolePayload from "../../InterfaceAdapters/Payloads/CheckUserRole.payload";
 import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
 import lazyInject from "../../../LazyInject";
 import {REPOSITORIES} from "../../../Repositories";

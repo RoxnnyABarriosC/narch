@@ -3,7 +3,7 @@ import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 import AuthUserPayload from "../../../App/InterfaceAdapters/Payloads/Defaults/AuthUser.payload";
 import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
 import {SERVICES} from "../../../Services";
-import IAuthService from "../../../App/InterfaceAdapters/IServices/IAuth.service";
+import IAuthService from "../../../User/InterfaceAdapters/IAuth.service";
 import TokenFactory from "../../../App/Infrastructure/Factories/Token.factory";
 
 export default class GetMeUseCase
