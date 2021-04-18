@@ -2,7 +2,7 @@ import Config from "config";
 import MinioStrategy from "../Filesystem/MinioStrategy";
 import {IFilesystem} from "@digichanges/shared-experience";
 
-class FilesystemFactory
+export default class FilesystemFactory
 {
     static create(encryptionConfig: string = Config.get('filesystem.default')): IFilesystem
     {
@@ -14,5 +14,3 @@ class FilesystemFactory
         }
     }
 }
-
-export default FilesystemFactory;

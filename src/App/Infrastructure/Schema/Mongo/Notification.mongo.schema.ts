@@ -4,7 +4,6 @@ import NotificationEntity from "../../Entities/Notification.entity";
 import EmailNotificationEntity from "../../Entities/EmailNotification.entity";
 import PushNotificationEntity from "../../Entities/PushNotification.entity";
 
-
 const options = {discriminatorKey: 'kind', timestamps: true};
 
 export const NotificationMongoSchema: any = new Schema({

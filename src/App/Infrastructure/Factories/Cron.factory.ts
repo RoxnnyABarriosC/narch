@@ -9,7 +9,7 @@ export default class CronFactory
         this.test = new TestCron('* * * * *');
     }
 
-    start(): any
+    start(): void
     {
         this.test.start();
     }

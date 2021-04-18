@@ -2,7 +2,6 @@ import Config from "config";
 import { v4 as uuidv4 } from 'uuid';
 import {ITokenRepository} from "@digichanges/shared-experience";
 
-
 import TokenEntity from "../Entities/Token.entity";
 import ContainerFactory from "./Container.factory";
 import {REPOSITORIES} from "../../../Repositories";

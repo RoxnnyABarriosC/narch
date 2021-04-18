@@ -14,7 +14,7 @@ const headersPrivate = {
     "Authentication": ""
 };
 
-export class AxiosFactory
+export default class AxiosFactory
 {
     static getAxiosInstance(isPrivate: boolean = true): AxiosInstance
     {
