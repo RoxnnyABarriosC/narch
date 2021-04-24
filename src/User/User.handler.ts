@@ -18,11 +18,13 @@ import IdRequest from "../App/Presentation/Requests/Defaults/Id.request";
 import GetUserUseCase from "./Domain/UseCases/GetUser.useCase";
 import UpdateUserRequest from "./Presentation/Requests/UpdateUser.request";
 import UpdateUserUseCase from "./Domain/UseCases/UpdateUser.useCase";
-import UserAssignRoleRequest from "./Presentation/Requests/UserAssignRole.request";
+import UserAssignRolesRequest from "./Presentation/Requests/UserAssignRoles.request";
 import AssignRolesUseCase from "./Domain/UseCases/AssignRoles.useCase";
 import RemoveUserUseCase from "./Domain/UseCases/RemoveUser.useCase";
 import ChangeUserPasswordRequest from "./Presentation/Requests/ChangeUserPassword.request";
 import ChangeUserPasswordUseCase from "./Domain/UseCases/ChangeUserPassword.useCase";
+import UserAssignPermissionsRequest from "./Presentation/Requests/UserAssignPermissions.request";
+import AssignPermissionsUseCase from "./Domain/UseCases/AssignPermissions.useCase";
 
 @controller('/api/users')
 export default class UserHandler
@@ -78,18 +80,6 @@ export default class UserHandler
         this.responder.send(user, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
     }
 
-    @httpPut('/:id/assignRoles', AuthorizeMiddleware(Permissions.ASSING_ROLES_TO_USERS))
-    public async assignRole (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
-    {
-        const _request = new UserAssignRoleRequest(req);
-        await ValidatorRequest.handle(_request);
-
-        const assignRolesUseCase = new AssignRolesUseCase();
-        const _response: IUserDomain = await assignRolesUseCase.handle(_request);
-
-        this.responder.send(_response, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
-    }
-
     @httpDelete('/:id', AuthorizeMiddleware(Permissions.REMOVE_USERS))
     public async remove (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
@@ -100,6 +90,30 @@ export default class UserHandler
         const data = await removeUserUseCase.handle(_request);
 
         this.responder.send(data, req, res, StatusCode.HTTP_OK, new UserTransformer());
+    }
+
+    @httpPut('/:id/assignRoles', AuthorizeMiddleware(Permissions.ASSING_ROLES_TO_USERS))
+    public async assignRoles (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
+    {
+        const _request = new UserAssignRolesRequest(req);
+        await ValidatorRequest.handle(_request);
+
+        const assignRolesUseCase = new AssignRolesUseCase();
+        const _response: IUserDomain = await assignRolesUseCase.handle(_request);
+
+        this.responder.send(_response, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
+    }
+
+    @httpPut('/:id/assignPermissions', AuthorizeMiddleware(Permissions.ASSING_PERMISSIONS_TO_USERS))
+    public async assignPermissions (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
+    {
+        const _request = new UserAssignPermissionsRequest(req);
+        await ValidatorRequest.handle(_request);
+
+        const assignPermissionsUseCase = new AssignPermissionsUseCase();
+        const _response: IUserDomain = await assignPermissionsUseCase.handle(_request);
+
+        this.responder.send(_response, req, res, StatusCode.HTTP_CREATED, new UserTransformer());
     }
 
     @httpPut('/:id/changePassword', AuthorizeMiddleware(Permissions.CHANGE_PASSWORDS_USERS))
