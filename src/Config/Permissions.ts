@@ -17,6 +17,7 @@ export default class Permissions
     static readonly LIST_USERS: string = 'listUsers';
     static readonly REMOVE_USERS: string = 'removeUsers';
     static readonly ASSING_ROLES_TO_USERS: string = 'assingRolesToUsers';
+    static readonly ASSING_PERMISSIONS_TO_USERS: string = 'assingPermissionsToUsers';
     static readonly CHANGE_PASSWORDS_USERS:string = 'changePasswordsUsers';
 
     // FILES
@@ -63,8 +64,8 @@ export default class Permissions
                 `${Permissions.LIST_USERS}`,
                 `${Permissions.REMOVE_USERS}`,
                 `${Permissions.CHANGE_PASSWORDS_USERS}`,
-                `${Permissions.CHANGE_MY_PASSWORD}`,
-                `${Permissions.UPDATE_ME}`,
+                `${Permissions.ASSING_PERMISSIONS_TO_USERS}`,
+                `${Permissions.ASSING_ROLES_TO_USERS}`
             ],
             ROLES: [
                 `${Permissions.SAVE_ROLES}`,
