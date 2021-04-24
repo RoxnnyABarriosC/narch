@@ -10,6 +10,9 @@ import TokenFactory from "../../../App/Infrastructure/Factories/Token.factory";
 import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
 import {SERVICES} from "../../../Services";
 import IAuthService from "../../../User/InterfaceAdapters/IAuth.service";
+import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
+import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
+import _ from "lodash";
 
 export default class ChangeMyPasswordUseCase
 {
@@ -34,6 +37,8 @@ export default class ChangeMyPasswordUseCase
         let user = payload.getAuthUser();
         const tokenId: string = payload.getTokenId();
 
+        const oldUser: IUserDomain = _.cloneDeep<IUserDomain>(user);
+
         if(! await this.encryption.compare(payload.getCurrentPassword(), user.password))
         {
             throw new PasswordWrongException();
@@ -44,6 +49,9 @@ export default class ChangeMyPasswordUseCase
         user = await this.repository.save(user);
 
         await this.authService.addTokenBackList(tokenId);
+
+        const log = new SaveLogUserUseCase(payload.getAuthUser(), oldUser);
+        await log.handle(LogActionEnum.CHANGE_PASSWORD);
 
         return this.tokenFactory.createToken(user);
     }

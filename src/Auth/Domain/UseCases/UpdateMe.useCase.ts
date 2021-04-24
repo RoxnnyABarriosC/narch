@@ -10,6 +10,9 @@ import UpdateMePayload from "../../InterfaceAdapters/Payloads/UpdateMe.payload";
 import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
 import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
 import UseCaseHelpers from "../../../App/Infrastructure/Helpers/UseCaseHelpers";
+import _ from "lodash";
+import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
+import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
 
 export default class UpdateMeUseCase extends UseCaseHelpers
 {
@@ -35,6 +38,8 @@ export default class UpdateMeUseCase extends UseCaseHelpers
         let user: IUserDomain = payload.getAuthUser();
         const tokenId: string = payload.getTokenId();
 
+        const oldUser: IUserDomain = _.cloneDeep<IUserDomain>(user);
+
         user.firstName = payload.getFirstName();
         user.lastName = payload.getLastName();
         user.email = payload.getEmail();
@@ -44,6 +49,9 @@ export default class UpdateMeUseCase extends UseCaseHelpers
         user = await this.repository.save(user);
 
         await this.authService.addTokenBackList(tokenId)
+
+        const log = new SaveLogUserUseCase(payload.getAuthUser(), oldUser);
+        await log.handle(LogActionEnum.UPDATE);
 
         return this.tokenFactory.createToken(user);
     }
