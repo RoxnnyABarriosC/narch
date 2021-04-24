@@ -30,6 +30,7 @@ export default class UpdateUserRequest extends IdRequest implements UpdateUserPa
     permissions: string[];
 
     @IsArray()
+    @ArrayMinSize(0)
     @IsUUID("4", {
         each: true,
     })
