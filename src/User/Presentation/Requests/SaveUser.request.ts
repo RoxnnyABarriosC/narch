@@ -48,6 +48,7 @@ export default class SaveUserRequest extends AuthUserRequest implements SaveUser
     permissions: string[]
 
     @IsArray()
+    @ArrayMinSize(0)
     @IsUUID("4", {
         each: true,
     })
