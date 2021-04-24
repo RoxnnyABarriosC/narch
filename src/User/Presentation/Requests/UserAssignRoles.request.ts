@@ -1,11 +1,12 @@
 import {Request} from "express";
-import {IsArray, IsUUID} from "class-validator";
+import {ArrayMinSize, IsArray, IsUUID} from "class-validator";
 import IdRequest from "../../../App/Presentation/Requests/Defaults/Id.request";
-import UserAssignRolePayload from "../../InterfaceAdapters/Payloads/UserAssignRole.payload";
+import UserAssignRolesPayload from "../../InterfaceAdapters/Payloads/UserAssignRoles.payload";
 
-export default class UserAssignRoleRequest extends IdRequest implements UserAssignRolePayload
+export default class UserAssignRolesRequest extends IdRequest implements UserAssignRolesPayload
 {
     @IsArray()
+    @ArrayMinSize(0)
     @IsUUID("4", {
         each: true,
     })
