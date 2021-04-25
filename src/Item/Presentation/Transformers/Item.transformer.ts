@@ -12,15 +12,15 @@ export default class ItemTransformer extends Transformer
         this.userRelationshipTransformer = new UserRelationshipTransformer();
     }
 
-    public transform(role: IItemDomain)
+    public transform(item: IItemDomain)
     {
         return {
-            id: role.getId(),
-            name: role.name,
-            createdBy: this.validate(role.getCreatedBy(),'userRelationshipTransformer'),
-            updatedBy: this.validate(role.getUpdatedBy(),'userRelationshipTransformer'),
-            createdAt: this.transformDate(role.createdAt),
-            updatedAt: this.transformDate(role.updatedAt),
+            id: item.getId(),
+            name: item.name,
+            createdBy: this.validate(item.getCreatedBy(),'userRelationshipTransformer'),
+            updatedBy: this.validate(item.getUpdatedBy(),'userRelationshipTransformer'),
+            createdAt: this.transformDate(item.createdAt),
+            updatedAt: this.transformDate(item.updatedAt),
         };
     }
 }

@@ -68,9 +68,9 @@ export default class ItemHandler
         await ValidatorRequest.handle(_request);
 
         const updateItemUseCase = new UpdateItemUseCase();
-        const role: IItemDomain = await updateItemUseCase.handle(_request);
+        const item: IItemDomain = await updateItemUseCase.handle(_request);
 
-        this.responder.send(role, req, res, StatusCode.HTTP_CREATED, new ItemTransformer());
+        this.responder.send(item, req, res, StatusCode.HTTP_CREATED, new ItemTransformer());
     }
 
     @httpDelete('/:id', AuthorizeMiddleware(Permissions.REMOVE_ITEMS))
