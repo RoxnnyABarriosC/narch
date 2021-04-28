@@ -14,11 +14,11 @@ import _ from "lodash";
 import IUserService from "../../InterfaceAdapters/IUser.service";
 import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
 import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
-import UseCaseHelpers from "../../../App/Infrastructure/Helpers/UseCaseHelpers";
+import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
 import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
 import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
 
-export default class UpdateUserUseCase extends UseCaseHelpers
+export default class UpdateUserUseCase extends UseCaseHelper
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;

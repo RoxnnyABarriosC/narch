@@ -12,13 +12,13 @@ import EventHandler from "../../../App/Infrastructure/Events/EventHandler";
 import UserCreatedEvent from "../../Infrastructure/Event/UserCreated.event";
 import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
 import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
-import UseCaseHelpers from "../../../App/Infrastructure/Helpers/UseCaseHelpers";
+import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
 import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
 import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
 import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 
-export default class SaveUserUseCase extends UseCaseHelpers
+export default class SaveUserUseCase extends UseCaseHelper
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;

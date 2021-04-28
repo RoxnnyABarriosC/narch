@@ -9,12 +9,12 @@ import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
 import UpdateMePayload from "../../InterfaceAdapters/Payloads/UpdateMe.payload";
 import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
 import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
-import UseCaseHelpers from "../../../App/Infrastructure/Helpers/UseCaseHelpers";
+import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
 import _ from "lodash";
 import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
 import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
 
-export default class UpdateMeUseCase extends UseCaseHelpers
+export default class UpdateMeUseCase extends UseCaseHelper
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;

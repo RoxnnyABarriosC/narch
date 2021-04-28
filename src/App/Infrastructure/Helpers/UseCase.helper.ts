@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-export default class UseCaseHelpers
+export default class UseCaseHelper
 {
     protected async updateOrCreateRelationshipById<IDomain, IReturnDomain>(entity: IDomain, attribute: string , id: string, repository: string): Promise<IReturnDomain | null>
     {
