@@ -2,15 +2,15 @@ import UserSeed from "../../../User/Infrastructure/User.seed";
 
 export default class SeedFactory
 {
-    private userSqlSeed: UserSeed;
+    private userSeed: UserSeed;
 
     constructor()
     {
-        this.userSqlSeed = new UserSeed();
+        this.userSeed = new UserSeed();
     }
 
     public async init()
     {
-        await this.userSqlSeed.authInit();
+        await this.userSeed.authInit();
     }
 }
