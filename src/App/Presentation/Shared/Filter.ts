@@ -72,16 +72,15 @@ export default abstract class Filter implements IFilter
         return this.filters;
     }
 
-    createFilter<F = any>(queryBuilder: SelectQueryBuilder<any>, entityFilter: F, attributeConfig: AttributeConfig<F>, condition: FilterCondition, operator: FilterOperator, alias: string = 'i'): void
+    createFilter<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attributeConfig: AttributeConfig<E, F>, condition: FilterCondition, operator: FilterOperator, alias: string = 'i'): void
     {
-        let attribute: string = attributeConfig as string;
-        let dbAttribute: string;
+        let attribute: keyof F | string = attributeConfig as string;
+        let dbAttribute: keyof E | string;
         let booleanAttribute: boolean = false;
         let toLower: boolean = false
 
         if (_.isObject(attributeConfig))
         {
-            // @ts-ignore
             attribute = attributeConfig.attribute;
 
             if (attributeConfig.dbAttribute)
@@ -168,7 +167,7 @@ export default abstract class Filter implements IFilter
         return filters;
     }
 
-    createBooleanMultiFilter<F = any>(queryBuilder: SelectQueryBuilder<any>, entityFilter: F, attribute: KeyAttribute<F>, value: boolean = true, condition: FilterCondition = 'andWhere', alias: string = 'i'): void
+    createBooleanMultiFilter<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute: KeyAttribute<F>, value: boolean = true, condition: FilterCondition = 'andWhere', alias: string = 'i'): void
     {
         // @ts-ignore
         if (this.has(entityFilter[attribute]))
@@ -186,15 +185,14 @@ export default abstract class Filter implements IFilter
         }
     }
 
-    createMultiFilter<F = any>(queryBuilder: SelectQueryBuilder<any>, entityFilter: F, attributeConfig: AttributeConfig<F>, condition: FilterCondition, operator: MultiFilterOperator, alias: string = 'i'): void
+    createMultiFilter<E = any ,F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attributeConfig: AttributeConfig<E, F>, condition: FilterCondition, operator: MultiFilterOperator, alias: string = 'i'): void
     {
-        let attribute: string = attributeConfig as string;
-        let dbAttribute: string;
+        let attribute: keyof F | string = attributeConfig as string;
+        let dbAttribute: keyof E | string;
         let toLower: boolean = false
 
         if (_.isObject(attributeConfig))
         {
-            // @ts-ignore
             attribute = attributeConfig.attribute;
 
             if (attributeConfig.dbAttribute)
@@ -250,10 +248,10 @@ export default abstract class Filter implements IFilter
         }
     }
 
-    createSearchVector<F = any>(queryBuilder: SelectQueryBuilder<any>, entityFilter: F, attribute: KeyAttribute , searchConfig: SearchConfig, condition: FilterCondition, alias: string = 'i'): void
+    createSearchVector<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute: KeyAttribute , searchConfig: SearchConfig, condition: FilterCondition, alias: string = 'i'): void
     {
         // @ts-ignore
-        const aliasAttr = `:${entityFilter[attribute]}`;
+        const aliasAttr: string = `:${entityFilter[attribute]}`;
 
         const partialMatch: boolean =  _.isUndefined(searchConfig?.partialMatch) ? true : searchConfig.partialMatch;
 
@@ -323,9 +321,9 @@ export default abstract class Filter implements IFilter
         }
     }
 
-    createSearchLike<F = any>(queryBuilder: SelectQueryBuilder<any>, entityFilter: F, attribute: KeyAttribute<F> , searchConfig: SearchConfig, condition: FilterCondition, alias: string = 'i'): void
+    createSearchLike<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute: KeyAttribute<F> , searchConfig: SearchConfig, condition: FilterCondition, alias: string = 'i'): void
     {
-        const aliasAttr = `:${entityFilter[attribute]}`;
+        const aliasAttr: string = `:${entityFilter[attribute]}`;
 
         let attrsDB: string | string[] | AttributeDBConfig[] = searchConfig.attributesDB;
 
