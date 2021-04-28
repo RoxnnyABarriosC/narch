@@ -42,7 +42,7 @@ export default class UpdateMeRequest extends AuthUserRequest implements UpdateMe
         this.lastName = request.body.lastName;
         this.email = request.body.email;
         this.id = request.tokenDecode.userId;
-        this.mainPictureId = request.body.mainPicture;
+        this.mainPictureId = request.body.mainPictureId;
     }
 
     getFirstName(): string

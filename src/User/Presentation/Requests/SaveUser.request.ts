@@ -70,7 +70,7 @@ export default class SaveUserRequest extends AuthUserRequest implements SaveUser
         this.permissions = request.body.permissions;
         this.passwordConfirmation = request.body.passwordConfirmation;
         this.enable = request.body.hasOwnProperty('enable') ? request.body.enable : true;
-        this.mainPictureId = request.body.mainPicture;
+        this.mainPictureId = request.body.mainPictureId;
         this.rolesId = request.body.rolesId;
     }
 
