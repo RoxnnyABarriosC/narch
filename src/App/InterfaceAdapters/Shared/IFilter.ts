@@ -9,15 +9,15 @@ export declare type AttributeConfig <E = any, F = any> = {
 
 export declare type KeyAttribute<F = any> = (keyof F);
 
-export declare type SearchConfig = {
-    attributesDB: string | string[] | AttributeDBConfig[]
+export declare type SearchConfig<E = any> = {
+    attributesDB: string | string[] | KeyAttribute<E> | KeyAttribute<E>[] | AttributeDBConfig<E>[]
     partialMatch?: boolean,
 }
 
-export declare type AttributeDBConfig = {
-    tableAlias?: string,
-    name: string,
+export declare type AttributeDBConfig<E = any> = {
+    name: string |  KeyAttribute<E>,
     coalesce?: boolean,
+    tableAlias?: string,
     setweight?: SetweightRelevance,
 }
 
@@ -38,8 +38,8 @@ export default interface IFilter
     isEmpty(): boolean;
     getFields(): any[];
     createFilter<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attributeConfig: AttributeConfig<E, F>, condition: FilterCondition, operator: FilterOperator, alias?: string): void;
-    createSearchVector<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute: KeyAttribute<F> , searchConfig: SearchConfig, condition: FilterCondition, alias?: string): void;
-    createSearchLike<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute:  AttributeConfig<E, F> , searchConfig: SearchConfig, condition: FilterCondition, alias?: string): void;
+    createSearchVector<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute: KeyAttribute<F> , searchConfig: SearchConfig<E>, condition: FilterCondition, alias?: string): void;
+    createSearchLike<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute:  AttributeConfig<E, F> , searchConfig: SearchConfig<E>, condition: FilterCondition, alias?: string): void;
     createMultiFilter<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attributeConfig: AttributeConfig<E, F>, condition: FilterCondition, operator: MultiFilterOperator, alias?: string): void;
     createBooleanMultiFilter<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute: KeyAttribute<F>, value: boolean, condition?: FilterCondition, alias?: string): void;
     getMultiFilter<F = any>(entityFilter: F, attribute: KeyAttribute<F>): string[];

@@ -248,14 +248,14 @@ export default abstract class Filter implements IFilter
         }
     }
 
-    createSearchVector<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute: KeyAttribute , searchConfig: SearchConfig, condition: FilterCondition, alias: string = 'i'): void
+    createSearchVector<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute: KeyAttribute<F>, searchConfig: SearchConfig<E>, condition: FilterCondition, alias: string = 'i'): void
     {
         // @ts-ignore
         const aliasAttr: string = `:${entityFilter[attribute]}`;
 
         const partialMatch: boolean =  _.isUndefined(searchConfig?.partialMatch) ? true : searchConfig.partialMatch;
 
-        let attrsDB: string | string[] | AttributeDBConfig[] = searchConfig.attributesDB;
+        let attrsDB:  string | string[] | KeyAttribute<E> | KeyAttribute<E>[] | AttributeDBConfig<E>[] = searchConfig.attributesDB;
 
         let searchAtt: string | string[];
 
@@ -275,7 +275,7 @@ export default abstract class Filter implements IFilter
             if (typeof attrsDB[0] === "object")
             {
                 // @ts-ignore
-                searchAtt = attrsDB.map((attrDB: AttributeDBConfig ) => {
+                searchAtt = attrsDB.map((attrDB: AttributeDBConfig<E> ) => {
                     const coalesce: boolean = _.isUndefined(attrDB?.coalesce) ? false : attrDB.coalesce;
                     const setweight: boolean | SetweightRelevance = _.isUndefined(attrDB?.setweight) ? false : attrDB.setweight;
                     const tableAlias: string = _.isUndefined(attrDB?.tableAlias) ? alias : attrDB.tableAlias;
@@ -321,11 +321,11 @@ export default abstract class Filter implements IFilter
         }
     }
 
-    createSearchLike<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute: KeyAttribute<F> , searchConfig: SearchConfig, condition: FilterCondition, alias: string = 'i'): void
+    createSearchLike<E = any, F = any>(queryBuilder: SelectQueryBuilder<E>, entityFilter: F, attribute: KeyAttribute<F> , searchConfig: SearchConfig<E>, condition: FilterCondition, alias: string = 'i'): void
     {
         const aliasAttr: string = `:${entityFilter[attribute]}`;
 
-        let attrsDB: string | string[] | AttributeDBConfig[] = searchConfig.attributesDB;
+        let attrsDB:  string | string[] | KeyAttribute<E> | KeyAttribute<E>[] | AttributeDBConfig<E>[] = searchConfig.attributesDB;
 
         let searchAtt: string | string[];
 
@@ -345,7 +345,7 @@ export default abstract class Filter implements IFilter
             if (typeof attrsDB[0] === "object")
             {
                 // @ts-ignore
-                searchAtt = attrsDB.map((attrDB: AttributeDBConfig ) => {
+                searchAtt = attrsDB.map((attrDB: AttributeDBConfig<E> ) => {
                     const coalesce: boolean = _.isUndefined(attrDB?.coalesce) ? false : attrDB.coalesce;
                     const tableAlias: string = _.isUndefined(attrDB?.tableAlias) ? alias : attrDB.tableAlias;
 
