@@ -1,7 +1,7 @@
 import Transformer from "../../../App/Presentation/Shared/Transformer";
 import IRoleDomain from "../../InterfaceAdapters/IRole.domain";
 
-export default class RoleUserTransformer extends Transformer
+export default class RoleLogTransformer extends Transformer
 {
     public transform(role: IRoleDomain)
     {
@@ -9,9 +9,8 @@ export default class RoleUserTransformer extends Transformer
             id: role.getId(),
             name: role.name,
             slug: role.slug,
+            permissions: this.validate(role?.permissions),
             enable: role.enable,
-            createdAt: this.unixDate(role.createdAt),
-            updatedAt: this.unixDate(role.updatedAt),
         };
     }
 }
