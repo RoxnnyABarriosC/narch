@@ -19,8 +19,8 @@ export default class ItemTransformer extends Transformer
             name: item.name,
             createdBy: this.validate(item.getCreatedBy(),'userRelationshipTransformer'),
             updatedBy: this.validate(item.getUpdatedBy(),'userRelationshipTransformer'),
-            createdAt: this.transformDate(item.createdAt),
-            updatedAt: this.transformDate(item.updatedAt),
+            createdAt: this.unixDate(item.createdAt),
+            updatedAt: this.unixDate(item.updatedAt),
         };
     }
 }
