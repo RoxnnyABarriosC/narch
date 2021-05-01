@@ -11,8 +11,8 @@ export default class RoleTransformer extends Transformer
             slug: role.slug,
             permissions: role.permissions ? role.permissions : null,
             enable: role.enable,
-            createdAt: this.transformDate(role.createdAt),
-            updatedAt: this.transformDate(role.updatedAt),
+            createdAt: this.unixDate(role.createdAt),
+            updatedAt: this.unixDate(role.updatedAt),
         };
     }
 }
