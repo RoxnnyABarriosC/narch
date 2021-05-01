@@ -5,7 +5,7 @@ import {validateEnv} from "./Config/validateEnv";
 import DatabaseFactory from "./App/Infrastructure/Factories/Database.factory";
 import {ICacheRepository} from "@digichanges/shared-experience";
 import CacheFactory from "./App/Infrastructure/Factories/Cache.factory";
-import EventHandler from "./App/Infrastructure/Events/EventHandler";
+import EventHandler from "./App/Infrastructure/Events/Event.handler";
 import App from "./App";
 import {loggerCli} from "./App/Infrastructure/Shared/Logger";
 import Config from "config";

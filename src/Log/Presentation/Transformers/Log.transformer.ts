@@ -22,8 +22,8 @@ export default class LogTransformer extends Transformer
             description: log.description,
             metadata: log.metadata,
             createdBy: this.validate(log.getCreatedBy(),'userRelationshipTransformer'),
-            createdAt: this.transformDate(log.createdAt),
-            updatedAt: this.transformDate(log.updatedAt),
+            createdAt: this.unixDate(log.createdAt),
+            updatedAt: this.unixDate(log.updatedAt),
         };
     }
 }

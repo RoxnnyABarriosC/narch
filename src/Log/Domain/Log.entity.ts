@@ -5,9 +5,11 @@ import LogActionEnum from "../Infrastructure/Enum/LogActionEnum";
 
 export default class LogEntity extends BaseEntity implements ILogDomain
 {
+    type: string;
     action: LogActionEnum;
     entity: string;
     entityId: string;
+    parentId: string;
     description: string;
     metadata: {};
     createdBy: IUserDomain;
