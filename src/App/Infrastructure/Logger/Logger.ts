@@ -176,8 +176,12 @@ export default class Logger
 
                 else
                 {
-                    newKey = key
-                    diff[key] = diffMap(diff[key]);
+                    newKey = key;
+
+                    if (!_.isArray(diff[key]))
+                    {
+                        diff[key] = diffMap(diff[key]);
+                    }
                 }
 
                 return { [newKey]: diff[key] };
