@@ -4,16 +4,19 @@ import {REPOSITORIES} from "../../../Repositories";
 import IItemDomain from "../../InterfaceAdapters/IItem.domain";
 import SaveItemPayload from "../../InterfaceAdapters/Payloads/SaveItem.payload";
 import ItemEntity from "../Item.entity";
-import SaveLogItemUseCase from "../../../Log/Domain/UseCases/SaveLogItem.useCase";
-import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
+import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
+import {ILogSaveProps} from "../../../App/Infrastructure/Logger/Logger";
+import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
 
-export default class SaveItemUseCase
+export default class SaveItemUseCase extends UseCaseHelper
 {
     @lazyInject(REPOSITORIES.IItemRepository)
     private repository: IItemRepository<IItemDomain>;
 
     async handle(payload: SaveItemPayload): Promise<IItemDomain>
     {
+        const authUser: IUserDomain = payload.getAuthUser();
+
         let item: IItemDomain = new ItemEntity();
 
         if (payload.getId())
@@ -27,8 +30,14 @@ export default class SaveItemUseCase
 
         item = await this.repository.save(item);
 
-        const log = new SaveLogItemUseCase(payload.getAuthUser(),item);
-        await log.handle(LogActionEnum.SAVE);
+        const logSaveProps: ILogSaveProps = {
+            type: ItemEntity.name,
+            entity: ItemEntity.name,
+            entityId: item.getId(),
+            authUser,
+        }
+
+        this.logSave(logSaveProps);
 
         return item;
     }

@@ -6,10 +6,13 @@ import IAuthService from "../../../User/InterfaceAdapters/IAuth.service";
 import IItemDomain from "../../InterfaceAdapters/IItem.domain";
 import UpdateITemPayload from "../../InterfaceAdapters/Payloads/UpdateITem.payload";
 import _ from "lodash";
-import SaveLogItemUseCase from "../../../Log/Domain/UseCases/SaveLogItem.useCase";
-import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
+import {ILogUpdateProps} from "../../../App/Infrastructure/Logger/Logger";
+import ItemEntity from "../Item.entity";
+import ItemLogTransformer from "../../Presentation/Transformers/ItemLog.transformer";
+import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
+import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
 
-export default class UpdateItemUseCase
+export default class UpdateItemUseCase extends UseCaseHelper
 {
     @lazyInject(REPOSITORIES.IItemRepository)
     private repository: IItemRepository<IItemDomain>;
@@ -19,17 +22,30 @@ export default class UpdateItemUseCase
 
     async handle(payload: UpdateITemPayload): Promise<IItemDomain>
     {
-        const item: IItemDomain = await this.repository.getOne(payload.getId());
+        const authUser: IUserDomain = payload.getAuthUser();
+
+        let item: IItemDomain = await this.repository.getOne(payload.getId());
 
         const oldItem: IItemDomain = _.cloneDeep<IItemDomain>(item);
 
         item.name = payload.getName();
         item.updatedBy = payload.getAuthUser();
 
-        const log = new SaveLogItemUseCase(payload.getAuthUser(), oldItem);
-        await log.handle(LogActionEnum.UPDATE);
+        item = await this.repository.update(item);
 
-        return await this.repository.save(item);
+        const logUpdateProps: ILogUpdateProps = {
+            type: ItemEntity.name,
+            entity: ItemEntity.name,
+            entityId: item.getId(),
+            newEntity: item,
+            oldEntity: oldItem,
+            transformer: new ItemLogTransformer(),
+            authUser,
+        };
+
+        this.logUpdate(logUpdateProps);
+
+        return item;
     }
 }
 
