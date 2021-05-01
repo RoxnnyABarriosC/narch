@@ -11,6 +11,9 @@ const LogSqlSchema = new EntitySchema<LogEntity>({
             primary: true,
             unique: true
         },
+        type: {
+            type: "varchar"
+        },
         action: {
             type: "varchar"
         },
@@ -18,6 +21,9 @@ const LogSqlSchema = new EntitySchema<LogEntity>({
             type: "varchar"
         },
         entityId: {
+            type: "varchar"
+        },
+        parentId: {
             type: "varchar"
         },
         description: {

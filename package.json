@@ -50,6 +50,7 @@
     "inversify": "^5.0.1",
     "inversify-express-utils": "^6.3.2",
     "inversify-inject-decorators": "^3.1.0",
+    "json-diff": "^0.5.4",
     "jsonwebtoken": "^8.5.1",
     "jwt-simple": "^0.5.6",
     "lodash": "^4.17.20",
@@ -77,6 +78,7 @@
     "yarn": "^1.22.10"
   },
   "devDependencies": {
+    "@types/json-diff": "^0.5.1",
     "@shelf/jest-mongodb": "^1.2.3",
     "@types/bcrypt": "^3.0.0",
     "@types/bcryptjs": "^2.4.2",

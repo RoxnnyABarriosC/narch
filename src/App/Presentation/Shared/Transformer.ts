@@ -35,9 +35,31 @@ export default abstract class Transformer
         return !_.isNull(value) && !_.isUndefined(value) ? value : null;
     }
 
-    transformDate(date: Date): number
+    unixDate(date: Date): number
     {
         return  !_.isNull(date) && !_.isUndefined(date) ? moment(date).utc().unix() : null;
+    }
+
+    getIds<T = any>(value: T): string | string[]
+    {
+        if (!_.isUndefined(value) && !_.isNull(value))
+        {
+            if (_.isArray(value))
+            {
+                return _.map(value, _value => _value?.getId());
+            }
+
+            else
+            {
+                // @ts-ignore
+                return value?.getId();
+            }
+        }
+
+        else
+        {
+            return null;
+        }
     }
 }
 
