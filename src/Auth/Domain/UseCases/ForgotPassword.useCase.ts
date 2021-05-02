@@ -4,7 +4,7 @@ import {REPOSITORIES} from "../../../Repositories";
 import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
 import ForgotPasswordPayload from "../../InterfaceAdapters/Payloads/ForgotPassword.payload";
 import EmailNotificationEntity from "../../../App/Infrastructure/Entities/EmailNotification.entity";
-import EventHandler from "../../../App/Infrastructure/Events/EventHandler";
+import EventHandler from "../../../App/Infrastructure/Events/Event.handler";
 import ForgotPasswordEvent from "../../Infrastructure/Event/ForgotPassword.event";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 

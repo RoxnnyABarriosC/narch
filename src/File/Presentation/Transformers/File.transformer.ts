@@ -14,8 +14,8 @@ export default class FileTransformer extends Transformer
             mimeType: file.mimeType,
             size: file.size,
             version: file.version,
-            createdAt: this.transformDate(file.createdAt),
-            updatedAt: this.transformDate(file.updatedAt),
+            createdAt: this.unixDate(file.createdAt),
+            updatedAt: this.unixDate(file.updatedAt),
         };
     }    
 }

@@ -32,8 +32,8 @@ export default class AuthTransformer extends Transformer
                 permissions: authService.getPermissions(user),
                 roles: this.validate(user.getRoles(),'roleUserTransformer'),
                 mainPicture: this.validate(user.getMainPicture(),'fileTransformer'),
-                createdAt: this.transformDate(user.createdAt),
-                updatedAt: this.transformDate(user.updatedAt),
+                createdAt: this.unixDate(user.createdAt),
+                updatedAt: this.unixDate(user.updatedAt),
             },
             expires: token.getExpires(),
             token: token.getHash()
