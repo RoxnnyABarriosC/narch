@@ -10,11 +10,13 @@ import TokenFactory from "../../../App/Infrastructure/Factories/Token.factory";
 import IToken from "../../../App/InterfaceAdapters/Shared/IToken";
 import {SERVICES} from "../../../Services";
 import IAuthService from "../../../User/InterfaceAdapters/IAuth.service";
-import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
-import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
 import _ from "lodash";
+import {ILogUpdateProps} from "../../../App/Infrastructure/Logger/Logger";
+import UserEntity from "../../../User/Domain/User.entity";
+import UserLogTransformer from "../../../User/Presentation/Transformers/UserLog.transformer";
+import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
 
-export default class ChangeMyPasswordUseCase
+export default class ChangeMyPasswordUseCase extends UseCaseHelper
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;
@@ -28,31 +30,43 @@ export default class ChangeMyPasswordUseCase
 
     constructor()
     {
+        super()
         this.tokenFactory = new TokenFactory();
         this.encryption = EncryptionFactory.create();
     }
 
     async handle(payload: ChangeMyPasswordPayload): Promise<IToken>
     {
-        let user = payload.getAuthUser();
+        let authUser = payload.getAuthUser();
         const tokenId: string = payload.getTokenId();
 
-        const oldUser: IUserDomain = _.cloneDeep<IUserDomain>(user);
+        const oldAuthUser: IUserDomain = _.cloneDeep<IUserDomain>(authUser);
 
-        if(! await this.encryption.compare(payload.getCurrentPassword(), user.password))
+        if(! await this.encryption.compare(payload.getCurrentPassword(), authUser.password))
         {
             throw new PasswordWrongException();
         }
 
-        user.password = await this.encryption.encrypt(payload.getNewPassword());
+        authUser.password = await this.encryption.encrypt(payload.getNewPassword());
 
-        user = await this.repository.save(user);
+        authUser = await this.repository.save(authUser);
 
         await this.authService.addTokenBackList(tokenId);
 
-        const log = new SaveLogUserUseCase(payload.getAuthUser(), oldUser);
-        await log.handle(LogActionEnum.CHANGE_PASSWORD);
+        const logUpdateProps: ILogUpdateProps<UserEntity> = {
+            type: UserEntity.name,
+            entity: UserEntity.name,
+            entityId: authUser.getId(),
+            newEntity: authUser,
+            oldEntity: oldAuthUser,
+            description: 'you changed your password',
+            ignore: ['password'],
+            transformer: new UserLogTransformer(),
+            authUser,
+        };
 
-        return this.tokenFactory.createToken(user);
+        this.logUpdate(logUpdateProps);
+
+        return this.tokenFactory.createToken(authUser);
     }
 }

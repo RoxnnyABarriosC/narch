@@ -46,7 +46,6 @@ export default class RegisterRequest implements RegisterPayload
         this.email = request.body.email;
         this.password = request.body.password;
         this.passwordConfirmation = request.body.passwordConfirmation;
-        this.passwordConfirmation = request.body.passwordConfirmation;
         this.enable = true;
     }
 

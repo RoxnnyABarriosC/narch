@@ -111,7 +111,7 @@ export default class AuthHandler
         this.responder.send(payload, null, res, StatusCode.HTTP_OK, null);
     }
 
-    @httpPost('/changeForgotPassword')
+    @httpPut('/changeForgotPassword')
     public async changeForgotPassword (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new ChangeForgotPasswordRequest(req);
@@ -123,7 +123,7 @@ export default class AuthHandler
         this.responder.send(payload, null, res, StatusCode.HTTP_CREATED, null);
     }
 
-    @httpPost('/changeMyPassword', AuthorizeMiddleware(Permissions.CHANGE_MY_PASSWORD))
+    @httpPut('/changeMyPassword', AuthorizeMiddleware(Permissions.CHANGE_MY_PASSWORD))
     public async changeMyPassword (@request() req: Request, @response() res: Response, @next() nex: NextFunction)
     {
         const _request = new ChangeMyPasswordRequest(req);

@@ -11,8 +11,9 @@ import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
 import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
 import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
 import _ from "lodash";
-import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
-import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
+import {ILogUpdateProps} from "../../../App/Infrastructure/Logger/Logger";
+import UserEntity from "../../../User/Domain/User.entity";
+import UserLogTransformer from "../../../User/Presentation/Transformers/UserLog.transformer";
 
 export default class UpdateMeUseCase extends UseCaseHelper
 {
@@ -35,24 +36,34 @@ export default class UpdateMeUseCase extends UseCaseHelper
 
     async handle(payload: UpdateMePayload): Promise<IToken>
     {
-        let user: IUserDomain = payload.getAuthUser();
+        let authUser: IUserDomain = payload.getAuthUser();
         const tokenId: string = payload.getTokenId();
 
-        const oldUser: IUserDomain = _.cloneDeep<IUserDomain>(user);
+        const oldAuthUser: IUserDomain = _.cloneDeep<IUserDomain>(authUser);
 
-        user.firstName = payload.getFirstName();
-        user.lastName = payload.getLastName();
-        user.email = payload.getEmail();
+        authUser.firstName = payload.getFirstName();
+        authUser.lastName = payload.getLastName();
+        authUser.email = payload.getEmail();
 
-        user.mainPicture =  await this.updateOrCreateRelationshipById<IUserDomain,IFileDomain>(user,'mainPicture', payload.getMainPictureId(),'fileRepository');
+        authUser.mainPicture =  await this.updateOrCreateRelationshipById<IUserDomain,IFileDomain>(authUser,'mainPicture', payload.getMainPictureId(),'fileRepository');
 
-        user = await this.repository.save(user);
+        authUser = await this.repository.update(authUser);
 
         await this.authService.addTokenBackList(tokenId)
 
-        const log = new SaveLogUserUseCase(payload.getAuthUser(), oldUser);
-        await log.handle(LogActionEnum.UPDATE);
+        const logUpdateProps: ILogUpdateProps = {
+            type: UserEntity.name,
+            entity: UserEntity.name,
+            entityId: authUser.getId(),
+            newEntity: authUser,
+            oldEntity: oldAuthUser,
+            description: 'you changed your data',
+            transformer: new UserLogTransformer(),
+            authUser,
+        };
 
-        return this.tokenFactory.createToken(user);
+        this.logUpdate(logUpdateProps);
+
+        return this.tokenFactory.createToken(authUser);
     }
 }
