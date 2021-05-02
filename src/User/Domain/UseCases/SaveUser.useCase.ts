@@ -8,15 +8,13 @@ import EncryptionFactory from "../../../App/Infrastructure/Factories/Encryption.
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
 import SaveUserPayload from "../../InterfaceAdapters/Payloads/SaveUser.payload";
 import UserEntity from "../User.entity";
-import EventHandler from "../../../App/Infrastructure/Events/EventHandler";
 import UserCreatedEvent from "../../Infrastructure/Event/UserCreated.event";
 import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
 import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
 import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
-import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
-import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
 import IRoleRepository from "../../../Role/InterfaceAdapters/IRole.repository";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
+import {ILogSaveProps} from "../../../App/Infrastructure/Logger/Logger";
 
 export default class SaveUserUseCase extends UseCaseHelper
 {
@@ -42,6 +40,8 @@ export default class SaveUserUseCase extends UseCaseHelper
 
     async handle(payload: SaveUserPayload): Promise<IUserDomain>
     {
+        const authUser: IUserDomain = payload.getAuthUser();
+
         this.authService.validatePermissions(payload.getPermissions());
 
         let user: IUserDomain = new UserEntity();
@@ -66,12 +66,16 @@ export default class SaveUserUseCase extends UseCaseHelper
 
         user = await this.repository.save(user);
 
-        const eventHandler = EventHandler.getInstance();
+        this.eventExecute(UserCreatedEvent.USER_CREATED_EVENT,{email: user.email});
 
-        eventHandler.execute(UserCreatedEvent.USER_CREATED_EVENT, {email: user.email});
+        const logSaveProps: ILogSaveProps = {
+            type: UserEntity.name,
+            entity: UserEntity.name,
+            entityId: user.getId(),
+            authUser,
+        }
 
-        const log = new SaveLogUserUseCase(payload.getAuthUser(),user);
-        await log.handle(LogActionEnum.SAVE);
+        this.logSave(logSaveProps);
 
         return user;
     }

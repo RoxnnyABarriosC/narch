@@ -21,7 +21,8 @@
 				"slug": "El slug ya se encuentra en uso."
 			},
 			"user": {
-				"email": "El email ya se encuentra en uso."
+				"email": "El email ya se encuentra en uso.",
+				"mainPicture": "general.uniques.user.mainPicture"
 			}
 		}
 	}
