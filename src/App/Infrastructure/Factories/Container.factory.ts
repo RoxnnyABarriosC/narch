@@ -4,7 +4,7 @@ import InjectionFactory from "./Injection.factory";
 
 export default class ContainerFactory
 {
-    static create<T>(type: string): T
+    static create<T = any>(type: string): T
     {
         return container.get<T>(type);
     }
