@@ -5,10 +5,11 @@ import _ from "lodash";
 
 interface UniqueParam {
     repository: REPOSITORIES,
+    dbAttribute?: string,
     property?: string,
 }
 
-export function Unique(params: UniqueParam,validationOptions?: ValidationOptions)
+export function Unique(params: UniqueParam, validationOptions?: ValidationOptions)
 {
     return (object: any, propertyName: string) =>
     {
@@ -30,8 +31,16 @@ export class UniqueConstraint implements ValidatorConstraintInterface
         // tslint:disable-next-line:no-shadowed-variable
         const [params] = args.constraints;
         // @ts-ignore
-        const repository = ContainerFactory.create<any>(REPOSITORIES[params.repository]);
-        const exist = await repository.exist({[args.property]:value},['_id']);
+        const repository = ContainerFactory.create(REPOSITORIES[params.repository]);
+
+        let key: string = args.property;
+
+        if (!_.isUndefined(params.dbAttribute))
+        {
+            key = params.dbAttribute;
+        }
+
+        const exist = await repository.exist({[key]:value},['_id']);
 
         if (exist)
         {
