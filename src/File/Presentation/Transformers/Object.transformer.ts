@@ -6,7 +6,7 @@ export default class ObjectTransformer extends Transformer
     {
         return {
             name: object.name,
-            lastModified: this.transformDate(object.lastModified),
+            lastModified: this.unixDate(object.lastModified),
             etag: object.etag,
             size: object.size,
         };

@@ -4,7 +4,7 @@ import {SERVICES} from "../../../Services";
 import {IEncryption} from "@digichanges/shared-experience";
 import IAuthService from "../../../User/InterfaceAdapters/IAuth.service";
 import EncryptionFactory from "../../../App/Infrastructure/Factories/Encryption.factory";
-import EventHandler from "../../../App/Infrastructure/Events/EventHandler";
+import EventHandler from "../../../App/Infrastructure/Events/Event.handler";
 import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
 import UserEntity from "../../../User/Domain/User.entity";
