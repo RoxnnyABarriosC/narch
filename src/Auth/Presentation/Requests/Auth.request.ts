@@ -6,7 +6,7 @@ import AuthPayload from "../../InterfaceAdapters/Payloads/Auth.payload";
 export default class AuthRequest implements AuthPayload
 {
     @IsEmail()
-    private email: string;
+    email: string;
 
     @IsString()
     @Length(Config.get('validationSettings.password.min'), Config.get('validationSettings.password.max'))

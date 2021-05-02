@@ -4,11 +4,11 @@ import {REPOSITORIES} from "../../../Repositories";
 import IUserRepository from "../../../User/InterfaceAdapters/IUser.repository";
 import ForgotPasswordPayload from "../../InterfaceAdapters/Payloads/ForgotPassword.payload";
 import EmailNotificationEntity from "../../../App/Infrastructure/Entities/EmailNotification.entity";
-import EventHandler from "../../../App/Infrastructure/Events/Event.handler";
 import ForgotPasswordEvent from "../../Infrastructure/Event/ForgotPassword.event";
 import IUserDomain from "../../../User/InterfaceAdapters/IUser.domain";
+import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
 
-export default class ForgotPasswordUseCase
+export default class ForgotPasswordUseCase extends UseCaseHelper
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;
@@ -31,9 +31,7 @@ export default class ForgotPasswordUseCase
         emailNotification.to = payload.getEmail();
         emailNotification.subject = "Forgot Password";
 
-        const eventHandler = EventHandler.getInstance();
-
-        eventHandler.execute(ForgotPasswordEvent.FORGOT_PASSWORD_EVENT, {emailNotification, urlConfirmationToken});
+        this.eventExecute(ForgotPasswordEvent.FORGOT_PASSWORD_EVENT, {emailNotification, urlConfirmationToken});
 
         return {message: "We've sent you an email"};
     }

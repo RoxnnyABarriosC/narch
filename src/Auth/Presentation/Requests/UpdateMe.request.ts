@@ -33,6 +33,15 @@ export default class UpdateMeRequest extends AuthUserRequest implements UpdateMe
     @IsOptional()
     @IsString()
     @IsUUID('4')
+    @IsEmail()
+    @Unique({
+            repository: REPOSITORIES.IUserRepository,
+            dbAttribute: 'mainPicture',
+            property: 'id'
+        },
+        {
+            message: () =>  Locales.__('general.uniques.user.mainPicture'),
+        })
     mainPictureId: string
 
     constructor(request: Request | any)
