@@ -2,11 +2,10 @@ import _ from "lodash";
 import EventHandler from "../Events/Event.handler";
 import LoggerEvent from "../Events/Logger.event";
 import {ILogRemoveProps, ILogSaveProps, ILogUpdateProps} from "../Logger/Logger";
-import {EventEmitter} from "events";
 
 export default class UseCaseHelper
 {
-    private event: EventEmitter =  EventHandler.getInstance();
+    private event: EventHandler =  EventHandler.getInstance();
 
     protected async updateOrCreateRelationshipById<IDomain, IReturnDomain>(entity: IDomain, attribute: string , id: string, repository: string): Promise<IReturnDomain | null>
     {
@@ -51,5 +50,10 @@ export default class UseCaseHelper
     protected logRemove(props: ILogRemoveProps): void
     {
         this.event.emit(LoggerEvent.LOG_REMOVE_EVENT, props);
+    }
+
+    protected eventExecute(event: string, props: any): void
+    {
+        this.event.execute(event, props);
     }
 }
