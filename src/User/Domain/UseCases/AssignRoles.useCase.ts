@@ -6,10 +6,12 @@ import UserAssignRolesPayload from "../../InterfaceAdapters/Payloads/UserAssignR
 import IUserDomain from "../../InterfaceAdapters/IUser.domain";
 import IRoleDomain from "../../../Role/InterfaceAdapters/IRole.domain";
 import _ from "lodash";
-import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
-import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
+import {ILogUpdateProps} from "../../../App/Infrastructure/Logger/Logger";
+import UserEntity from "../User.entity";
+import UserLogTransformer from "../../Presentation/Transformers/UserLog.transformer";
+import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
 
-export default class AssignRolesUseCase
+export default class AssignRolesUseCase extends UseCaseHelper
 {
     @lazyInject(REPOSITORIES.IUserRepository)
     private repository: IUserRepository<IUserDomain>;
@@ -19,6 +21,8 @@ export default class AssignRolesUseCase
 
     async handle(payload: UserAssignRolesPayload): Promise<IUserDomain>
     {
+        const authUser: IUserDomain = payload.getAuthUser();
+
         let user: IUserDomain = await this.repository.getOne(payload.getId());
         const oldUser: IUserDomain = _.cloneDeep<IUserDomain>(user);
 
@@ -30,9 +34,21 @@ export default class AssignRolesUseCase
             user.setRole(role);
         }
 
-        const log = new SaveLogUserUseCase(payload.getAuthUser(), oldUser);
-        await log.handle(LogActionEnum.UPDATE);
+        user = await this.repository.update(user);
 
-        return await this.repository.save(user);
+        const logUpdateProps: ILogUpdateProps = {
+            type: UserEntity.name,
+            entity: UserEntity.name,
+            entityId: user.getId(),
+            newEntity: user,
+            oldEntity: oldUser,
+            description: `${authUser.email} updated the roles`,
+            transformer: new UserLogTransformer(),
+            authUser,
+        };
+
+        this.logUpdate(logUpdateProps);
+
+        return user;
     }
 }

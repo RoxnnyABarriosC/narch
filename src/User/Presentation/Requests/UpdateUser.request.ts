@@ -1,6 +1,9 @@
 import {ArrayMinSize, IsArray, IsBoolean, IsEmail, IsOptional, IsString, IsUUID, Length} from "class-validator";
 import UpdateUserPayload from "../../InterfaceAdapters/Payloads/UpdateUser.payload";
 import IdRequest from "../../../App/Presentation/Requests/Defaults/Id.request";
+import {Unique} from "../../../App/Infrastructure/Shared/Decorators/unique";
+import {REPOSITORIES} from "../../../Repositories";
+import {Locales} from "../../../App";
 
 export default class UpdateUserRequest extends IdRequest implements UpdateUserPayload
 {
@@ -13,6 +16,13 @@ export default class UpdateUserRequest extends IdRequest implements UpdateUserPa
     lastName: string
 
     @IsEmail()
+    @Unique({
+            repository: REPOSITORIES.IUserRepository,
+            property: 'id'
+        },
+        {
+            message: () =>  Locales.__('general.uniques.user.email'),
+        })
     email: string
 
     @IsBoolean()
@@ -39,6 +49,14 @@ export default class UpdateUserRequest extends IdRequest implements UpdateUserPa
     @IsOptional()
     @IsString()
     @IsUUID('4')
+    @Unique({
+            repository: REPOSITORIES.IUserRepository,
+            dbAttribute: 'mainPicture',
+            property: 'id'
+        },
+        {
+            message: () =>  Locales.__('general.uniques.user.mainPicture'),
+        })
     mainPictureId: string
 
     constructor(request: any)

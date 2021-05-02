@@ -15,8 +15,9 @@ import IUserService from "../../InterfaceAdapters/IUser.service";
 import IFileRepository from "../../../File/InterfaceAdapters/IFile.repository";
 import IFileDomain from "../../../File/InterfaceAdapters/IFile.domain";
 import UseCaseHelper from "../../../App/Infrastructure/Helpers/UseCase.helper";
-import SaveLogUserUseCase from "../../../Log/Domain/UseCases/SaveLogUser.useCase";
-import LogActionEnum from "../../../Log/Infrastructure/Enum/LogActionEnum";
+import {ILogUpdateProps} from "../../../App/Infrastructure/Logger/Logger";
+import UserEntity from "../User.entity";
+import UserLogTransformer from "../../Presentation/Transformers/UserLog.transformer";
 
 export default class UpdateUserUseCase extends UseCaseHelper
 {
@@ -37,6 +38,8 @@ export default class UpdateUserUseCase extends UseCaseHelper
 
     async handle(payload: UpdateUserPayload): Promise<IUserDomain>
     {
+        const authUser: IUserDomain = payload.getAuthUser();
+
         let user: IUserDomain = await this.repository.getOne(payload.getId());
         const oldUser: IUserDomain = _.cloneDeep<IUserDomain>(user);
 
@@ -66,8 +69,17 @@ export default class UpdateUserUseCase extends UseCaseHelper
 
         user = await this.repository.save(user);
 
-        const log = new SaveLogUserUseCase(payload.getAuthUser(), oldUser);
-        await log.handle(LogActionEnum.UPDATE);
+        const logUpdateProps: ILogUpdateProps = {
+            type: UserEntity.name,
+            entity: UserEntity.name,
+            entityId: user.getId(),
+            newEntity: user,
+            oldEntity: oldUser,
+            transformer: new UserLogTransformer(),
+            authUser,
+        };
+
+        this.logUpdate(logUpdateProps);
 
         return user;
     }

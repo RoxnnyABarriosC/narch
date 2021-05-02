@@ -26,8 +26,8 @@ export default class UserTransformer extends Transformer
             permissions: user.permissions,
             roles: this.validate(user?.getRoles(),'roleTransformer'),
             mainPicture: this.validate(user?.getMainPicture(),'fileTransformer'),
-            createdAt: this.transformDate(user.createdAt),
-            updatedAt: this.transformDate(user.updatedAt),
+            createdAt: this.unixDate(user.createdAt),
+            updatedAt: this.unixDate(user.updatedAt),
         };
     }
 }

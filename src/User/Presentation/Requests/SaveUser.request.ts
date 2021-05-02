@@ -57,6 +57,13 @@ export default class SaveUserRequest extends AuthUserRequest implements SaveUser
     @IsOptional()
     @IsString()
     @IsUUID('4')
+    @Unique({
+            repository: REPOSITORIES.IUserRepository,
+            dbAttribute: 'mainPicture'
+        },
+        {
+            message: () =>  Locales.__('general.uniques.user.mainPicture'),
+        })
     mainPictureId: string
 
     constructor(request: Request | any)
