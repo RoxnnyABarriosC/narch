@@ -29,10 +29,11 @@ export declare interface ILogRemoveProps extends ILogSaveProps, ILogTransformer
     removeEntity: {};
 }
 
-export declare interface ILogUpdateProps extends ILogSaveProps,ILogTransformer
+export declare interface ILogUpdateProps<T = any> extends ILogSaveProps,ILogTransformer
 {
     oldEntity: {};
     newEntity: {};
+    ignore?: (keyof T) [];
 }
 
 declare interface IDiff {
@@ -43,6 +44,7 @@ declare interface IDiff {
 
 export declare interface IDifferences {
     differences: IDiff;
+    ignored: any[];
 }
 
 export default class Logger
@@ -117,7 +119,7 @@ export default class Logger
 
     public static async update(props: ILogUpdateProps)
     {
-        const { type, entity, entityId, parentId,transformer, authUser } = props;
+        const { type, entity, entityId, parentId,transformer, ignore ,authUser } = props;
         let {metadata, description, oldEntity, newEntity } = props;
 
         if(!_.isNull(transformer))
@@ -131,7 +133,7 @@ export default class Logger
             description = `${authUser.email} updated the ${entity.replace('Entity','')}`;
         }
 
-        const differences = this.differences(jsonDiff.diff(oldEntity, newEntity));
+        const differences = this.differences(jsonDiff.diff(oldEntity, newEntity), ignore);
 
         if (_.isUndefined(metadata) || _.isNull(metadata))
         {
@@ -157,12 +159,12 @@ export default class Logger
         await this.repository.save(log);
     }
 
-    private static differences(differ: IDiff): IDifferences
+    private static differences(differ: IDiff, ignore: any[]): IDifferences
     {
         const diffMap = (diff: IDiff) => {
             const keyValues = Object.keys(diff).map(key =>
             {
-                let newKey;
+                let newKey: any;
 
                 if (key === '__old')
                 {
@@ -190,6 +192,22 @@ export default class Logger
             return Object.assign({}, ...keyValues)
         }
 
-        return { differences:  diffMap(differ) } as IDifferences;
+        const differences =  diffMap(differ);
+        const ignored: any[] = [];
+
+        if (!_.isUndefined(ignore))
+        {
+            ignore = _.uniq(ignore);
+            _.map(ignore, _ignore => {
+                _.mapKeys(differences, (value, key) => {
+                    if (_ignore === key)
+                    {
+                        ignored.push(key);
+                    }
+                })
+            })
+        }
+
+        return { differences , ignored} as IDifferences;
     }
 }
